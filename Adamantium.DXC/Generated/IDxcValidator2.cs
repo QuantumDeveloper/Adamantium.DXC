@@ -8,7 +8,7 @@ namespace Adamantium.DXC;
 [Guid("458E1FD1-B1B2-4750-A6E1-9C10F03BED92")]
 [NativeTypeName("struct IDxcValidator2 : IDxcValidator")]
 [NativeInheritance("IDxcValidator")]
-public unsafe partial struct IDxcValidator2
+internal unsafe partial struct IDxcValidator2
 {
     public void** lpVtbl;
 

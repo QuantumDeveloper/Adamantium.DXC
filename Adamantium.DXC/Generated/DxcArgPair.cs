@@ -1,7 +1,7 @@
 namespace Adamantium.DXC;
 
 /// <include file='DxcArgPair.xml' path='doc/member[@name="DxcArgPair"]/*' />
-public unsafe partial struct DxcArgPair
+internal unsafe partial struct DxcArgPair
 {
     /// <include file='DxcArgPair.xml' path='doc/member[@name="DxcArgPair.pName"]/*' />
     [NativeTypeName("const WCHAR *")]

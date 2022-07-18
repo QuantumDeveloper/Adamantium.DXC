@@ -1,7 +1,7 @@
 namespace Adamantium.DXC;
 
 /// <include file='DxcShaderHash.xml' path='doc/member[@name="DxcShaderHash"]/*' />
-public unsafe partial struct DxcShaderHash
+internal unsafe partial struct DxcShaderHash
 {
     /// <include file='DxcShaderHash.xml' path='doc/member[@name="DxcShaderHash.Flags"]/*' />
     [NativeTypeName("UINT32")]

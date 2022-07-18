@@ -1,6 +1,4 @@
-using Adamantium.DXC;
-
-namespace TerraFX.Interop.DirectX;
+namespace Adamantium.DXC.Interop;
 
 public static partial class DXC
 {

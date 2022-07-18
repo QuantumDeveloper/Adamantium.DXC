@@ -8,7 +8,7 @@ namespace Adamantium.DXC;
 [Guid("5E13E843-9D25-473C-9AD2-03B2D0B44B1E")]
 [NativeTypeName("struct IDxcVersionInfo3 : IUnknown")]
 [NativeInheritance("IUnknown")]
-public unsafe partial struct IDxcVersionInfo3
+internal unsafe partial struct IDxcVersionInfo3
 {
     public void** lpVtbl;
 

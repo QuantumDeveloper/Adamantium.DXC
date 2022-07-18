@@ -1,7 +1,7 @@
 namespace Adamantium.DXC;
 
 /// <include file='DxcBuffer.xml' path='doc/member[@name="DxcBuffer"]/*' />
-public unsafe partial struct DxcBuffer
+internal unsafe partial struct DxcBuffer
 {
     /// <include file='DxcBuffer.xml' path='doc/member[@name="DxcBuffer.Ptr"]/*' />
     [NativeTypeName("LPCVOID")]

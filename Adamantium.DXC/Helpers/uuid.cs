@@ -4,11 +4,6 @@ using System.Runtime.CompilerServices;
 
 namespace Adamantium.DXC;
 
-public static class Response
-{
-    
-}
-
 internal static partial class Windows
 {
     /// <summary>Retrieves the GUID of of a specified type.</summary>

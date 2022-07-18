@@ -8,7 +8,7 @@ namespace Adamantium.DXC;
 [Guid("3DA636C9-BA71-4024-A301-30CBF125305B")]
 [NativeTypeName("struct IDxcBlobUtf8 : IDxcBlobEncoding")]
 [NativeInheritance("IDxcBlobEncoding")]
-public unsafe partial struct IDxcBlobUtf8
+internal unsafe partial struct IDxcBlobUtf8
 {
     public void** lpVtbl;
 

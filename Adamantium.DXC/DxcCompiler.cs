@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using TerraFX.Interop.Windows;
 
 namespace Adamantium.DXC;
 
 public unsafe class DxcCompiler
 {
     /// <summary>
-    /// The <see cref="IDxcCompiler"/> instance to use to create the bytecode for HLSL sources.
+    /// The <see cref="IDxcCompiler3"/> instance to use to create the bytecode for HLSL sources.
     /// </summary>
     private readonly ComPtr<IDxcCompiler3> DxcCompiler3;
 
     /// <summary>
-    /// The <see cref="IDxcLibrary"/> instance to use to work with <see cref="DxcCompiler"/>.
+    /// The <see cref="DxcUtils"/> instance to use to work with <see cref="DxcCompiler"/>.
     /// </summary>
     private readonly ComPtr<IDxcUtils> DxcUtils;
 

@@ -1,7 +1,7 @@
 namespace Adamantium.DXC;
 
 /// <include file='DXC_OUT_KIND.xml' path='doc/member[@name="DXC_OUT_KIND"]/*' />
-public enum DXC_OUT_KIND
+internal enum DXC_OUT_KIND
 {
     /// <include file='DXC_OUT_KIND.xml' path='doc/member[@name="DXC_OUT_KIND.DXC_OUT_NONE"]/*' />
     DXC_OUT_NONE = 0,

@@ -8,7 +8,7 @@ namespace Adamantium.DXC;
 [Guid("AE2CD79F-CC22-453F-9B6B-B124E7A5204C")]
 [NativeTypeName("struct IDxcOptimizerPass : IUnknown")]
 [NativeInheritance("IUnknown")]
-public unsafe partial struct IDxcOptimizerPass
+internal unsafe partial struct IDxcOptimizerPass
 {
     public void** lpVtbl;
 

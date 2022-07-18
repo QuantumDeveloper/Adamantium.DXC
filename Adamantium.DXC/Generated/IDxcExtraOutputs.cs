@@ -8,7 +8,7 @@ namespace Adamantium.DXC;
 [Guid("319B37A2-A5C2-494A-A5DE-4801B2FAF989")]
 [NativeTypeName("struct IDxcExtraOutputs : IUnknown")]
 [NativeInheritance("IUnknown")]
-public unsafe partial struct IDxcExtraOutputs
+internal unsafe partial struct IDxcExtraOutputs
 {
     public void** lpVtbl;
 

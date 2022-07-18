@@ -1,7 +1,7 @@
 namespace Adamantium.DXC;
 
 /// <include file='DxcDefine.xml' path='doc/member[@name="DxcDefine"]/*' />
-public unsafe partial struct DxcDefine
+internal unsafe partial struct DxcDefine
 {
     /// <include file='DxcDefine.xml' path='doc/member[@name="DxcDefine.Name"]/*' />
     [NativeTypeName("LPCWSTR")]
