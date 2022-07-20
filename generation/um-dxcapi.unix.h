@@ -1,0 +1,2 @@
+#include "/home/den/Загрузки/VulkanSDK/1.3.216.0/source/DirectXShaderCompiler/include/dxc/dxcapi.h"
+#include "/home/den/Загрузки/VulkanSDK/1.3.216.0/source/DirectXShaderCompiler/include/dxc/Support/WinAdapter.h"

@@ -3,3 +3,4 @@
 
 cd ..\generation
 ClangSharpPInvokeGenerator "@generate.rsp"
+ClangSharpPInvokeGenerator "@generate.unix.rsp"
