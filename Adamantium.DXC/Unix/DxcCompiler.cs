@@ -27,25 +27,25 @@ public unsafe class DxcCompiler
         using ComPtr<IDxcUtils> dxcUtils = default;
         using ComPtr<IDxcIncludeHandler> dxcIncludeHandler = default;
 
-        ???
+        //???
         var result = DxcInterop.DxcCreateInstance(
-            CLSID.DxcCompiler.GetPointer(),
-            IID.IDxcCompiler3.GetPointer(),
+            CLSID.DxcCompiler,
+            IID.IDxcCompiler3,
             dxcCompiler.GetVoidAddressOf());
         
-        result = DxcInterop.DxcCreateInstance(
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID.DxcCompiler)),
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcCompiler3)),
-            dxcCompiler.GetVoidAddressOf());
+        // result = DxcInterop.DxcCreateInstance(
+        //     (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID.DxcCompiler)),
+        //     (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcCompiler3)),
+        //     dxcCompiler.GetVoidAddressOf());
         
         // result = DxcInterop.DxcCreateInstance(
         //     CLSID.DxcUtils.GetPointer(),
         //     IID.IDxcUtils.GetPointer(),
         //     dxcUtils.GetVoidAddressOf());
-        
+
         result = DxcInterop.DxcCreateInstance(
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID.DxcUtils)),
-        (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcUtils)),
+            CLSID.DxcUtils,
+            IID.IDxcUtils,
             dxcUtils.GetVoidAddressOf());
 
         result = dxcUtils.Get()->CreateDefaultIncludeHandler(dxcIncludeHandler.GetAddressOf());

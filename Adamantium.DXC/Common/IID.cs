@@ -7,6 +7,16 @@ namespace Adamantium.DXC;
 
 public static partial class IID
 {
+    public static readonly unsafe Guid* IDxcCompiler3;
+    public static readonly unsafe Guid* IDxcUtils;
+    static IID()
+    {
+        unsafe
+        {
+            IDxcCompiler3 = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in _IDxcCompiler3));
+            IDxcUtils = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in _IDxcUtils));
+        }
+    }
     public static ref readonly Guid IID_IDxcBlob
     {
         get
@@ -237,7 +247,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IDxcUtils
+    public static ref readonly Guid _IDxcUtils
     {
         get
         {
@@ -306,7 +316,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IDxcCompiler3
+    public static ref readonly Guid _IDxcCompiler3
     {
         get
         {
