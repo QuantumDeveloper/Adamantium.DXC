@@ -29,6 +29,11 @@
       <Content Include="libdxcompiler.so.3.7">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="libdxcompiler.so" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Generated.Windows" />
     </ItemGroup>
 
 </Project>

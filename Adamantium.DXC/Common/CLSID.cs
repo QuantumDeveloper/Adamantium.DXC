@@ -8,7 +8,7 @@ namespace Adamantium.DXC;
 public static partial class CLSID
 {
     [NativeTypeName("const CLSID")]
-    public static ref readonly Guid CLSID_DxcCompiler
+    public static ref readonly Guid DxcCompiler
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -33,7 +33,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid CLSID_DxcLinker
+    public static ref readonly Guid DxcLinker
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -58,7 +58,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const CLSID")]
-    public static ref readonly Guid CLSID_DxcDiaDataSource
+    public static ref readonly Guid DxcDiaDataSource
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -83,7 +83,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const CLSID")]
-    public static ref readonly Guid CLSID_DxcCompilerArgs
+    public static ref readonly Guid DxcCompilerArgs
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -108,7 +108,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid CLSID_DxcLibrary
+    public static ref readonly Guid DxcLibrary
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -133,10 +133,10 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid CLSID_DxcUtils => ref CLSID_DxcLibrary;
+    public static ref readonly Guid DxcUtils => ref DxcLibrary;
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid CLSID_DxcValidator
+    public static ref readonly Guid DxcValidator
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -161,7 +161,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid CLSID_DxcAssembler
+    public static ref readonly Guid DxcAssembler
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -186,7 +186,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid CLSID_DxcContainerReflection
+    public static ref readonly Guid DxcContainerReflection
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -211,7 +211,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid CLSID_DxcOptimizer
+    public static ref readonly Guid DxcOptimizer
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -236,7 +236,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid CLSID_DxcContainerBuilder
+    public static ref readonly Guid DxcContainerBuilder
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -261,7 +261,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid CLSID_DxcPdbUtils
+    public static ref readonly Guid DxcPdbUtils
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get

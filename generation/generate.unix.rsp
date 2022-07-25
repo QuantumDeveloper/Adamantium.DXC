@@ -8,7 +8,7 @@ DxcInterop
 --namespace
 Adamantium.DXC.Unix
 --output
-../Adamantium.DXC/Generated.Unix
+../Adamantium.DXC/Unix/Generated
 --test-output
 ../Adamantium.DXC.Tests
 --traverse

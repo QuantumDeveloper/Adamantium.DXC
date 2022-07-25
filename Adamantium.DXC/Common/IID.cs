@@ -30,7 +30,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcBlobEncoding
+    public static ref readonly Guid IDxcBlobEncoding
     {
         get
         {
@@ -53,7 +53,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcBlobWide
+    public static ref readonly Guid IDxcBlobWide
     {
         get
         {
@@ -76,7 +76,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcBlobUtf8
+    public static ref readonly Guid IDxcBlobUtf8
     {
         get
         {
@@ -99,7 +99,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcIncludeHandler
+    public static ref readonly Guid IDxcIncludeHandler
     {
         get
         {
@@ -122,7 +122,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcCompilerArgs
+    public static ref readonly Guid IDxcCompilerArgs
     {
         get
         {
@@ -145,7 +145,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcOperationResult
+    public static ref readonly Guid IDxcOperationResult
     {
         get
         {
@@ -168,7 +168,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcCompiler
+    public static ref readonly Guid IDxcCompiler
     {
         get
         {
@@ -191,7 +191,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcCompiler2
+    public static ref readonly Guid IDxcCompiler2
     {
         get
         {
@@ -214,7 +214,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcLinker
+    public static ref readonly Guid IDxcLinker
     {
         get
         {
@@ -237,7 +237,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcUtils
+    public static ref readonly Guid IDxcUtils
     {
         get
         {
@@ -260,7 +260,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcResult
+    public static ref readonly Guid IDxcResult
     {
         get
         {
@@ -283,7 +283,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcExtraOutputs
+    public static ref readonly Guid IDxcExtraOutputs
     {
         get
         {
@@ -306,7 +306,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcCompiler3
+    public static ref readonly Guid IDxcCompiler3
     {
         get
         {
@@ -329,7 +329,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcValidator
+    public static ref readonly Guid IDxcValidator
     {
         get
         {
@@ -352,7 +352,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcValidator2
+    public static ref readonly Guid IDxcValidator2
     {
         get
         {
@@ -375,7 +375,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcContainerBuilder
+    public static ref readonly Guid IDxcContainerBuilder
     {
         get
         {
@@ -398,7 +398,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcAssembler
+    public static ref readonly Guid IDxcAssembler
     {
         get
         {
@@ -421,7 +421,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcContainerReflection
+    public static ref readonly Guid IDxcContainerReflection
     {
         get
         {
@@ -444,7 +444,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcOptimizerPass
+    public static ref readonly Guid IDxcOptimizerPass
     {
         get
         {
@@ -467,7 +467,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcOptimizer
+    public static ref readonly Guid IDxcOptimizer
     {
         get
         {
@@ -490,7 +490,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcVersionInfo
+    public static ref readonly Guid IDxcVersionInfo
     {
         get
         {
@@ -513,7 +513,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcVersionInfo2
+    public static ref readonly Guid IDxcVersionInfo2
     {
         get
         {
@@ -536,7 +536,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcVersionInfo3
+    public static ref readonly Guid IDxcVersionInfo3
     {
         get
         {
@@ -559,7 +559,7 @@ public static partial class IID
         }
     }
 
-    public static ref readonly Guid IID_IDxcPdbUtils
+    public static ref readonly Guid IDxcPdbUtils
     {
         get
         {
