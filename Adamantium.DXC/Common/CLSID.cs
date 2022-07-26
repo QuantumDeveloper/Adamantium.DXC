@@ -14,10 +14,40 @@ public static partial class CLSID
     {
         unsafe
         {
-            DxcCompiler = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in _DxcCompiler));
-            DxcUtils = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in _DxcUtils));
+            DxcCompiler = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcCompilerGuid));
+            DxcUtils = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcUtilsGuid));
         }
     }
+
+    private static readonly Guid DxcCompilerGuid = new Guid(new byte[]
+    {
+        0x93, 0x2D, 0xE2, 0x73,
+        0xCE, 0xE6,
+        0xF3, 0x47,
+        0xB5,
+        0xBF,
+        0xF0,
+        0x66,
+        0x4F,
+        0x39,
+        0xC1,
+        0xB0
+    });
+    
+    private static readonly Guid DxcUtilsGuid = new Guid(new byte[]
+    {
+        0xAF, 0xD6, 0x45, 0x62,
+        0xE0, 0x66,
+        0xFD, 0x48,
+        0x80,
+        0xB4,
+        0x4D,
+        0x27,
+        0x17,
+        0x96,
+        0x74,
+        0x8C
+    });
     
     [NativeTypeName("const CLSID")]
     public static ref readonly Guid _DxcCompiler
