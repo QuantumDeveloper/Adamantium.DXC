@@ -28,13 +28,12 @@ public unsafe class WindowsDxcCompiler
         using ComPtr<IDxcIncludeHandler> dxcIncludeHandler = default;
 
         var result= DxcInterop.DxcCreateInstance(
-            //(Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID.DxcCompiler)),
-            CLSID.DxcCompiler.GetPointer(),
+            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID._DxcCompiler)),
             UuidOf.__uuidof<IDxcCompiler3>(),
             dxcCompiler.GetVoidAddressOf());
         
         result = DxcInterop.DxcCreateInstance(
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID.DxcUtils)),
+            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID._DxcUtils)),
             UuidOf.__uuidof<IDxcUtils>(),
             dxcUtils.GetVoidAddressOf());
 

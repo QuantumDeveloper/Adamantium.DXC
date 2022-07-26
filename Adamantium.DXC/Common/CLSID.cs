@@ -7,8 +7,20 @@ namespace Adamantium.DXC;
 
 public static partial class CLSID
 {
+    public static readonly unsafe Guid* DxcCompiler;
+    public static readonly unsafe Guid* DxcUtils;
+
+    static CLSID()
+    {
+        unsafe
+        {
+            DxcCompiler = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in _DxcCompiler));
+            DxcUtils = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in _DxcUtils));
+        }
+    }
+    
     [NativeTypeName("const CLSID")]
-    public static ref readonly Guid DxcCompiler
+    public static ref readonly Guid _DxcCompiler
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
@@ -133,7 +145,7 @@ public static partial class CLSID
     }
 
     [NativeTypeName("const GUID")]
-    public static ref readonly Guid DxcUtils => ref DxcLibrary;
+    public static ref readonly Guid _DxcUtils => ref DxcLibrary;
 
     [NativeTypeName("const GUID")]
     public static ref readonly Guid DxcValidator
