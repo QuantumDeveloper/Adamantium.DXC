@@ -8,7 +8,7 @@ namespace Adamantium.DXC.Windows;
 [Guid("00000002-0000-0000-C000-000000000046")]
 [NativeTypeName("struct IMalloc : IUnknown")]
 [NativeInheritance("IUnknown")]
-public unsafe partial struct IMalloc
+internal unsafe partial struct IMalloc
 {
     public void** lpVtbl;
 

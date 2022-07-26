@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Adamantium.DXC;
+namespace Adamantium.DXC.Windows;
 
 /// <include file='IDxcVersionInfo2.xml' path='doc/member[@name="IDxcVersionInfo2"]/*' />
 [Guid("FB6904C4-42F0-4B62-9C46-983AF7DA7C83")]

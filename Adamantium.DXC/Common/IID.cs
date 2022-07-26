@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC;
 
-public static partial class IID
+internal static partial class IID
 {
     public static ref readonly Guid IID_IDxcBlob
     {

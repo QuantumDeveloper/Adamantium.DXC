@@ -1,6 +1,6 @@
 namespace Adamantium.DXC;
 
-public static partial class HresultCodes
+internal static partial class HresultCodes
 {
     [NativeTypeName("#define E_ABORT (HRESULT)0x80004004")]
     public const int ABORT = unchecked((int)(0x80004004));

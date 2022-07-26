@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Adamantium.DXC.Unix.UnitTests;
+namespace Adamantium.DXC.Windows.UnitTests;
 
 /// <summary>Provides validation of the <see cref="DxcDefine" /> struct.</summary>
 public static unsafe partial class DxcDefineTests

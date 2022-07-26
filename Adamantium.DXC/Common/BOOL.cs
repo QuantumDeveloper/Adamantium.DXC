@@ -2,7 +2,7 @@
 
 namespace Adamantium.DXC;
 
-public partial struct BOOL : IComparable, IComparable<BOOL>, IEquatable<BOOL>, IFormattable
+internal partial struct BOOL : IComparable, IComparable<BOOL>, IEquatable<BOOL>, IFormattable
     {
         public readonly int Value;
 

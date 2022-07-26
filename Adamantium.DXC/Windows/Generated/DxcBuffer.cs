@@ -1,4 +1,4 @@
-namespace Adamantium.DXC;
+namespace Adamantium.DXC.Windows;
 
 /// <include file='DxcBuffer.xml' path='doc/member[@name="DxcBuffer"]/*' />
 internal unsafe partial struct DxcBuffer

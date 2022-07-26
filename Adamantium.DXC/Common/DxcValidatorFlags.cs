@@ -1,6 +1,6 @@
 namespace Adamantium.DXC;
 
-public static partial class DxcValidatorFlags
+internal static partial class DxcValidatorFlags
 {
     [NativeTypeName("const UINT32")]
     public const uint DxcValidatorFlags_Default = 0;

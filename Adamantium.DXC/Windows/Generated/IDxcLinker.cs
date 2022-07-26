@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Adamantium.DXC;
+namespace Adamantium.DXC.Windows;
 
 /// <include file='IDxcLinker.xml' path='doc/member[@name="IDxcLinker"]/*' />
 [Guid("F1B5BE2A-62DD-4327-A1C2-42AC1E1E78E6")]
@@ -43,7 +43,7 @@ internal unsafe partial struct IDxcLinker
     [VtblIndex(3)]
     public HRESULT RegisterLibrary([NativeTypeName("LPCWSTR")] ushort* pLibName, IDxcBlob* pLib)
     {
-        return ((delegate* unmanaged[Thiscall]<IDxcLinker*, ushort*, IDxcBlob*, int>)(lpVtbl[3]))((IDxcLinker*)Unsafe.AsPointer(ref this), pLibName, pLib);
+        return ((delegate* unmanaged[Stdcall]<IDxcLinker*, ushort*, IDxcBlob*, int>)(lpVtbl[3]))((IDxcLinker*)Unsafe.AsPointer(ref this), pLibName, pLib);
     }
 
     /// <include file='IDxcLinker.xml' path='doc/member[@name="IDxcLinker.Link"]/*' />
@@ -66,7 +66,7 @@ internal unsafe partial struct IDxcLinker
         public delegate* unmanaged[Stdcall]<IDxcLinker*, uint> Release;
 
         [NativeTypeName("HRESULT (LPCWSTR, IDxcBlob *)")]
-        public delegate* unmanaged[Thiscall]<IDxcLinker*, ushort*, IDxcBlob*, int> RegisterLibrary;
+        public delegate* unmanaged[Stdcall]<IDxcLinker*, ushort*, IDxcBlob*, int> RegisterLibrary;
 
         [NativeTypeName("HRESULT (LPCWSTR, LPCWSTR, const LPCWSTR *, UINT32, const LPCWSTR *, UINT32, IDxcOperationResult **) __attribute__((stdcall))")]
         public delegate* unmanaged[Stdcall]<IDxcLinker*, ushort*, ushort*, ushort**, uint, ushort**, uint, IDxcOperationResult**, int> Link;

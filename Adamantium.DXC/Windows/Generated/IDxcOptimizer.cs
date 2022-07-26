@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Adamantium.DXC;
+namespace Adamantium.DXC.Windows;
 
 /// <include file='IDxcOptimizer.xml' path='doc/member[@name="IDxcOptimizer"]/*' />
 [Guid("25740E2E-9CBA-401B-9119-4FB42F39F270")]

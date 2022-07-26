@@ -32,8 +32,4 @@
       <None Remove="libdxcompiler.so" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Generated.Windows" />
-    </ItemGroup>
-
 </Project>

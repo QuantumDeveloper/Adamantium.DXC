@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Adamantium.DXC;
+namespace Adamantium.DXC.Windows;
 
 /// <include file='IDxcBlob.xml' path='doc/member[@name="IDxcBlob"]/*' />
 [Guid("8BA5FB08-5195-40E2-AC58-0D989C3A0102")]
@@ -44,8 +44,7 @@ internal unsafe partial struct IDxcBlob
     [return: NativeTypeName("LPVOID")]
     public void* GetBufferPointer()
     {
-        //return ((delegate* unmanaged[Stdcall]<IDxcBlob*, void*>)(lpVtbl[3]))((IDxcBlob*)Unsafe.AsPointer(ref this));
-        return ((delegate* unmanaged[Stdcall]<IDxcBlob*, void*>)(lpVtbl[5]))((IDxcBlob*)Unsafe.AsPointer(ref this));
+        return ((delegate* unmanaged[Stdcall]<IDxcBlob*, void*>)(lpVtbl[3]))((IDxcBlob*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcBlob.xml' path='doc/member[@name="IDxcBlob.GetBufferSize"]/*' />
@@ -54,8 +53,7 @@ internal unsafe partial struct IDxcBlob
     [return: NativeTypeName("SIZE_T")]
     public nuint GetBufferSize()
     {
-        //return ((delegate* unmanaged[Stdcall]<IDxcBlob*, nuint>)(lpVtbl[4]))((IDxcBlob*)Unsafe.AsPointer(ref this));
-        return ((delegate* unmanaged[Stdcall]<IDxcBlob*, nuint>)(lpVtbl[6]))((IDxcBlob*)Unsafe.AsPointer(ref this));
+        return ((delegate* unmanaged[Stdcall]<IDxcBlob*, nuint>)(lpVtbl[4]))((IDxcBlob*)Unsafe.AsPointer(ref this));
     }
 
     public partial struct Vtbl

@@ -1,6 +1,6 @@
 ﻿namespace Adamantium.DXC;
 
-public partial struct HRESULT
+internal partial struct HRESULT
 {
     public static bool SUCCEEDED(HRESULT hr)
     {

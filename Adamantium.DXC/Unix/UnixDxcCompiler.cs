@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Adamantium.DXC.Unix;
 
-public unsafe class DxcCompiler
+public unsafe class UnixDxcCompiler
 {
     /// <summary>
     /// The <see cref="IDxcCompiler3"/> instance to use to create the bytecode for HLSL sources.
@@ -15,19 +15,19 @@ public unsafe class DxcCompiler
     private readonly ComPtr<IDxcCompiler3> DxcCompiler3;
 
     /// <summary>
-    /// The <see cref="DxcUtils"/> instance to use to work with <see cref="DxcCompiler"/>.
+    /// The <see cref="DxcUtils"/> instance to use to work with <see cref="UnixDxcCompiler"/>.
     /// </summary>
     private readonly ComPtr<IDxcUtils> DxcUtils;
 
     private readonly ComPtr<IDxcIncludeHandler> DxcIncludeHandler;
 
-    public DxcCompiler()
+    public UnixDxcCompiler()
     {
         using ComPtr<IDxcCompiler3> dxcCompiler = default;
         using ComPtr<IDxcUtils> dxcUtils = default;
         using ComPtr<IDxcIncludeHandler> dxcIncludeHandler = default;
 
-        ???
+        //???
         var result = DxcInterop.DxcCreateInstance(
             CLSID.DxcCompiler.GetPointer(),
             IID.IDxcCompiler3.GetPointer(),

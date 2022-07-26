@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Adamantium.DXC;
+namespace Adamantium.DXC.Windows;
 
 /// <include file='IDxcBlobEncoding.xml' path='doc/member[@name="IDxcBlobEncoding"]/*' />
 [Guid("7241D424-2646-4191-97C0-98E96E42FC68")]
@@ -44,8 +44,7 @@ internal unsafe partial struct IDxcBlobEncoding
     [return: NativeTypeName("LPVOID")]
     public void* GetBufferPointer()
     {
-        //return ((delegate* unmanaged[Stdcall]<IDxcBlobEncoding*, void*>)(lpVtbl[3]))((IDxcBlobEncoding*)Unsafe.AsPointer(ref this));
-        return ((delegate* unmanaged[Cdecl]<IDxcBlobEncoding*, void*>)(lpVtbl[5]))((IDxcBlobEncoding*)Unsafe.AsPointer(ref this));
+        return ((delegate* unmanaged[Stdcall]<IDxcBlobEncoding*, void*>)(lpVtbl[3]))((IDxcBlobEncoding*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IDxcBlob.GetBufferSize" />
@@ -54,8 +53,7 @@ internal unsafe partial struct IDxcBlobEncoding
     [return: NativeTypeName("SIZE_T")]
     public nuint GetBufferSize()
     {
-        //return ((delegate* unmanaged[Stdcall]<IDxcBlobEncoding*, nuint>)(lpVtbl[4]))((IDxcBlobEncoding*)Unsafe.AsPointer(ref this));
-        return ((delegate* unmanaged[Cdecl]<IDxcBlobEncoding*, nuint>)(lpVtbl[6]))((IDxcBlobEncoding*)Unsafe.AsPointer(ref this));
+        return ((delegate* unmanaged[Stdcall]<IDxcBlobEncoding*, nuint>)(lpVtbl[4]))((IDxcBlobEncoding*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcBlobEncoding.xml' path='doc/member[@name="IDxcBlobEncoding.GetEncoding"]/*' />

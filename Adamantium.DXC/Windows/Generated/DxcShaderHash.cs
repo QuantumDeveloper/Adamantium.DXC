@@ -1,4 +1,4 @@
-namespace Adamantium.DXC;
+namespace Adamantium.DXC.Windows;
 
 /// <include file='DxcShaderHash.xml' path='doc/member[@name="DxcShaderHash"]/*' />
 internal unsafe partial struct DxcShaderHash

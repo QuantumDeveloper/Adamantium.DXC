@@ -1,4 +1,4 @@
-namespace Adamantium.DXC;
+namespace Adamantium.DXC.Windows;
 
 /// <include file='DxcArgPair.xml' path='doc/member[@name="DxcArgPair"]/*' />
 internal unsafe partial struct DxcArgPair

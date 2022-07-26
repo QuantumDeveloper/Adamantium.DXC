@@ -2,7 +2,7 @@
 
 namespace Adamantium.DXC;
 
-public unsafe partial struct STATSTG
+internal unsafe partial struct STATSTG
 {
     [NativeTypeName("LPOLESTR")]
     public ushort* pwcsName;

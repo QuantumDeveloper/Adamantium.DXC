@@ -1,9 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Adamantium.DXC.Windows;
 
-namespace Adamantium.DXC;
+namespace Adamantium.DXC.Windows;
 
 /// <include file='IDxcUtils.xml' path='doc/member[@name="IDxcUtils"]/*' />
 [Guid("4605C4CB-2019-492A-ADA4-65F20BB7D67F")]
@@ -81,14 +80,8 @@ internal unsafe partial struct IDxcUtils
     [VtblIndex(7)]
     public HRESULT LoadFile([NativeTypeName("LPCWSTR")] ushort* pFileName, [NativeTypeName("UINT32 *")] uint* pCodePage, IDxcBlobEncoding** pBlobEncoding)
     {
-        //return ((delegate* unmanaged[Stdcall]<IDxcUtils*, ushort*, uint*, IDxcBlobEncoding**, int>)(lpVtbl[7]))((IDxcUtils*)Unsafe.AsPointer(ref this), pFileName, pCodePage, pBlobEncoding);
-        return ((delegate* unmanaged[Cdecl]<IDxcUtils*, ushort*, uint*, IDxcBlobEncoding**, int>)(lpVtbl[9]))((IDxcUtils*)Unsafe.AsPointer(ref this), pFileName, pCodePage, pBlobEncoding);
+        return ((delegate* unmanaged[Stdcall]<IDxcUtils*, ushort*, uint*, IDxcBlobEncoding**, int>)(lpVtbl[7]))((IDxcUtils*)Unsafe.AsPointer(ref this), pFileName, pCodePage, pBlobEncoding);
     }
-    
-    // public HRESULT LoadFile([NativeTypeName("LPCWSTR")] uint* pFileName, [NativeTypeName("UINT32 *")] uint* pCodePage, IDxcBlobEncoding** pBlobEncoding)
-    // {
-    //     return ((delegate* unmanaged[Stdcall]<IDxcUtils*, uint*, uint*, IDxcBlobEncoding**, int>)(lpVtbl[9]))((IDxcUtils*)Unsafe.AsPointer(ref this), pFileName, pCodePage, pBlobEncoding);
-    // }
 
     /// <include file='IDxcUtils.xml' path='doc/member[@name="IDxcUtils.CreateReadOnlyStreamFromBlob"]/*' />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -103,7 +96,7 @@ internal unsafe partial struct IDxcUtils
     [VtblIndex(9)]
     public HRESULT CreateDefaultIncludeHandler(IDxcIncludeHandler** ppResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcUtils*, IDxcIncludeHandler**, int>)(lpVtbl[11]))((IDxcUtils*)Unsafe.AsPointer(ref this), ppResult);
+        return ((delegate* unmanaged[Stdcall]<IDxcUtils*, IDxcIncludeHandler**, int>)(lpVtbl[9]))((IDxcUtils*)Unsafe.AsPointer(ref this), ppResult);
     }
 
     /// <include file='IDxcUtils.xml' path='doc/member[@name="IDxcUtils.GetBlobAsUtf8"]/*' />

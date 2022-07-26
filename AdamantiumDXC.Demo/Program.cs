@@ -1,9 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using Adamantium.DXC.Unix;
+using Adamantium.DXC;
+using Adamantium.DXC.Windows;
 
 //DxcCompiler compiler = new DxcCompiler();
 //compiler.CompileIntoSpirv("simpleVertex.hlsl");
 //compiler.Compile("simpleVertex.hlsl");
-DxcCompiler compiler = new DxcCompiler();
+WindowsDxcCompiler compiler = new WindowsDxcCompiler();
 compiler.CompileIntoSpirv("simpleVertex.hlsl");

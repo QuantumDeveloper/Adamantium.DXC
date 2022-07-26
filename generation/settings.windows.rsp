@@ -37,6 +37,6 @@ UNICODE
 F:/DirectXShaderCompiler-main/include/dxc
 #F:/DirectXShaderCompiler-main/include/dxc/Support
 --with-callconv
-*=Winapi
+*=Stdcall
 --with-access-specifier
 *=internal
