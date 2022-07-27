@@ -150,14 +150,10 @@ internal unsafe class WindowsDxcCompiler : IDxcCompilerPlatform
 
     public DXCCompileResult CompileIntoSpirv(string filePath, string entryPoint, string targetProfile, params string[] compileArguments)
     {
-        var fullPath = Path.GetFullPath(filePath);
         ComPtr<IDxcBlobEncoding> encoding = default;
-        HRESULT hr;
+        IntPtr pFilename = Marshal.StringToHGlobalUni(filePath);
 
-        fixed (byte* pFilename = Encoding.UTF32.GetBytes(fullPath))
-        {
-            hr = DxcUtils.Get()->LoadFile((ushort*)pFilename, null, encoding.GetAddressOf());
-        }
+        var hr = DxcUtils.Get()->LoadFile((ushort*)pFilename, null, encoding.GetAddressOf());
         
         var buffer = new DxcBuffer();
         buffer.Ptr = encoding.Get()->GetBufferPointer();
