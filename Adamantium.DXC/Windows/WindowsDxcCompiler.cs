@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Adamantium.DXC.Windows;
 
-public unsafe class WindowsDxcCompiler
+internal unsafe class WindowsDxcCompiler : IDxcCompilerPlatform
 {
     /// <summary>
     /// The <see cref="IDxcCompiler3"/> instance to use to create the bytecode for HLSL sources.
@@ -28,13 +27,13 @@ public unsafe class WindowsDxcCompiler
         using ComPtr<IDxcIncludeHandler> dxcIncludeHandler = default;
 
         var result= DxcInterop.DxcCreateInstance(
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID._DxcCompiler)),
-            UuidOf.__uuidof<IDxcCompiler3>(),
+            CLSID.DxcCompiler,
+            IID.IDxcCompiler3,
             dxcCompiler.GetVoidAddressOf());
         
         result = DxcInterop.DxcCreateInstance(
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID._DxcUtils)),
-            UuidOf.__uuidof<IDxcUtils>(),
+            CLSID.DxcUtils,
+            IID.IDxcUtils,
             dxcUtils.GetVoidAddressOf());
 
         result = dxcUtils.Get()->CreateDefaultIncludeHandler(dxcIncludeHandler.GetAddressOf());
@@ -88,7 +87,7 @@ public unsafe class WindowsDxcCompiler
             arrayPtr,
             (uint)dxcArgs.Count,
             DxcIncludeHandler.Get(),
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcResult)),
+            IID.IDxcResult,
             compileResult.GetVoidAddressOf());
         
         allocated.Free();
@@ -124,7 +123,7 @@ public unsafe class WindowsDxcCompiler
         ComPtr<IDxcBlob> shader = default;
         ComPtr<IDxcBlobUtf16> shaderName = default;
         compileResult.Get()->GetOutput(DXC_OUT_KIND.DXC_OUT_ERRORS,
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IID_IDxcBlob)),
+            IID.IDxcBlob,
             shader.GetVoidAddressOf(),
             shaderName.GetAddressOf());
         
@@ -135,7 +134,7 @@ public unsafe class WindowsDxcCompiler
         ComPtr<IDxcBlob> reflectionData = default;
         ComPtr<IDxcBlobUtf16> shaderName1 = default;
         compileResult.Get()->GetOutput(DXC_OUT_KIND.DXC_OUT_REFLECTION,
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IID_IDxcBlob)),
+            IID.IDxcBlob,
             reflectionData.GetVoidAddressOf(),
             shaderName1.GetAddressOf());
         
@@ -145,11 +144,11 @@ public unsafe class WindowsDxcCompiler
 
         ComPtr<IDxcContainerReflection> reflection = default;
         DxcUtils.Get()->CreateReflection(&reflectionBuffer,
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcContainerReflection)),
+            IID.IDxcContainerReflection,
             reflection.GetVoidAddressOf());
     }
 
-    public void CompileIntoSpirv(string filePath)
+    public DXCCompileResult CompileIntoSpirv(string filePath, string entryPoint, string targetProfile, params string[] compileArguments)
     {
         var fullPath = Path.GetFullPath(filePath);
         ComPtr<IDxcBlobEncoding> encoding = default;
@@ -160,32 +159,21 @@ public unsafe class WindowsDxcCompiler
             hr = DxcUtils.Get()->LoadFile((ushort*)pFilename, null, encoding.GetAddressOf());
         }
         
-        var ptr = encoding.Get()->GetBufferPointer();
-        var size = (uint)encoding.Get()->GetBufferSize();
-        BOOL known = default;
-        uint codePage = default;
-        //encoding.Get()->GetEncoding(&known, &codePage);
-
         var buffer = new DxcBuffer();
-        buffer.Ptr = ptr;
-        buffer.Size = size;
+        buffer.Ptr = encoding.Get()->GetBufferPointer();
+        buffer.Size = (uint)encoding.Get()->GetBufferSize();
         
-        var dxcArgs = new string[]
+        var dxcArgs = new List<string>()
         {
-            "simpleVertex.hlsl",
+            filePath,
             "-E",
-            "LightVertexShader",
+            entryPoint,
             "-T",
-            "vs_6_6",
-            "-spirv",
-            "-all-resources-bound", // nVidia: This allows for the compiler to do a better job at optimizing texture accesses. We have seen frame rate improvements of > 1% when toggling this flag on.
-            "-enable-16bit-types", // VK_KHR_shader_float16_int8
-            "-fvk-use-dx-layout", // memory layout for resources
-            "-fspv-target-env=vulkan1.1", // Vulkan version
-            "-fspv-extension=SPV_GOOGLE_hlsl_functionality1",
-            "-fspv-extension=SPV_GOOGLE_user_type",
-            "-fspv-reflect"
+            targetProfile,
+            "-spirv"
         };
+        
+        dxcArgs.AddRange(compileArguments);
 
         var intPtrArray = new List<IntPtr>();
         foreach (var arg in dxcArgs)
@@ -196,56 +184,41 @@ public unsafe class WindowsDxcCompiler
         var allocated = GCHandle.Alloc(intPtrArray.ToArray(), GCHandleType.Pinned);
         var arrayPtr = (ushort**)allocated.AddrOfPinnedObject();
 
-        ComPtr<IDxcResult> compileResult = default;
+        ComPtr<IDxcResult> dxcResult = default;
         var result =  DxcCompiler3.Get()->Compile(
             &buffer,
             arrayPtr,
-            (uint)dxcArgs.Length,
+            (uint)dxcArgs.Count,
             DxcIncludeHandler.Get(),
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcResult)),
-            compileResult.GetVoidAddressOf());
+            IID.IDxcResult,
+            dxcResult.GetVoidAddressOf());
         
         allocated.Free();
 
-        if (HRESULT.FAILED(result))
-        {
-            return;
-        }
-
         HRESULT status;
-        compileResult.Get()->GetStatus(&status);
+        dxcResult.Get()->GetStatus(&status);
 
+        DXCCompileResult compileResult = new DXCCompileResult();
         if (HRESULT.FAILED(status))
         {
+            compileResult.HasErrors = true;
             ComPtr<IDxcBlobEncoding> errorBlob = default;
-            var res = compileResult.Get()->GetErrorBuffer(errorBlob.GetAddressOf());
+            var res = dxcResult.Get()->GetErrorBuffer(errorBlob.GetAddressOf());
             if (HRESULT.SUCCEEDED(res))
             {
                 var errors = (IntPtr)errorBlob.Get()->GetBufferPointer();
-                var stringSize = (int)errorBlob.Get()->GetBufferSize();
-                var str = Marshal.PtrToStringAnsi(errors);
-                var str2 = Encoding.ASCII.GetString((byte*)errors, stringSize);
-                Console.WriteLine(str);
+                var errorsString = Marshal.PtrToStringAnsi(errors);
+                compileResult.Errors = errorsString;
             }
             
-            return;
+            return compileResult;
         }
         
-        if (compileResult.Get()->HasOutput(DXC_OUT_KIND.DXC_OUT_OBJECT))
-        {
-            ComPtr<IDxcBlob> shader = default;
-            ComPtr<IDxcBlobUtf16> shaderName = default;
-            var output = compileResult.Get()->GetOutput(
-                DXC_OUT_KIND.DXC_OUT_OBJECT,
-                (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IID_IDxcBlob)),
-                shader.GetVoidAddressOf(),
-                shaderName.GetAddressOf()
-            );
+        ComPtr<IDxcBlob> code = default;
+        dxcResult.Get()->GetResult(code.GetAddressOf());
+        compileResult.Source = (IntPtr)code.Get()->GetBufferPointer();
+        compileResult.Size = (uint)code.Get()->GetBufferSize();
 
-            ComPtr<IDxcBlob> code = default;
-            compileResult.Get()->GetResult(code.GetAddressOf());
-            var ptr1 = code.Get()->GetBufferPointer();
-            var size1 = (uint)code.Get()->GetBufferSize();
-        }
+        return compileResult;
     }
 }

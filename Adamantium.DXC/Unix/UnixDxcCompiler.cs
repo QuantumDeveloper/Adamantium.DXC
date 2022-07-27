@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Adamantium.DXC.Unix;
 
-public unsafe class UnixDxcCompiler
+internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
 {
     /// <summary>
     /// The <see cref="IDxcCompiler3"/> instance to use to create the bytecode for HLSL sources.
@@ -27,22 +27,11 @@ public unsafe class UnixDxcCompiler
         using ComPtr<IDxcUtils> dxcUtils = default;
         using ComPtr<IDxcIncludeHandler> dxcIncludeHandler = default;
 
-        //???
         var result = DxcInterop.DxcCreateInstance(
             CLSID.DxcCompiler,
             IID.IDxcCompiler3,
             dxcCompiler.GetVoidAddressOf());
         
-        // result = DxcInterop.DxcCreateInstance(
-        //     (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in CLSID.DxcCompiler)),
-        //     (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcCompiler3)),
-        //     dxcCompiler.GetVoidAddressOf());
-        
-        // result = DxcInterop.DxcCreateInstance(
-        //     CLSID.DxcUtils.GetPointer(),
-        //     IID.IDxcUtils.GetPointer(),
-        //     dxcUtils.GetVoidAddressOf());
-
         result = DxcInterop.DxcCreateInstance(
             CLSID.DxcUtils,
             IID.IDxcUtils,
@@ -99,7 +88,7 @@ public unsafe class UnixDxcCompiler
             arrayPtr,
             (uint)dxcArgs.Count,
             DxcIncludeHandler.Get(),
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcResult)),
+            IID.IDxcResult,
             compileResult.GetVoidAddressOf());
         
         allocated.Free();
@@ -135,7 +124,7 @@ public unsafe class UnixDxcCompiler
         ComPtr<IDxcBlob> shader = default;
         ComPtr<IDxcBlobUtf16> shaderName = default;
         compileResult.Get()->GetOutput(DXC_OUT_KIND.DXC_OUT_ERRORS,
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IID_IDxcBlob)),
+            IID.IDxcBlob,
             shader.GetVoidAddressOf(),
             shaderName.GetAddressOf());
         
@@ -146,7 +135,7 @@ public unsafe class UnixDxcCompiler
         ComPtr<IDxcBlob> reflectionData = default;
         ComPtr<IDxcBlobUtf16> shaderName1 = default;
         compileResult.Get()->GetOutput(DXC_OUT_KIND.DXC_OUT_REFLECTION,
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IID_IDxcBlob)),
+            IID.IDxcBlob,
             reflectionData.GetVoidAddressOf(),
             shaderName1.GetAddressOf());
         
@@ -156,14 +145,15 @@ public unsafe class UnixDxcCompiler
 
         ComPtr<IDxcContainerReflection> reflection = default;
         DxcUtils.Get()->CreateReflection(&reflectionBuffer,
-            (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcContainerReflection)),
+            IID.IDxcContainerReflection,
             reflection.GetVoidAddressOf());
     }
 
-    public unsafe void CompileIntoSpirv(string filePath)
+    public DXCCompileResult CompileIntoSpirv(string filePath, string entryPoint, string targetProfile,
+        params string[] compileArguments)
     {
         var fullPath = Path.GetFullPath(filePath);
-        ComPtr<Adamantium.DXC.Unix.IDxcBlobEncoding> encoding = default;
+        ComPtr<IDxcBlobEncoding> encoding = default;
         HRESULT hr;
 
         fixed (byte* pFilename = Encoding.UTF32.GetBytes(fullPath+'\0'))
@@ -171,35 +161,24 @@ public unsafe class UnixDxcCompiler
             hr = DxcUtils.Get()->LoadFile((uint*)pFilename, null, encoding.GetAddressOf());
         }
         
-        var ptr = encoding.Get()->GetBufferPointer();
-        var size = (uint)encoding.Get()->GetBufferSize();
-        BOOL known = default;
-        uint codePage = default;
-        encoding.Get()->GetEncoding(&known, &codePage);
-
         var buffer = new DxcBuffer();
-        buffer.Ptr = ptr;
-        buffer.Size = size;
+        buffer.Ptr = encoding.Get()->GetBufferPointer();
+        buffer.Size = (uint)encoding.Get()->GetBufferSize();
         
-        var dxcArgs = new string[]
+        var dxcArgs = new List<string>()
         {
-            "simpleVertex.hlsl",
+            filePath,
             "-E",
-            "LightVertexShader",
+            entryPoint,
             "-T",
-            "vs_6_6",
-            "-spirv",
-            "-all-resources-bound", // nVidia: This allows for the compiler to do a better job at optimizing texture accesses. We have seen frame rate improvements of > 1% when toggling this flag on.
-            "-enable-16bit-types", // VK_KHR_shader_float16_int8
-            "-fvk-use-dx-layout", // memory layout for resources
-            "-fspv-target-env=vulkan1.1", // Vulkan version
-            "-fspv-extension=SPV_GOOGLE_hlsl_functionality1",
-            "-fspv-extension=SPV_GOOGLE_user_type",
-            "-fspv-reflect"
+            targetProfile,
+            "-spirv"
         };
+        
+        dxcArgs.AddRange(compileArguments);
 
-        var intPtrArray = new IntPtr[dxcArgs.Length];
-        for (var index = 0; index < dxcArgs.Length; index++)
+        var intPtrArray = new IntPtr[dxcArgs.Count];
+        for (var index = 0; index < dxcArgs.Count; index++)
         {
             var arg = dxcArgs[index];
             var bytes = Encoding.UTF32.GetBytes(arg+ "\0");
@@ -209,7 +188,7 @@ public unsafe class UnixDxcCompiler
             intPtrArray[index] = ptr1;
         }
         
-        ComPtr<IDxcResult> compileResult = default;
+        ComPtr<IDxcResult> dxcResult = default;
         HRESULT result;
         fixed (IntPtr* p = intPtrArray)
         {
@@ -218,49 +197,35 @@ public unsafe class UnixDxcCompiler
                 (uint**)p,
                 (uint)intPtrArray.Length,
                 DxcIncludeHandler.Get(),
-                (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IDxcResult)),
-                compileResult.GetVoidAddressOf());
+                IID.IDxcResult,
+                dxcResult.GetVoidAddressOf());
         }
 
-        if (HRESULT.FAILED(result))
-        {
-            return;
-        }
-        
         HRESULT status;
-        compileResult.Get()->GetStatus(&status);
+        dxcResult.Get()->GetStatus(&status);
+
+        DXCCompileResult compileResult = new DXCCompileResult();
 
         if (HRESULT.FAILED(status))
         {
-            ComPtr<Adamantium.DXC.Unix.IDxcBlobEncoding> errorBlob = default;
-            var res = compileResult.Get()->GetErrorBuffer(errorBlob.GetAddressOf());
+            compileResult.HasErrors = true;
+            ComPtr<IDxcBlobEncoding> errorBlob = default;
+            var res = dxcResult.Get()->GetErrorBuffer(errorBlob.GetAddressOf());
             if (HRESULT.SUCCEEDED(res))
             {
                 var errors = (IntPtr)errorBlob.Get()->GetBufferPointer();
                 var bufferSize = (uint)errorBlob.Get()->GetBufferSize();
-                var str = Encoding.UTF8.GetString((byte*)errors, (int)bufferSize);
-                var str2 = Encoding.ASCII.GetString((byte*)errors, (int)bufferSize);
-                Console.WriteLine(str);
+                compileResult.Errors = Encoding.UTF8.GetString((byte*)errors, (int)bufferSize); 
             }
-            
-            return;
+
+            return compileResult;
         }
         
-        if (compileResult.Get()->HasOutput(DXC_OUT_KIND.DXC_OUT_OBJECT))
-        {
-            ComPtr<IDxcBlob> shader = default;
-            ComPtr<IDxcBlobUtf16> shaderName = default;
-            var output = compileResult.Get()->GetOutput(
-                DXC_OUT_KIND.DXC_OUT_OBJECT,
-                (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IID.IID_IDxcBlob)),
-                shader.GetVoidAddressOf(),
-                shaderName.GetAddressOf()
-            );
+        ComPtr<IDxcBlob> code = default;
+        dxcResult.Get()->GetResult(code.GetAddressOf());
+        compileResult.Source = (IntPtr)code.Get()->GetBufferPointer();
+        compileResult.Size = (uint)code.Get()->GetBufferSize();
 
-            ComPtr<IDxcBlob> code = default;
-            compileResult.Get()->GetResult(code.GetAddressOf());
-            var ptr1 = code.Get()->GetBufferPointer();
-            var size1 = (uint)code.Get()->GetBufferSize();
-        }
+        return compileResult;
     }
 }
