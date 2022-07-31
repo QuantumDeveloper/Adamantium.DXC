@@ -180,7 +180,7 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
         ComPtr<IDxcBlobEncoding> encoding = default;
         HRESULT hr;
 
-        var bytes = Encoding.UTF32.GetBytes(sourceText + '\0');
+        var bytes = Encoding.UTF8.GetBytes(sourceText + '\0');
 
         fixed (byte* pSourceText = bytes)
         {

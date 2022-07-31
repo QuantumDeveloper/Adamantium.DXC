@@ -12,10 +12,13 @@ compilerOptions.Add($"{CompilerArguments.SpvExtension}SPV_GOOGLE_hlsl_functional
 compilerOptions.Add($"{CompilerArguments.SpvExtension}SPV_GOOGLE_user_type");
 compilerOptions.Add(CompilerArguments.SpvReflect);
 
-var result = compiler.CompileIntoSpirvFromFile(
+var text = File.ReadAllText("simpleVertex.hlsl");
+var result = compiler.CompileIntoSpirvFromText(
+    text,
     "simpleVertex.hlsl", 
     "LightVertexShader", 
-    "vs_6_6", compilerOptions);
+    "vs_6_6", 
+    compilerOptions);
 
 SpirvReflection reflection = new SpirvReflection(result.Bytecode);
 var lst = new List<ResourceBindingKey>();

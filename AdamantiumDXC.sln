@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdamantiumVulkan.SPIRV.Cros
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdamantiumVulkan.Shaders", "..\AdamantiumVulkan\AdamantiumVulkan.Shaders\AdamantiumVulkan.Shaders.csproj", "{DAF5BA25-097F-45C4-99B9-27583E485DAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdamantiumVulkan", "..\AdamantiumVulkan\AdamantiumVulkan\AdamantiumVulkan.csproj", "{09380270-65B0-4129-8B29-2A163EC0E2D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{DAF5BA25-097F-45C4-99B9-27583E485DAD}.Debug|Any CPU.Build.0 = Debug|x64
 		{DAF5BA25-097F-45C4-99B9-27583E485DAD}.Release|Any CPU.ActiveCfg = Release|x64
 		{DAF5BA25-097F-45C4-99B9-27583E485DAD}.Release|Any CPU.Build.0 = Release|x64
+		{09380270-65B0-4129-8B29-2A163EC0E2D2}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{09380270-65B0-4129-8B29-2A163EC0E2D2}.Debug|Any CPU.Build.0 = Debug|x64
+		{09380270-65B0-4129-8B29-2A163EC0E2D2}.Release|Any CPU.ActiveCfg = Release|x64
+		{09380270-65B0-4129-8B29-2A163EC0E2D2}.Release|Any CPU.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal
