@@ -150,7 +150,7 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
     }
 
     public DXCCompileResult CompileIntoSpirv(string filePath, string entryPoint, string targetProfile,
-        params string[] compileArguments)
+        CompilerOptions compilerOptions)
     {
         var fullPath = Path.GetFullPath(filePath);
         ComPtr<IDxcBlobEncoding> encoding = default;
@@ -160,7 +160,21 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
         {
             hr = DxcUtils.Get()->LoadFile((uint*)pFilename, null, encoding.GetAddressOf());
         }
-        
+
+        if (HRESULT.FAILED(hr))
+        {
+            DxcUtils.Dispose();
+            if (HRESULT.INVALIDARG == hr)
+            {
+                throw new ArgumentException(
+                    $"Cannot load {filePath}. Please, check correctness of file path, entry point and target profile");
+            }
+            else
+            {
+                throw new ShaderLoadException($"Cannot load {filePath}");
+            }
+        }
+
         var buffer = new DxcBuffer();
         buffer.Ptr = encoding.Get()->GetBufferPointer();
         buffer.Size = (uint)encoding.Get()->GetBufferSize();
@@ -175,7 +189,7 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
             "-spirv"
         };
         
-        dxcArgs.AddRange(compileArguments);
+        dxcArgs.AddRange(compilerOptions.Get());
 
         var intPtrArray = new IntPtr[dxcArgs.Count];
         for (var index = 0; index < dxcArgs.Count; index++)
@@ -215,7 +229,9 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
             {
                 var errors = (IntPtr)errorBlob.Get()->GetBufferPointer();
                 var bufferSize = (uint)errorBlob.Get()->GetBufferSize();
-                compileResult.Errors = Encoding.UTF8.GetString((byte*)errors, (int)bufferSize); 
+                compileResult.Errors = Encoding.UTF8.GetString((byte*)errors, (int)bufferSize);
+                errorBlob.Dispose();
+                dxcResult.Dispose();
             }
 
             return compileResult;
@@ -223,9 +239,23 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
         
         ComPtr<IDxcBlob> code = default;
         dxcResult.Get()->GetResult(code.GetAddressOf());
-        compileResult.Source = (IntPtr)code.Get()->GetBufferPointer();
-        compileResult.Size = (uint)code.Get()->GetBufferSize();
+        
+        var sourcePtr = (IntPtr)code.Get()->GetBufferPointer();
+        var size = (int)code.Get()->GetBufferSize();
+        var bytecode = new byte[size];
+        Marshal.Copy(sourcePtr, bytecode, 0, size);
+        compileResult.Bytecode = bytecode;
+        
+        code.Dispose();
+        dxcResult.Dispose();
 
         return compileResult;
+    }
+
+    public void Dispose()
+    {
+        DxcCompiler3.Dispose();
+        DxcUtils.Dispose();
+        DxcIncludeHandler.Dispose();
     }
 }

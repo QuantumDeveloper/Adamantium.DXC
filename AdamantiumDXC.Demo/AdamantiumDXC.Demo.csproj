@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\AdamantiumVulkan\AdamantiumVulkan.SPIRV.Reflection\AdamantiumVulkan.SPIRV.Reflection.csproj" />
       <ProjectReference Include="..\Adamantium.DXC\Adamantium.DXC.csproj" />
     </ItemGroup>
 

@@ -1,6 +1,6 @@
 namespace Adamantium.DXC;
 
-internal static partial class HresultCodes
+internal partial struct HRESULT
 {
     [NativeTypeName("#define E_ABORT (HRESULT)0x80004004")]
     public const int ABORT = unchecked((int)(0x80004004));
@@ -37,4 +37,20 @@ internal static partial class HresultCodes
 
     [NativeTypeName("#define E_UNEXPECTED (HRESULT)0x8000FFFF")]
     public const int UNEXPECTED = unchecked((int)(0x8000FFFF));
+    
+    public static bool SUCCEEDED(HRESULT hr)
+    {
+        return hr >= 0;
+    }
+
+    public static bool FAILED(HRESULT hr)
+    {
+        return hr < 0;
+    }
+    
+    [NativeTypeName("#define S_OK ((HRESULT)0L)")]
+    public const int OK = ((int)(0));
+
+    [NativeTypeName("#define S_FALSE ((HRESULT)1L)")]
+    public const int FALSE = ((int)(1));
 }

@@ -148,12 +148,27 @@ internal unsafe class WindowsDxcCompiler : IDxcCompilerPlatform
             reflection.GetVoidAddressOf());
     }
 
-    public DXCCompileResult CompileIntoSpirv(string filePath, string entryPoint, string targetProfile, params string[] compileArguments)
+    public DXCCompileResult CompileIntoSpirv(string filePath, string entryPoint, string targetProfile,
+        CompilerOptions compilerOptions)
     {
         ComPtr<IDxcBlobEncoding> encoding = default;
         IntPtr pFilename = Marshal.StringToHGlobalUni(filePath);
 
         var hr = DxcUtils.Get()->LoadFile((ushort*)pFilename, null, encoding.GetAddressOf());
+        
+        if (HRESULT.FAILED(hr))
+        {
+            DxcUtils.Dispose();
+            if (HRESULT.INVALIDARG == hr)
+            {
+                throw new ArgumentException(
+                    $"Cannot load {filePath}. Please, check correctness of file path, entry point and target profile");
+            }
+            else
+            {
+                throw new ShaderLoadException($"Cannot load {filePath}");
+            }
+        }
         
         var buffer = new DxcBuffer();
         buffer.Ptr = encoding.Get()->GetBufferPointer();
@@ -169,7 +184,7 @@ internal unsafe class WindowsDxcCompiler : IDxcCompilerPlatform
             "-spirv"
         };
         
-        dxcArgs.AddRange(compileArguments);
+        dxcArgs.AddRange(compilerOptions.Get());
 
         var intPtrArray = new List<IntPtr>();
         foreach (var arg in dxcArgs)
@@ -212,9 +227,23 @@ internal unsafe class WindowsDxcCompiler : IDxcCompilerPlatform
         
         ComPtr<IDxcBlob> code = default;
         dxcResult.Get()->GetResult(code.GetAddressOf());
-        compileResult.Source = (IntPtr)code.Get()->GetBufferPointer();
-        compileResult.Size = (uint)code.Get()->GetBufferSize();
+        
+        var sourcePtr = (IntPtr)code.Get()->GetBufferPointer();
+        var size = (int)code.Get()->GetBufferSize();
+        var bytecode = new byte[size];
+        Marshal.Copy(sourcePtr, bytecode, 0, size);
+        compileResult.Bytecode = bytecode;
+        
+        code.Dispose();
+        dxcResult.Dispose();
 
         return compileResult;
+    }
+
+    public void Dispose()
+    {
+        DxcCompiler3.Dispose();
+        DxcUtils.Dispose();
+        DxcIncludeHandler.Dispose();
     }
 }

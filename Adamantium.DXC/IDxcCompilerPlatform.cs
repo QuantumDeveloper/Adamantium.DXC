@@ -1,6 +1,8 @@
+using System;
+
 namespace Adamantium.DXC;
 
-public interface IDxcCompilerPlatform
+public interface IDxcCompilerPlatform : IDisposable
 {
-    DXCCompileResult CompileIntoSpirv(string filePath, string entryPoint, string targetProfile, params string[] compileArguments);
+    DXCCompileResult CompileIntoSpirv(string filePath, string entryPoint, string targetProfile, CompilerOptions compilerOptions);
 }
