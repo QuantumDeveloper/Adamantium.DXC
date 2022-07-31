@@ -149,7 +149,7 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
             reflection.GetVoidAddressOf());
     }
 
-    public DXCCompileResult CompileIntoSpirv(string filePath, string entryPoint, string targetProfile,
+    public DxcCompilationResult CompileIntoSpirvFromFile(string filePath, string entryPoint, string targetProfile,
         CompilerOptions compilerOptions)
     {
         var fullPath = Path.GetFullPath(filePath);
@@ -161,27 +161,51 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
             hr = DxcUtils.Get()->LoadFile((uint*)pFilename, null, encoding.GetAddressOf());
         }
 
-        if (HRESULT.FAILED(hr))
-        {
-            DxcUtils.Dispose();
-            if (HRESULT.INVALIDARG == hr)
-            {
-                throw new ArgumentException(
-                    $"Cannot load {filePath}. Please, check correctness of file path, entry point and target profile");
-            }
-            else
-            {
-                throw new ShaderLoadException($"Cannot load {filePath}");
-            }
-        }
+        DxcCompiler.CheckResult(hr, filePath);
 
         var buffer = new DxcBuffer();
         buffer.Ptr = encoding.Get()->GetBufferPointer();
         buffer.Size = (uint)encoding.Get()->GetBufferSize();
-        
+
+        return Compile(filePath, entryPoint, targetProfile, buffer, compilerOptions);
+    }
+
+    public DxcCompilationResult CompileIntoSpirvFromText(
+        string sourceText, 
+        string fileName, 
+        string entryPoint, 
+        string targetProfile,
+        CompilerOptions compilerOptions)
+    {
+        ComPtr<IDxcBlobEncoding> encoding = default;
+        HRESULT hr;
+
+        var bytes = Encoding.UTF32.GetBytes(sourceText + '\0');
+
+        fixed (byte* pSourceText = bytes)
+        {
+            hr = DxcUtils.Get()->CreateBlob(pSourceText, (uint)bytes.Length,0, encoding.GetAddressOf());
+        }
+
+        DxcCompiler.CheckResult(hr, fileName);
+
+        var buffer = new DxcBuffer();
+        buffer.Ptr = encoding.Get()->GetBufferPointer();
+        buffer.Size = (uint)encoding.Get()->GetBufferSize();
+
+        return Compile(fileName, entryPoint, targetProfile, buffer, compilerOptions);
+    }
+
+    private DxcCompilationResult Compile(
+        string fileName,
+        string entryPoint,
+        string targetProfile,
+        DxcBuffer buffer,
+        CompilerOptions compilerOptions)
+    {
         var dxcArgs = new List<string>()
         {
-            filePath,
+            fileName,
             "-E",
             entryPoint,
             "-T",
@@ -218,23 +242,28 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
         HRESULT status;
         dxcResult.Get()->GetStatus(&status);
 
-        DXCCompileResult compileResult = new DXCCompileResult();
-
+        DxcCompilationResult compilationResult = new DxcCompilationResult
+        {
+            Name = fileName,
+            EntryPoint = entryPoint,
+            TargetProfile = targetProfile
+        };
+        
         if (HRESULT.FAILED(status))
         {
-            compileResult.HasErrors = true;
+            compilationResult.HasErrors = true;
             ComPtr<IDxcBlobEncoding> errorBlob = default;
             var res = dxcResult.Get()->GetErrorBuffer(errorBlob.GetAddressOf());
             if (HRESULT.SUCCEEDED(res))
             {
                 var errors = (IntPtr)errorBlob.Get()->GetBufferPointer();
                 var bufferSize = (uint)errorBlob.Get()->GetBufferSize();
-                compileResult.Errors = Encoding.UTF8.GetString((byte*)errors, (int)bufferSize);
+                compilationResult.Errors = Encoding.UTF8.GetString((byte*)errors, (int)bufferSize);
                 errorBlob.Dispose();
                 dxcResult.Dispose();
             }
 
-            return compileResult;
+            return compilationResult;
         }
         
         ComPtr<IDxcBlob> code = default;
@@ -244,12 +273,12 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
         var size = (int)code.Get()->GetBufferSize();
         var bytecode = new byte[size];
         Marshal.Copy(sourcePtr, bytecode, 0, size);
-        compileResult.Bytecode = bytecode;
+        compilationResult.Bytecode = bytecode;
         
         code.Dispose();
         dxcResult.Dispose();
 
-        return compileResult;
+        return compilationResult;
     }
 
     public void Dispose()
