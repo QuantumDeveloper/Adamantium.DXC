@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -182,7 +181,7 @@ internal unsafe class WindowsDxcCompiler : IDxcCompilerPlatform
         var buffer = new DxcBuffer
         {
             Ptr = encoding.Get()->GetBufferPointer(),
-            Size = (uint)encoding.Get()->GetBufferSize()
+            Size = encoding.Get()->GetBufferSize()
         };
 
         return Compile(fileName, entryPoint, targetProfile, buffer, compilerOptions);
@@ -226,6 +225,8 @@ internal unsafe class WindowsDxcCompiler : IDxcCompilerPlatform
             dxcResult.GetVoidAddressOf());
         
         allocated.Free();
+
+        DxcCompiler.CheckResult(result, fileName);
 
         HRESULT status;
         dxcResult.Get()->GetStatus(&status);

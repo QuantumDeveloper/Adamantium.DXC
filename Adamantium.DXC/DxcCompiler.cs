@@ -24,7 +24,7 @@ public class DxcCompiler
             if (HRESULT.INVALIDARG == hr)
             {
                 throw new ArgumentException(
-                    $"Cannot load {filePath}. Please, check correctness of file path, entry point and target profile");
+                    $"Cannot load {filePath}. Please, check correctness of file path, entry point and target profile and other parameters");
             }
             else
             {

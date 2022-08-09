@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Adamantium.DXC;
-using AdamantiumVulkan.SPIRV.Reflection;
+using AdamantiumVulkan.Spirv.Reflection;
 
 var compiler = DxcCompiler.Create();
 var compilerOptions = new CompilerOptions();
@@ -12,12 +12,20 @@ compilerOptions.Add($"{CompilerArguments.SpvExtension}SPV_GOOGLE_hlsl_functional
 compilerOptions.Add($"{CompilerArguments.SpvExtension}SPV_GOOGLE_user_type");
 compilerOptions.Add(CompilerArguments.SpvReflect);
 
-var text = File.ReadAllText("simpleVertex.hlsl");
+//var text = File.ReadAllText("simpleVertex.hlsl");
+// var result = compiler.CompileIntoSpirvFromText(
+//     text,
+//     "simpleVertex.hlsl", 
+//     "LightVertexShader", 
+//     "vs_6_6", 
+//     compilerOptions);
+
+var text = File.ReadAllText("UIEffect.fx");
 var result = compiler.CompileIntoSpirvFromText(
     text,
-    "simpleVertex.hlsl", 
-    "LightVertexShader", 
-    "vs_6_6", 
+    "UIEffect.fx",
+    "TexturedVertexShader", 
+    "vs_5_1", 
     compilerOptions);
 
 SpirvReflection reflection = new SpirvReflection(result.Bytecode);

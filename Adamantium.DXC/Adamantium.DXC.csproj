@@ -3,6 +3,15 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>10</LangVersion>
+        <Platforms>x64</Platforms>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>Adamantium.DXC</PackageId>
+        <Version>1.0.2</Version>
+        <Authors>Den</Authors>
+        <Company>Adamantium studio</Company>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -16,20 +25,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Memory" Version="4.5.5" />
-      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="7.0.0-preview.2.22152.2" />
+        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="dxcompiler.dll" />
       <Content Include="dxcompiler.dll">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <PackageCopyToOutput>true</PackageCopyToOutput>
       </Content>
-      <None Remove="libdxcompiler.so.3.7" />
       <Content Include="libdxcompiler.so.3.7">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <PackageCopyToOutput>true</PackageCopyToOutput>
       </Content>
-      <None Remove="libdxcompiler.so" />
     </ItemGroup>
 
 </Project>
