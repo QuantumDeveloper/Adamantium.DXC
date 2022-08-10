@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System.Runtime.InteropServices;
 
-namespace Adamantium.DXC.Windows.UnitTests;
+namespace Adamantium.DXC.Unix.UnitTests;
 
 /// <summary>Provides validation of the <see cref="DxcShaderHash" /> struct.</summary>
 public static unsafe partial class DxcShaderHashTests

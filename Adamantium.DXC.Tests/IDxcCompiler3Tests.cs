@@ -1,20 +1,12 @@
 using NUnit.Framework;
 using System;
 using System.Runtime.InteropServices;
-using static Adamantium.DXC.IID;
 
-namespace Adamantium.DXC.Windows.UnitTests;
+namespace Adamantium.DXC.Unix.UnitTests;
 
 /// <summary>Provides validation of the <see cref="IDxcCompiler3" /> struct.</summary>
 public static unsafe partial class IDxcCompiler3Tests
 {
-    /// <summary>Validates that the <see cref="Guid" /> of the <see cref="IDxcCompiler3" /> struct is correct.</summary>
-    [Test]
-    public static void GuidOfTest()
-    {
-        Assert.That(typeof(IDxcCompiler3).GUID, Is.EqualTo(IID_IDxcCompiler3));
-    }
-
     /// <summary>Validates that the <see cref="IDxcCompiler3" /> struct is blittable.</summary>
     [Test]
     public static void IsBlittableTest()

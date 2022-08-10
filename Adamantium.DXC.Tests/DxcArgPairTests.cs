@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Adamantium.DXC.Windows.UnitTests;
+namespace Adamantium.DXC.Unix.UnitTests;
 
 /// <summary>Provides validation of the <see cref="DxcArgPair" /> struct.</summary>
 public static unsafe partial class DxcArgPairTests

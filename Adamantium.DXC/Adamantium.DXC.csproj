@@ -25,10 +25,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Content Include="dxcompiler.dll">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <PackageCopyToOutput>true</PackageCopyToOutput>
@@ -37,6 +33,10 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <PackageCopyToOutput>true</PackageCopyToOutput>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
     </ItemGroup>
 
 </Project>
