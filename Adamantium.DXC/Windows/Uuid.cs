@@ -71,7 +71,7 @@ internal static partial class UuidOf
         /// <returns>A pointer to memory holding the <see cref="Guid"/> value for the current type.</returns>
         private static Guid* CreateRIID()
         {
-            var p = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(T), sizeof(Guid));
+            var p = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
             *p = typeof(T).GUID;
             return p;
         }

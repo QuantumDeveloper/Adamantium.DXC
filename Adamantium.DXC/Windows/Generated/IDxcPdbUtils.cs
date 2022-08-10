@@ -12,12 +12,98 @@ internal unsafe partial struct IDxcPdbUtils
 {
     public void** lpVtbl;
 
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _QueryInterface(IDxcPdbUtils* pThis, [NativeTypeName("const IID &")] Guid* riid, void** ppvObject);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    [return: NativeTypeName("ULONG")]
+    public delegate uint _AddRef(IDxcPdbUtils* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    [return: NativeTypeName("ULONG")]
+    public delegate uint _Release(IDxcPdbUtils* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _Load(IDxcPdbUtils* pThis, IDxcBlob* pPdbOrDxil);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetSourceCount(IDxcPdbUtils* pThis, [NativeTypeName("UINT32 *")] uint* pCount);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetSource(IDxcPdbUtils* pThis, [NativeTypeName("UINT32")] uint uIndex, IDxcBlobEncoding** ppResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetSourceName(IDxcPdbUtils* pThis, [NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetFlagCount(IDxcPdbUtils* pThis, [NativeTypeName("UINT32 *")] uint* pCount);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetFlag(IDxcPdbUtils* pThis, [NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetArgCount(IDxcPdbUtils* pThis, [NativeTypeName("UINT32 *")] uint* pCount);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetArg(IDxcPdbUtils* pThis, [NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetArgPairCount(IDxcPdbUtils* pThis, [NativeTypeName("UINT32 *")] uint* pCount);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetArgPair(IDxcPdbUtils* pThis, [NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pName, [NativeTypeName("BSTR *")] ushort** pValue);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetDefineCount(IDxcPdbUtils* pThis, [NativeTypeName("UINT32 *")] uint* pCount);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetDefine(IDxcPdbUtils* pThis, [NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetTargetProfile(IDxcPdbUtils* pThis, [NativeTypeName("BSTR *")] ushort** pResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetEntryPoint(IDxcPdbUtils* pThis, [NativeTypeName("BSTR *")] ushort** pResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetMainFileName(IDxcPdbUtils* pThis, [NativeTypeName("BSTR *")] ushort** pResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetHash(IDxcPdbUtils* pThis, IDxcBlob** ppResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetName(IDxcPdbUtils* pThis, [NativeTypeName("BSTR *")] ushort** pResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate BOOL _IsFullPDB(IDxcPdbUtils* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetFullPDB(IDxcPdbUtils* pThis, IDxcBlob** ppFullPDB);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetVersionInfo(IDxcPdbUtils* pThis, IDxcVersionInfo** ppVersionInfo);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _SetCompiler(IDxcPdbUtils* pThis, IDxcCompiler3* pCompiler);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _CompileForFullPDB(IDxcPdbUtils* pThis, IDxcResult** ppResult);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _OverrideArgs(IDxcPdbUtils* pThis, DxcArgPair* pArgPairs, [NativeTypeName("UINT32")] uint uNumArgPairs);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _OverrideRootSignature(IDxcPdbUtils* pThis, [NativeTypeName("const WCHAR *")] ushort* pRootSignature);
+
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("const IID &")] Guid* riid, void** ppvObject)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, Guid*, void**, int>)(lpVtbl[0]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), riid, ppvObject);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
@@ -26,7 +112,10 @@ internal unsafe partial struct IDxcPdbUtils
     [return: NativeTypeName("ULONG")]
     public uint AddRef()
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint>)(lpVtbl[1]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this));
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
@@ -35,7 +124,10 @@ internal unsafe partial struct IDxcPdbUtils
     [return: NativeTypeName("ULONG")]
     public uint Release()
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint>)(lpVtbl[2]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this));
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.Load"]/*' />
@@ -43,7 +135,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(3)]
     public HRESULT Load(IDxcBlob* pPdbOrDxil)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcBlob*, int>)(lpVtbl[3]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pPdbOrDxil);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Load>((IntPtr)(lpVtbl[3]))(pThis, pPdbOrDxil);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetSourceCount"]/*' />
@@ -51,7 +146,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(4)]
     public HRESULT GetSourceCount([NativeTypeName("UINT32 *")] uint* pCount)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int>)(lpVtbl[4]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pCount);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetSourceCount>((IntPtr)(lpVtbl[4]))(pThis, pCount);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetSource"]/*' />
@@ -59,7 +157,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(5)]
     public HRESULT GetSource([NativeTypeName("UINT32")] uint uIndex, IDxcBlobEncoding** ppResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, IDxcBlobEncoding**, int>)(lpVtbl[5]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), uIndex, ppResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetSource>((IntPtr)(lpVtbl[5]))(pThis, uIndex, ppResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetSourceName"]/*' />
@@ -67,7 +168,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(6)]
     public HRESULT GetSourceName([NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, int>)(lpVtbl[6]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), uIndex, pResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetSourceName>((IntPtr)(lpVtbl[6]))(pThis, uIndex, pResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetFlagCount"]/*' />
@@ -75,7 +179,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(7)]
     public HRESULT GetFlagCount([NativeTypeName("UINT32 *")] uint* pCount)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int>)(lpVtbl[7]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pCount);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetFlagCount>((IntPtr)(lpVtbl[7]))(pThis, pCount);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetFlag"]/*' />
@@ -83,7 +190,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(8)]
     public HRESULT GetFlag([NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, int>)(lpVtbl[8]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), uIndex, pResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetFlag>((IntPtr)(lpVtbl[8]))(pThis, uIndex, pResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetArgCount"]/*' />
@@ -91,7 +201,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(9)]
     public HRESULT GetArgCount([NativeTypeName("UINT32 *")] uint* pCount)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int>)(lpVtbl[9]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pCount);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetArgCount>((IntPtr)(lpVtbl[9]))(pThis, pCount);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetArg"]/*' />
@@ -99,7 +212,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(10)]
     public HRESULT GetArg([NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, int>)(lpVtbl[10]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), uIndex, pResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetArg>((IntPtr)(lpVtbl[10]))(pThis, uIndex, pResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetArgPairCount"]/*' />
@@ -107,7 +223,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(11)]
     public HRESULT GetArgPairCount([NativeTypeName("UINT32 *")] uint* pCount)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int>)(lpVtbl[11]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pCount);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetArgPairCount>((IntPtr)(lpVtbl[11]))(pThis, pCount);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetArgPair"]/*' />
@@ -115,7 +234,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(12)]
     public HRESULT GetArgPair([NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pName, [NativeTypeName("BSTR *")] ushort** pValue)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, ushort**, int>)(lpVtbl[12]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), uIndex, pName, pValue);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetArgPair>((IntPtr)(lpVtbl[12]))(pThis, uIndex, pName, pValue);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetDefineCount"]/*' />
@@ -123,7 +245,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(13)]
     public HRESULT GetDefineCount([NativeTypeName("UINT32 *")] uint* pCount)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int>)(lpVtbl[13]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pCount);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetDefineCount>((IntPtr)(lpVtbl[13]))(pThis, pCount);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetDefine"]/*' />
@@ -131,7 +256,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(14)]
     public HRESULT GetDefine([NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("BSTR *")] ushort** pResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, int>)(lpVtbl[14]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), uIndex, pResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetDefine>((IntPtr)(lpVtbl[14]))(pThis, uIndex, pResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetTargetProfile"]/*' />
@@ -139,7 +267,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(15)]
     public HRESULT GetTargetProfile([NativeTypeName("BSTR *")] ushort** pResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort**, int>)(lpVtbl[15]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetTargetProfile>((IntPtr)(lpVtbl[15]))(pThis, pResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetEntryPoint"]/*' />
@@ -147,7 +278,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(16)]
     public HRESULT GetEntryPoint([NativeTypeName("BSTR *")] ushort** pResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort**, int>)(lpVtbl[16]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetEntryPoint>((IntPtr)(lpVtbl[16]))(pThis, pResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetMainFileName"]/*' />
@@ -155,7 +289,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(17)]
     public HRESULT GetMainFileName([NativeTypeName("BSTR *")] ushort** pResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort**, int>)(lpVtbl[17]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetMainFileName>((IntPtr)(lpVtbl[17]))(pThis, pResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetHash"]/*' />
@@ -163,7 +300,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(18)]
     public HRESULT GetHash(IDxcBlob** ppResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcBlob**, int>)(lpVtbl[18]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), ppResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetHash>((IntPtr)(lpVtbl[18]))(pThis, ppResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetName"]/*' />
@@ -171,7 +311,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(19)]
     public HRESULT GetName([NativeTypeName("BSTR *")] ushort** pResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort**, int>)(lpVtbl[19]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetName>((IntPtr)(lpVtbl[19]))(pThis, pResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.IsFullPDB"]/*' />
@@ -179,7 +322,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(20)]
     public BOOL IsFullPDB()
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, int>)(lpVtbl[20]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this));
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_IsFullPDB>((IntPtr)(lpVtbl[20]))(pThis);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetFullPDB"]/*' />
@@ -187,7 +333,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(21)]
     public HRESULT GetFullPDB(IDxcBlob** ppFullPDB)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcBlob**, int>)(lpVtbl[21]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), ppFullPDB);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetFullPDB>((IntPtr)(lpVtbl[21]))(pThis, ppFullPDB);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.GetVersionInfo"]/*' />
@@ -195,7 +344,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(22)]
     public HRESULT GetVersionInfo(IDxcVersionInfo** ppVersionInfo)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcVersionInfo**, int>)(lpVtbl[22]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), ppVersionInfo);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetVersionInfo>((IntPtr)(lpVtbl[22]))(pThis, ppVersionInfo);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.SetCompiler"]/*' />
@@ -203,7 +355,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(23)]
     public HRESULT SetCompiler(IDxcCompiler3* pCompiler)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcCompiler3*, int>)(lpVtbl[23]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pCompiler);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_SetCompiler>((IntPtr)(lpVtbl[23]))(pThis, pCompiler);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.CompileForFullPDB"]/*' />
@@ -211,7 +366,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(24)]
     public HRESULT CompileForFullPDB(IDxcResult** ppResult)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcResult**, int>)(lpVtbl[24]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), ppResult);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_CompileForFullPDB>((IntPtr)(lpVtbl[24]))(pThis, ppResult);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.OverrideArgs"]/*' />
@@ -219,7 +377,10 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(25)]
     public HRESULT OverrideArgs(DxcArgPair* pArgPairs, [NativeTypeName("UINT32")] uint uNumArgPairs)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, DxcArgPair*, uint, int>)(lpVtbl[25]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pArgPairs, uNumArgPairs);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_OverrideArgs>((IntPtr)(lpVtbl[25]))(pThis, pArgPairs, uNumArgPairs);
+        }
     }
 
     /// <include file='IDxcPdbUtils.xml' path='doc/member[@name="IDxcPdbUtils.OverrideRootSignature"]/*' />
@@ -227,90 +388,93 @@ internal unsafe partial struct IDxcPdbUtils
     [VtblIndex(26)]
     public HRESULT OverrideRootSignature([NativeTypeName("const WCHAR *")] ushort* pRootSignature)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort*, int>)(lpVtbl[26]))((IDxcPdbUtils*)Unsafe.AsPointer(ref this), pRootSignature);
+        fixed (IDxcPdbUtils* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_OverrideRootSignature>((IntPtr)(lpVtbl[26]))(pThis, pRootSignature);
+        }
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (const IID &, void **) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, Guid*, void**, int> QueryInterface;
+        public IntPtr QueryInterface;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint> AddRef;
+        public IntPtr AddRef;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint> Release;
+        public IntPtr Release;
 
         [NativeTypeName("HRESULT (IDxcBlob *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcBlob*, int> Load;
+        public IntPtr Load;
 
         [NativeTypeName("HRESULT (UINT32 *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int> GetSourceCount;
+        public IntPtr GetSourceCount;
 
         [NativeTypeName("HRESULT (UINT32, IDxcBlobEncoding **) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, IDxcBlobEncoding**, int> GetSource;
+        public IntPtr GetSource;
 
         [NativeTypeName("HRESULT (UINT32, BSTR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, int> GetSourceName;
+        public IntPtr GetSourceName;
 
         [NativeTypeName("HRESULT (UINT32 *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int> GetFlagCount;
+        public IntPtr GetFlagCount;
 
         [NativeTypeName("HRESULT (UINT32, BSTR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, int> GetFlag;
+        public IntPtr GetFlag;
 
         [NativeTypeName("HRESULT (UINT32 *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int> GetArgCount;
+        public IntPtr GetArgCount;
 
         [NativeTypeName("HRESULT (UINT32, BSTR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, int> GetArg;
+        public IntPtr GetArg;
 
         [NativeTypeName("HRESULT (UINT32 *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int> GetArgPairCount;
+        public IntPtr GetArgPairCount;
 
         [NativeTypeName("HRESULT (UINT32, BSTR *, BSTR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, ushort**, int> GetArgPair;
+        public IntPtr GetArgPair;
 
         [NativeTypeName("HRESULT (UINT32 *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint*, int> GetDefineCount;
+        public IntPtr GetDefineCount;
 
         [NativeTypeName("HRESULT (UINT32, BSTR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, uint, ushort**, int> GetDefine;
+        public IntPtr GetDefine;
 
         [NativeTypeName("HRESULT (BSTR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort**, int> GetTargetProfile;
+        public IntPtr GetTargetProfile;
 
         [NativeTypeName("HRESULT (BSTR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort**, int> GetEntryPoint;
+        public IntPtr GetEntryPoint;
 
         [NativeTypeName("HRESULT (BSTR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort**, int> GetMainFileName;
+        public IntPtr GetMainFileName;
 
         [NativeTypeName("HRESULT (IDxcBlob **) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcBlob**, int> GetHash;
+        public IntPtr GetHash;
 
         [NativeTypeName("HRESULT (BSTR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort**, int> GetName;
+        public IntPtr GetName;
 
         [NativeTypeName("BOOL () __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, int> IsFullPDB;
+        public IntPtr IsFullPDB;
 
         [NativeTypeName("HRESULT (IDxcBlob **) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcBlob**, int> GetFullPDB;
+        public IntPtr GetFullPDB;
 
         [NativeTypeName("HRESULT (IDxcVersionInfo **) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcVersionInfo**, int> GetVersionInfo;
+        public IntPtr GetVersionInfo;
 
         [NativeTypeName("HRESULT (IDxcCompiler3 *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcCompiler3*, int> SetCompiler;
+        public IntPtr SetCompiler;
 
         [NativeTypeName("HRESULT (IDxcResult **) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, IDxcResult**, int> CompileForFullPDB;
+        public IntPtr CompileForFullPDB;
 
         [NativeTypeName("HRESULT (DxcArgPair *, UINT32) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, DxcArgPair*, uint, int> OverrideArgs;
+        public IntPtr OverrideArgs;
 
         [NativeTypeName("HRESULT (const WCHAR *) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcPdbUtils*, ushort*, int> OverrideRootSignature;
+        public IntPtr OverrideRootSignature;
     }
 }

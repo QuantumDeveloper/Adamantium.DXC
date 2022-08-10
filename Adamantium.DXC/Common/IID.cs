@@ -1,7 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC;
 
@@ -37,31 +34,58 @@ internal static partial class IID
     {
         unsafe
         {
-            IDxcCompiler3 = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcCompiler3Guid));
-            IDxcUtils = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcUtilsGuid));
-            IDxcBlob = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcBlobGuid));
-            IDxcBlobEncoding = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcBlobEncodingGuid));
-            IDxcBlobWide = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcBlobWideGuid));
-            IDxcBlobUtf8 = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcBlobUtf8Guid));
-            IDxcIncludeHandler = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcIncludeHandlerGuid));
-            IDxcCompilerArgs = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcCompilerArgsGuid));
-            IDxcOperationResult = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcOperationResultGuid));
-            IDxcCompiler = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcCompilerGuid));
-            IDxcCompiler2 = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcCompiler2Guid));
-            IDxcLinker = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcLinkerGuid));
-            IDxcResult = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcResultGuid));
-            IDxcExtraOutputs = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcExtraOutputsGuid));
-            IDxcValidator = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcValidatorGuid));
-            IDxcValidator2 = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcValidator2Guid));
-            IDxcContainerBuilder = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcContainerBuilderGuid));
-            IDxcAssembler = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcAssemblerGuid));
-            IDxcContainerReflection = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcContainerReflectionGuid));
-            IDxcOptimizerPass = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcOptimizerPassGuid));
-            IDxcOptimizer = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcOptimizerGuid));
-            IDxcVersionInfo = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcVersionInfoGuid));
-            IDxcVersionInfo2 = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcVersionInfo2Guid));
-            IDxcVersionInfo3 = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcVersionInfo3Guid));
-            IDxcPdbUtils = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in IDxcPdbUtilsGuid));
+            IDxcCompiler3 =    (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcUtils =        (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcBlob =         (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcBlobEncoding = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcBlobWide =     (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcBlobUtf8 =       (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcIncludeHandler = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcCompilerArgs = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcOperationResult = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcCompiler = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcCompiler2 = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcLinker = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcResult = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcExtraOutputs = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcValidator = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcValidator2 = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcContainerBuilder = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcAssembler = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcContainerReflection = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcOptimizerPass = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcOptimizer = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcVersionInfo = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcVersionInfo2 = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcVersionInfo3 = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcPdbUtils = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            
+            
+            *IDxcCompiler3 = IDxcCompiler3Guid;
+            *IDxcUtils = IDxcUtilsGuid;
+            *IDxcBlob = IDxcBlobGuid;
+            *IDxcBlobEncoding = IDxcBlobEncodingGuid;
+            *IDxcBlobWide = IDxcBlobWideGuid;
+            *IDxcBlobUtf8 = IDxcBlobUtf8Guid;
+            *IDxcIncludeHandler = IDxcIncludeHandlerGuid;
+            *IDxcCompilerArgs = IDxcCompilerArgsGuid;
+            *IDxcOperationResult = IDxcOperationResultGuid;
+            *IDxcCompiler = IDxcCompilerGuid;
+            *IDxcCompiler2 = IDxcCompiler2Guid;
+            *IDxcLinker = IDxcLinkerGuid;
+            *IDxcResult = IDxcResultGuid;
+            *IDxcExtraOutputs = IDxcExtraOutputsGuid;
+            *IDxcValidator = IDxcValidatorGuid;
+            *IDxcValidator2 = IDxcValidator2Guid;
+            *IDxcContainerBuilder = IDxcContainerBuilderGuid;
+            *IDxcAssembler = IDxcAssemblerGuid;
+            *IDxcContainerReflection = IDxcContainerReflectionGuid;
+            *IDxcOptimizerPass = IDxcOptimizerPassGuid;
+            *IDxcOptimizer = IDxcOptimizerGuid;
+            *IDxcVersionInfo = IDxcVersionInfoGuid;
+            *IDxcVersionInfo2 = IDxcVersionInfo2Guid;
+            *IDxcVersionInfo3 = IDxcVersionInfo3Guid;
+            *IDxcPdbUtils = IDxcPdbUtilsGuid;
         }
     }
 

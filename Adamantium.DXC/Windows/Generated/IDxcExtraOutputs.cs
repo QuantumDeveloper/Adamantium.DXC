@@ -12,12 +12,33 @@ internal unsafe partial struct IDxcExtraOutputs
 {
     public void** lpVtbl;
 
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _QueryInterface(IDxcExtraOutputs* pThis, [NativeTypeName("const IID &")] Guid* riid, void** ppvObject);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    [return: NativeTypeName("ULONG")]
+    public delegate uint _AddRef(IDxcExtraOutputs* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    [return: NativeTypeName("ULONG")]
+    public delegate uint _Release(IDxcExtraOutputs* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    [return: NativeTypeName("UINT32")]
+    public delegate uint _GetOutputCount(IDxcExtraOutputs* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate HRESULT _GetOutput(IDxcExtraOutputs* pThis, [NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("const IID &")] Guid* iid, void** ppvObject, [NativeTypeName("IDxcBlobWide **")] IDxcBlobUtf16** ppOutputType, [NativeTypeName("IDxcBlobWide **")] IDxcBlobUtf16** ppOutputName);
+
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("const IID &")] Guid* riid, void** ppvObject)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, Guid*, void**, int>)(lpVtbl[0]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this), riid, ppvObject);
+        fixed (IDxcExtraOutputs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
@@ -26,7 +47,10 @@ internal unsafe partial struct IDxcExtraOutputs
     [return: NativeTypeName("ULONG")]
     public uint AddRef()
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, uint>)(lpVtbl[1]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this));
+        fixed (IDxcExtraOutputs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
@@ -35,7 +59,10 @@ internal unsafe partial struct IDxcExtraOutputs
     [return: NativeTypeName("ULONG")]
     public uint Release()
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, uint>)(lpVtbl[2]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this));
+        fixed (IDxcExtraOutputs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
+        }
     }
 
     /// <include file='IDxcExtraOutputs.xml' path='doc/member[@name="IDxcExtraOutputs.GetOutputCount"]/*' />
@@ -44,7 +71,10 @@ internal unsafe partial struct IDxcExtraOutputs
     [return: NativeTypeName("UINT32")]
     public uint GetOutputCount()
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, uint>)(lpVtbl[3]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this));
+        fixed (IDxcExtraOutputs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetOutputCount>((IntPtr)(lpVtbl[3]))(pThis);
+        }
     }
 
     /// <include file='IDxcExtraOutputs.xml' path='doc/member[@name="IDxcExtraOutputs.GetOutput"]/*' />
@@ -52,24 +82,27 @@ internal unsafe partial struct IDxcExtraOutputs
     [VtblIndex(4)]
     public HRESULT GetOutput([NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("const IID &")] Guid* iid, void** ppvObject, [NativeTypeName("IDxcBlobWide **")] IDxcBlobUtf16** ppOutputType, [NativeTypeName("IDxcBlobWide **")] IDxcBlobUtf16** ppOutputName)
     {
-        return ((delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, uint, Guid*, void**, IDxcBlobUtf16**, IDxcBlobUtf16**, int>)(lpVtbl[4]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this), uIndex, iid, ppvObject, ppOutputType, ppOutputName);
+        fixed (IDxcExtraOutputs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetOutput>((IntPtr)(lpVtbl[4]))(pThis, uIndex, iid, ppvObject, ppOutputType, ppOutputName);
+        }
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (const IID &, void **) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, Guid*, void**, int> QueryInterface;
+        public IntPtr QueryInterface;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, uint> AddRef;
+        public IntPtr AddRef;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, uint> Release;
+        public IntPtr Release;
 
         [NativeTypeName("UINT32 () __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, uint> GetOutputCount;
+        public IntPtr GetOutputCount;
 
         [NativeTypeName("HRESULT (UINT32, const IID &, void **, IDxcBlobWide **, IDxcBlobWide **) __attribute__((stdcall))")]
-        public delegate* unmanaged[Stdcall]<IDxcExtraOutputs*, uint, Guid*, void**, IDxcBlobUtf16**, IDxcBlobUtf16**, int> GetOutput;
+        public IntPtr GetOutput;
     }
 }

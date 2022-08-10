@@ -27,7 +27,8 @@ generate-unmanaged-constants
 generate-vtbl-index-attribute
 log-potential-typedef-remappings
 multi-file
-preview-codegen
+#preview-codegen
+compatible-codegen
 trimmable-vtbls
 --define-macro
 GDIPVER=0x0110

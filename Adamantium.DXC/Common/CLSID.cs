@@ -1,7 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC;
 
@@ -23,17 +20,29 @@ public static partial class CLSID
     {
         unsafe
         {
-            DxcCompiler = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcCompilerGuid));
-            DxcUtils = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcUtilsGuid));
-            DxcLinker = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcLinkerGuid));
-            DxcDiaDataSource = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcDiaDataSourceGuid));
-            DxcCompilerArgs = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcCompilerArgsGuid));
-            DxcValidator = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcValidatorGuid));
-            DxcAssembler = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcAssemblerGuid));
-            DxcContainerReflection = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcContainerReflectionGuid));
-            DxcOptimizer = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcOptimizerGuid));
-            DxcContainerBuilder = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcContainerBuilderGuid));
-            DxcPdbUtils = (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in DxcPdbUtilsGuid));
+            DxcCompiler = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            DxcUtils = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            DxcLinker = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));;
+            DxcDiaDataSource = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            DxcCompilerArgs = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            DxcValidator = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            DxcAssembler = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            DxcContainerReflection = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            DxcOptimizer = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            DxcContainerBuilder = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            DxcPdbUtils = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            
+            *DxcCompiler = DxcCompilerGuid;
+            *DxcUtils = DxcUtilsGuid;
+            *DxcLinker = DxcLinkerGuid;
+            *DxcDiaDataSource = DxcDiaDataSourceGuid;
+            *DxcCompilerArgs = DxcCompilerArgsGuid;
+            *DxcValidator = DxcValidatorGuid;
+            *DxcAssembler = DxcAssemblerGuid;
+            *DxcContainerReflection = DxcContainerReflectionGuid;
+            *DxcOptimizer = DxcOptimizerGuid;
+            *DxcContainerBuilder = DxcContainerBuilderGuid;
+            *DxcPdbUtils = DxcPdbUtilsGuid;
         }
     }
 

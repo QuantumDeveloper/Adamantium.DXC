@@ -12,13 +12,7 @@ internal static class RuntimeHelpers
     /// <summary>
     /// Allocates some memory tied to the lifetime of a specific type.
     /// </summary>
-    /// <param name="type">The type to associate the memory to.</param>
     /// <param name="size">The size in byte of the memory to allocate.</param>
     /// <returns>A pointer to the allocated memory.</returns>
-    public static IntPtr AllocateTypeAssociatedMemory(Type type, int size) => Marshal.AllocHGlobal(size);
-
-    public static unsafe Guid* GetPointer(this Guid guid)
-    {
-        return (Guid*)Unsafe.AsPointer(ref Unsafe.AsRef(in guid));
-    }
+    public static IntPtr AllocateTypeAssociatedMemory(int size) => Marshal.AllocHGlobal(size);
 }

@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using System;
-using static Adamantium.DXC.CLSID;
+using static Adamantium.DXC.Windows.CLSID;
 
-namespace Adamantium.DXC.UnitTests;
+namespace Adamantium.DXC.Windows.UnitTests;
 
 /// <summary>Provides validation of the <see cref="CLSID" /> class.</summary>
 public static partial class CLSIDTests
