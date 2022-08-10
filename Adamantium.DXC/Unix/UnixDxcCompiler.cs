@@ -23,25 +23,17 @@ internal unsafe class UnixDxcCompiler : IDxcCompilerPlatform
 
     public UnixDxcCompiler()
     {
-        using ComPtr<IDxcCompiler3> dxcCompiler = default;
-        using ComPtr<IDxcUtils> dxcUtils = default;
-        using ComPtr<IDxcIncludeHandler> dxcIncludeHandler = default;
-
         var result = DxcInterop.DxcCreateInstance(
             CLSID.DxcCompiler,
             IID.IDxcCompiler3,
-            dxcCompiler.GetVoidAddressOf());
+            DxcCompiler3.GetVoidAddressOf());
         
         result = DxcInterop.DxcCreateInstance(
             CLSID.DxcUtils,
             IID.IDxcUtils,
-            dxcUtils.GetVoidAddressOf());
+            DxcUtils.GetVoidAddressOf());
 
-        result = dxcUtils.Get()->CreateDefaultIncludeHandler(dxcIncludeHandler.GetAddressOf());
-
-        DxcCompiler3 = dxcCompiler.Move();
-        DxcUtils = dxcUtils.Move();
-        DxcIncludeHandler = dxcIncludeHandler.Move();
+        result = DxcUtils.Get()->CreateDefaultIncludeHandler(DxcIncludeHandler.GetAddressOf());
     }
 
     public void Compile(string filePath)
