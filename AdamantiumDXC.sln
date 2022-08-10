@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamantiumDXC.Demo", "Adama
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamantiumVulkan.Common", "..\AdamantiumVulkan\AdamantiumVulkan.Common\AdamantiumVulkan.Common.csproj", "{EEDD0454-2CF3-47E7-A94E-E8684B67DF35}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamantiumVulkan.Spirv", "..\AdamantiumVulkan\AdamantiumVulkan.Spirv\AdamantiumVulkan.Spirv.csproj", "{51BE7F2B-95A3-49BB-A43C-E1AF741B71B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamantiumVulkan.Spirv", "..\AdamantiumVulkan\AdamantiumVulkan.SPIRV\AdamantiumVulkan.SPIRV.csproj", "{51BE7F2B-95A3-49BB-A43C-E1AF741B71B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

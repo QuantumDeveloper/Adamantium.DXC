@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -12,30 +13,86 @@ internal unsafe partial struct IStream
 
     internal ISequentialStream Base;
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _QueryInterface(IStream* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    [return: NativeTypeName("ULONG")]
+    public delegate UIntPtr _AddRef(IStream* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    [return: NativeTypeName("ULONG")]
+    public delegate UIntPtr _Release(IStream* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void _Dispose(IStream* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _Read(IStream* pThis, void* pv, [NativeTypeName("ULONG")] UIntPtr cb, [NativeTypeName("ULONG *")] UIntPtr* pcbRead);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _Write(IStream* pThis, [NativeTypeName("const void *")] void* pv, [NativeTypeName("ULONG")] UIntPtr cb, [NativeTypeName("ULONG *")] UIntPtr* pcbWritten);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _Seek(IStream* pThis, LARGE_INTEGER dlibMove, [NativeTypeName("DWORD")] uint dwOrigin, ULARGE_INTEGER* plibNewPosition);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _SetSize(IStream* pThis, ULARGE_INTEGER libNewSize);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _CopyTo(IStream* pThis, IStream* pstm, ULARGE_INTEGER cb, ULARGE_INTEGER* pcbRead, ULARGE_INTEGER* pcbWritten);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _Commit(IStream* pThis, [NativeTypeName("DWORD")] uint grfCommitFlags);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _Revert(IStream* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _LockRegion(IStream* pThis, ULARGE_INTEGER libOffset, ULARGE_INTEGER cb, [NativeTypeName("DWORD")] uint dwLockType);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _UnlockRegion(IStream* pThis, ULARGE_INTEGER libOffset, ULARGE_INTEGER cb, [NativeTypeName("DWORD")] uint dwLockType);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _Stat(IStream* pThis, STATSTG* pstatstg, [NativeTypeName("DWORD")] uint grfStatFlag);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _Clone(IStream* pThis, IStream** ppstm);
+
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, Guid*, void**, int>)(lpVtbl[0]))((IStream*)Unsafe.AsPointer(ref this), riid, ppvObject);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public nuint AddRef()
+    public UIntPtr AddRef()
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, nuint>)(lpVtbl[1]))((IStream*)Unsafe.AsPointer(ref this));
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public nuint Release()
+    public UIntPtr Release()
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, nuint>)(lpVtbl[2]))((IStream*)Unsafe.AsPointer(ref this));
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -43,23 +100,32 @@ internal unsafe partial struct IStream
     [VtblIndex(4)]
     public void Dispose()
     {
-        ((delegate* unmanaged[Cdecl]<IStream*, void>)(lpVtbl[4]))((IStream*)Unsafe.AsPointer(ref this));
+        fixed (IStream* pThis = &this)
+        {
+            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
+        }
     }
 
     /// <inheritdoc cref="ISequentialStream.Read" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(5)]
-    public HRESULT Read(void* pv, [NativeTypeName("ULONG")] nuint cb, [NativeTypeName("ULONG *")] nuint* pcbRead)
+    public HRESULT Read(void* pv, [NativeTypeName("ULONG")] UIntPtr cb, [NativeTypeName("ULONG *")] UIntPtr* pcbRead)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, void*, nuint, nuint*, int>)(lpVtbl[5]))((IStream*)Unsafe.AsPointer(ref this), pv, cb, pcbRead);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Read>((IntPtr)(lpVtbl[5]))(pThis, pv, cb, pcbRead);
+        }
     }
 
     /// <inheritdoc cref="ISequentialStream.Write" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(6)]
-    public HRESULT Write([NativeTypeName("const void *")] void* pv, [NativeTypeName("ULONG")] nuint cb, [NativeTypeName("ULONG *")] nuint* pcbWritten)
+    public HRESULT Write([NativeTypeName("const void *")] void* pv, [NativeTypeName("ULONG")] UIntPtr cb, [NativeTypeName("ULONG *")] UIntPtr* pcbWritten)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, void*, nuint, nuint*, int>)(lpVtbl[6]))((IStream*)Unsafe.AsPointer(ref this), pv, cb, pcbWritten);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Write>((IntPtr)(lpVtbl[6]))(pThis, pv, cb, pcbWritten);
+        }
     }
 
     /// <include file='IStream.xml' path='doc/member[@name="IStream.Seek"]/*' />
@@ -67,7 +133,10 @@ internal unsafe partial struct IStream
     [VtblIndex(7)]
     public HRESULT Seek(LARGE_INTEGER dlibMove, [NativeTypeName("DWORD")] uint dwOrigin, ULARGE_INTEGER* plibNewPosition)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, LARGE_INTEGER, uint, ULARGE_INTEGER*, int>)(lpVtbl[7]))((IStream*)Unsafe.AsPointer(ref this), dlibMove, dwOrigin, plibNewPosition);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Seek>((IntPtr)(lpVtbl[7]))(pThis, dlibMove, dwOrigin, plibNewPosition);
+        }
     }
 
     /// <include file='IStream.xml' path='doc/member[@name="IStream.SetSize"]/*' />
@@ -75,7 +144,10 @@ internal unsafe partial struct IStream
     [VtblIndex(8)]
     public HRESULT SetSize(ULARGE_INTEGER libNewSize)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, ULARGE_INTEGER, int>)(lpVtbl[8]))((IStream*)Unsafe.AsPointer(ref this), libNewSize);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_SetSize>((IntPtr)(lpVtbl[8]))(pThis, libNewSize);
+        }
     }
 
     /// <include file='IStream.xml' path='doc/member[@name="IStream.CopyTo"]/*' />
@@ -83,7 +155,10 @@ internal unsafe partial struct IStream
     [VtblIndex(9)]
     public HRESULT CopyTo(IStream* pstm, ULARGE_INTEGER cb, ULARGE_INTEGER* pcbRead, ULARGE_INTEGER* pcbWritten)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, IStream*, ULARGE_INTEGER, ULARGE_INTEGER*, ULARGE_INTEGER*, int>)(lpVtbl[9]))((IStream*)Unsafe.AsPointer(ref this), pstm, cb, pcbRead, pcbWritten);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_CopyTo>((IntPtr)(lpVtbl[9]))(pThis, pstm, cb, pcbRead, pcbWritten);
+        }
     }
 
     /// <include file='IStream.xml' path='doc/member[@name="IStream.Commit"]/*' />
@@ -91,7 +166,10 @@ internal unsafe partial struct IStream
     [VtblIndex(10)]
     public HRESULT Commit([NativeTypeName("DWORD")] uint grfCommitFlags)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, uint, int>)(lpVtbl[10]))((IStream*)Unsafe.AsPointer(ref this), grfCommitFlags);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Commit>((IntPtr)(lpVtbl[10]))(pThis, grfCommitFlags);
+        }
     }
 
     /// <include file='IStream.xml' path='doc/member[@name="IStream.Revert"]/*' />
@@ -99,7 +177,10 @@ internal unsafe partial struct IStream
     [VtblIndex(11)]
     public HRESULT Revert()
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, int>)(lpVtbl[11]))((IStream*)Unsafe.AsPointer(ref this));
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Revert>((IntPtr)(lpVtbl[11]))(pThis);
+        }
     }
 
     /// <include file='IStream.xml' path='doc/member[@name="IStream.LockRegion"]/*' />
@@ -107,7 +188,10 @@ internal unsafe partial struct IStream
     [VtblIndex(12)]
     public HRESULT LockRegion(ULARGE_INTEGER libOffset, ULARGE_INTEGER cb, [NativeTypeName("DWORD")] uint dwLockType)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, ULARGE_INTEGER, ULARGE_INTEGER, uint, int>)(lpVtbl[12]))((IStream*)Unsafe.AsPointer(ref this), libOffset, cb, dwLockType);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_LockRegion>((IntPtr)(lpVtbl[12]))(pThis, libOffset, cb, dwLockType);
+        }
     }
 
     /// <include file='IStream.xml' path='doc/member[@name="IStream.UnlockRegion"]/*' />
@@ -115,7 +199,10 @@ internal unsafe partial struct IStream
     [VtblIndex(13)]
     public HRESULT UnlockRegion(ULARGE_INTEGER libOffset, ULARGE_INTEGER cb, [NativeTypeName("DWORD")] uint dwLockType)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, ULARGE_INTEGER, ULARGE_INTEGER, uint, int>)(lpVtbl[13]))((IStream*)Unsafe.AsPointer(ref this), libOffset, cb, dwLockType);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_UnlockRegion>((IntPtr)(lpVtbl[13]))(pThis, libOffset, cb, dwLockType);
+        }
     }
 
     /// <include file='IStream.xml' path='doc/member[@name="IStream.Stat"]/*' />
@@ -123,7 +210,10 @@ internal unsafe partial struct IStream
     [VtblIndex(14)]
     public HRESULT Stat(STATSTG* pstatstg, [NativeTypeName("DWORD")] uint grfStatFlag)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, STATSTG*, uint, int>)(lpVtbl[14]))((IStream*)Unsafe.AsPointer(ref this), pstatstg, grfStatFlag);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Stat>((IntPtr)(lpVtbl[14]))(pThis, pstatstg, grfStatFlag);
+        }
     }
 
     /// <include file='IStream.xml' path='doc/member[@name="IStream.Clone"]/*' />
@@ -131,54 +221,57 @@ internal unsafe partial struct IStream
     [VtblIndex(15)]
     public HRESULT Clone(IStream** ppstm)
     {
-        return ((delegate* unmanaged[Cdecl]<IStream*, IStream**, int>)(lpVtbl[15]))((IStream*)Unsafe.AsPointer(ref this), ppstm);
+        fixed (IStream* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Clone>((IntPtr)(lpVtbl[15]))(pThis, ppstm);
+        }
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public delegate* unmanaged[Cdecl]<IStream*, Guid*, void**, int> QueryInterface;
+        public IntPtr QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public delegate* unmanaged[Cdecl]<IStream*, nuint> AddRef;
+        public IntPtr AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public delegate* unmanaged[Cdecl]<IStream*, nuint> Release;
+        public IntPtr Release;
 
         [NativeTypeName("void () noexcept")]
-        public delegate* unmanaged[Cdecl]<IStream*, void> Dispose;
+        public IntPtr Dispose;
 
         [NativeTypeName("HRESULT (void *, ULONG, ULONG *)")]
-        public delegate* unmanaged[Cdecl]<IStream*, void*, nuint, nuint*, int> Read;
+        public IntPtr Read;
 
         [NativeTypeName("HRESULT (const void *, ULONG, ULONG *)")]
-        public delegate* unmanaged[Cdecl]<IStream*, void*, nuint, nuint*, int> Write;
+        public IntPtr Write;
 
         [NativeTypeName("HRESULT (LARGE_INTEGER, DWORD, ULARGE_INTEGER *)")]
-        public delegate* unmanaged[Cdecl]<IStream*, LARGE_INTEGER, uint, ULARGE_INTEGER*, int> Seek;
+        public IntPtr Seek;
 
         [NativeTypeName("HRESULT (ULARGE_INTEGER)")]
-        public delegate* unmanaged[Cdecl]<IStream*, ULARGE_INTEGER, int> SetSize;
+        public IntPtr SetSize;
 
         [NativeTypeName("HRESULT (IStream *, ULARGE_INTEGER, ULARGE_INTEGER *, ULARGE_INTEGER *)")]
-        public delegate* unmanaged[Cdecl]<IStream*, IStream*, ULARGE_INTEGER, ULARGE_INTEGER*, ULARGE_INTEGER*, int> CopyTo;
+        public IntPtr CopyTo;
 
         [NativeTypeName("HRESULT (DWORD)")]
-        public delegate* unmanaged[Cdecl]<IStream*, uint, int> Commit;
+        public IntPtr Commit;
 
         [NativeTypeName("HRESULT ()")]
-        public delegate* unmanaged[Cdecl]<IStream*, int> Revert;
+        public IntPtr Revert;
 
         [NativeTypeName("HRESULT (ULARGE_INTEGER, ULARGE_INTEGER, DWORD)")]
-        public delegate* unmanaged[Cdecl]<IStream*, ULARGE_INTEGER, ULARGE_INTEGER, uint, int> LockRegion;
+        public IntPtr LockRegion;
 
         [NativeTypeName("HRESULT (ULARGE_INTEGER, ULARGE_INTEGER, DWORD)")]
-        public delegate* unmanaged[Cdecl]<IStream*, ULARGE_INTEGER, ULARGE_INTEGER, uint, int> UnlockRegion;
+        public IntPtr UnlockRegion;
 
         [NativeTypeName("HRESULT (STATSTG *, DWORD)")]
-        public delegate* unmanaged[Cdecl]<IStream*, STATSTG*, uint, int> Stat;
+        public IntPtr Stat;
 
         [NativeTypeName("HRESULT (IStream **)")]
-        public delegate* unmanaged[Cdecl]<IStream*, IStream**, int> Clone;
+        public IntPtr Clone;
     }
 }

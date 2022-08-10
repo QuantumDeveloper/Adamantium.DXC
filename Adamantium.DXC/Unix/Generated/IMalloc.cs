@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -12,30 +13,62 @@ internal unsafe partial struct IMalloc
 
     internal IUnknown Base;
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _QueryInterface(IMalloc* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    [return: NativeTypeName("ULONG")]
+    public delegate UIntPtr _AddRef(IMalloc* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    [return: NativeTypeName("ULONG")]
+    public delegate UIntPtr _Release(IMalloc* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void _Dispose(IMalloc* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void* _Alloc(IMalloc* pThis, [NativeTypeName("size_t")] UIntPtr size);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void* _Realloc(IMalloc* pThis, void* ptr, [NativeTypeName("size_t")] UIntPtr size);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void _Free(IMalloc* pThis, void* ptr);
+
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        return ((delegate* unmanaged[Cdecl]<IMalloc*, Guid*, void**, int>)(lpVtbl[0]))((IMalloc*)Unsafe.AsPointer(ref this), riid, ppvObject);
+        fixed (IMalloc* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public nuint AddRef()
+    public UIntPtr AddRef()
     {
-        return ((delegate* unmanaged[Cdecl]<IMalloc*, nuint>)(lpVtbl[1]))((IMalloc*)Unsafe.AsPointer(ref this));
+        fixed (IMalloc* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public nuint Release()
+    public UIntPtr Release()
     {
-        return ((delegate* unmanaged[Cdecl]<IMalloc*, nuint>)(lpVtbl[2]))((IMalloc*)Unsafe.AsPointer(ref this));
+        fixed (IMalloc* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -43,23 +76,32 @@ internal unsafe partial struct IMalloc
     [VtblIndex(4)]
     public void Dispose()
     {
-        ((delegate* unmanaged[Cdecl]<IMalloc*, void>)(lpVtbl[4]))((IMalloc*)Unsafe.AsPointer(ref this));
+        fixed (IMalloc* pThis = &this)
+        {
+            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
+        }
     }
 
     /// <include file='IMalloc.xml' path='doc/member[@name="IMalloc.Alloc"]/*' />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(5)]
-    public void* Alloc([NativeTypeName("size_t")] nuint size)
+    public void* Alloc([NativeTypeName("size_t")] UIntPtr size)
     {
-        return ((delegate* unmanaged[Cdecl]<IMalloc*, nuint, void*>)(lpVtbl[5]))((IMalloc*)Unsafe.AsPointer(ref this), size);
+        fixed (IMalloc* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Alloc>((IntPtr)(lpVtbl[5]))(pThis, size);
+        }
     }
 
     /// <include file='IMalloc.xml' path='doc/member[@name="IMalloc.Realloc"]/*' />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(6)]
-    public void* Realloc(void* ptr, [NativeTypeName("size_t")] nuint size)
+    public void* Realloc(void* ptr, [NativeTypeName("size_t")] UIntPtr size)
     {
-        return ((delegate* unmanaged[Cdecl]<IMalloc*, void*, nuint, void*>)(lpVtbl[6]))((IMalloc*)Unsafe.AsPointer(ref this), ptr, size);
+        fixed (IMalloc* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Realloc>((IntPtr)(lpVtbl[6]))(pThis, ptr, size);
+        }
     }
 
     /// <include file='IMalloc.xml' path='doc/member[@name="IMalloc.Free"]/*' />
@@ -67,30 +109,33 @@ internal unsafe partial struct IMalloc
     [VtblIndex(7)]
     public void Free(void* ptr)
     {
-        ((delegate* unmanaged[Cdecl]<IMalloc*, void*, void>)(lpVtbl[7]))((IMalloc*)Unsafe.AsPointer(ref this), ptr);
+        fixed (IMalloc* pThis = &this)
+        {
+            Marshal.GetDelegateForFunctionPointer<_Free>((IntPtr)(lpVtbl[7]))(pThis, ptr);
+        }
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public delegate* unmanaged[Cdecl]<IMalloc*, Guid*, void**, int> QueryInterface;
+        public IntPtr QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public delegate* unmanaged[Cdecl]<IMalloc*, nuint> AddRef;
+        public IntPtr AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public delegate* unmanaged[Cdecl]<IMalloc*, nuint> Release;
+        public IntPtr Release;
 
         [NativeTypeName("void () noexcept")]
-        public delegate* unmanaged[Cdecl]<IMalloc*, void> Dispose;
+        public IntPtr Dispose;
 
         [NativeTypeName("void *(size_t)")]
-        public delegate* unmanaged[Cdecl]<IMalloc*, nuint, void*> Alloc;
+        public IntPtr Alloc;
 
         [NativeTypeName("void *(void *, size_t)")]
-        public delegate* unmanaged[Cdecl]<IMalloc*, void*, nuint, void*> Realloc;
+        public IntPtr Realloc;
 
         [NativeTypeName("void (void *)")]
-        public delegate* unmanaged[Cdecl]<IMalloc*, void*, void> Free;
+        public IntPtr Free;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -12,30 +13,70 @@ internal unsafe partial struct IDxcCompilerArgs
 
     internal IUnknown Base;
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _QueryInterface(IDxcCompilerArgs* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    [return: NativeTypeName("ULONG")]
+    public delegate UIntPtr _AddRef(IDxcCompilerArgs* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    [return: NativeTypeName("ULONG")]
+    public delegate UIntPtr _Release(IDxcCompilerArgs* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void _Dispose(IDxcCompilerArgs* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    [return: NativeTypeName("LPCWSTR *")]
+    public delegate uint** _GetArguments(IDxcCompilerArgs* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    [return: NativeTypeName("UINT32")]
+    public delegate uint _GetCount(IDxcCompilerArgs* pThis);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _AddArguments(IDxcCompilerArgs* pThis, [NativeTypeName("LPCWSTR *")] uint** pArguments, [NativeTypeName("UINT32")] uint argCount);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _AddArgumentsUTF8(IDxcCompilerArgs* pThis, [NativeTypeName("LPCSTR *")] sbyte** pArguments, [NativeTypeName("UINT32")] uint argCount);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate HRESULT _AddDefines(IDxcCompilerArgs* pThis, [NativeTypeName("const DxcDefine *")] DxcDefine* pDefines, [NativeTypeName("UINT32")] uint defineCount);
+
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        return ((delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, Guid*, void**, int>)(lpVtbl[0]))((IDxcCompilerArgs*)Unsafe.AsPointer(ref this), riid, ppvObject);
+        fixed (IDxcCompilerArgs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public nuint AddRef()
+    public UIntPtr AddRef()
     {
-        return ((delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, nuint>)(lpVtbl[1]))((IDxcCompilerArgs*)Unsafe.AsPointer(ref this));
+        fixed (IDxcCompilerArgs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public nuint Release()
+    public UIntPtr Release()
     {
-        return ((delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, nuint>)(lpVtbl[2]))((IDxcCompilerArgs*)Unsafe.AsPointer(ref this));
+        fixed (IDxcCompilerArgs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
+        }
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -43,7 +84,10 @@ internal unsafe partial struct IDxcCompilerArgs
     [VtblIndex(4)]
     public void Dispose()
     {
-        ((delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, void>)(lpVtbl[4]))((IDxcCompilerArgs*)Unsafe.AsPointer(ref this));
+        fixed (IDxcCompilerArgs* pThis = &this)
+        {
+            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
+        }
     }
 
     /// <include file='IDxcCompilerArgs.xml' path='doc/member[@name="IDxcCompilerArgs.GetArguments"]/*' />
@@ -52,7 +96,10 @@ internal unsafe partial struct IDxcCompilerArgs
     [return: NativeTypeName("LPCWSTR *")]
     public uint** GetArguments()
     {
-        return ((delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, uint**>)(lpVtbl[5]))((IDxcCompilerArgs*)Unsafe.AsPointer(ref this));
+        fixed (IDxcCompilerArgs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetArguments>((IntPtr)(lpVtbl[5]))(pThis);
+        }
     }
 
     /// <include file='IDxcCompilerArgs.xml' path='doc/member[@name="IDxcCompilerArgs.GetCount"]/*' />
@@ -61,7 +108,10 @@ internal unsafe partial struct IDxcCompilerArgs
     [return: NativeTypeName("UINT32")]
     public uint GetCount()
     {
-        return ((delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, uint>)(lpVtbl[6]))((IDxcCompilerArgs*)Unsafe.AsPointer(ref this));
+        fixed (IDxcCompilerArgs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_GetCount>((IntPtr)(lpVtbl[6]))(pThis);
+        }
     }
 
     /// <include file='IDxcCompilerArgs.xml' path='doc/member[@name="IDxcCompilerArgs.AddArguments"]/*' />
@@ -69,7 +119,10 @@ internal unsafe partial struct IDxcCompilerArgs
     [VtblIndex(7)]
     public HRESULT AddArguments([NativeTypeName("LPCWSTR *")] uint** pArguments, [NativeTypeName("UINT32")] uint argCount)
     {
-        return ((delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, uint**, uint, int>)(lpVtbl[7]))((IDxcCompilerArgs*)Unsafe.AsPointer(ref this), pArguments, argCount);
+        fixed (IDxcCompilerArgs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_AddArguments>((IntPtr)(lpVtbl[7]))(pThis, pArguments, argCount);
+        }
     }
 
     /// <include file='IDxcCompilerArgs.xml' path='doc/member[@name="IDxcCompilerArgs.AddArgumentsUTF8"]/*' />
@@ -77,7 +130,10 @@ internal unsafe partial struct IDxcCompilerArgs
     [VtblIndex(8)]
     public HRESULT AddArgumentsUTF8([NativeTypeName("LPCSTR *")] sbyte** pArguments, [NativeTypeName("UINT32")] uint argCount)
     {
-        return ((delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, sbyte**, uint, int>)(lpVtbl[8]))((IDxcCompilerArgs*)Unsafe.AsPointer(ref this), pArguments, argCount);
+        fixed (IDxcCompilerArgs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_AddArgumentsUTF8>((IntPtr)(lpVtbl[8]))(pThis, pArguments, argCount);
+        }
     }
 
     /// <include file='IDxcCompilerArgs.xml' path='doc/member[@name="IDxcCompilerArgs.AddDefines"]/*' />
@@ -85,36 +141,39 @@ internal unsafe partial struct IDxcCompilerArgs
     [VtblIndex(9)]
     public HRESULT AddDefines([NativeTypeName("const DxcDefine *")] DxcDefine* pDefines, [NativeTypeName("UINT32")] uint defineCount)
     {
-        return ((delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, DxcDefine*, uint, int>)(lpVtbl[9]))((IDxcCompilerArgs*)Unsafe.AsPointer(ref this), pDefines, defineCount);
+        fixed (IDxcCompilerArgs* pThis = &this)
+        {
+            return Marshal.GetDelegateForFunctionPointer<_AddDefines>((IntPtr)(lpVtbl[9]))(pThis, pDefines, defineCount);
+        }
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, Guid*, void**, int> QueryInterface;
+        public IntPtr QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, nuint> AddRef;
+        public IntPtr AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, nuint> Release;
+        public IntPtr Release;
 
         [NativeTypeName("void () noexcept")]
-        public delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, void> Dispose;
+        public IntPtr Dispose;
 
         [NativeTypeName("LPCWSTR *()")]
-        public delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, uint**> GetArguments;
+        public IntPtr GetArguments;
 
         [NativeTypeName("UINT32 ()")]
-        public delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, uint> GetCount;
+        public IntPtr GetCount;
 
         [NativeTypeName("HRESULT (LPCWSTR *, UINT32)")]
-        public delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, uint**, uint, int> AddArguments;
+        public IntPtr AddArguments;
 
         [NativeTypeName("HRESULT (LPCSTR *, UINT32)")]
-        public delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, sbyte**, uint, int> AddArgumentsUTF8;
+        public IntPtr AddArgumentsUTF8;
 
         [NativeTypeName("HRESULT (const DxcDefine *, UINT32)")]
-        public delegate* unmanaged[Cdecl]<IDxcCompilerArgs*, DxcDefine*, uint, int> AddDefines;
+        public IntPtr AddDefines;
     }
 }

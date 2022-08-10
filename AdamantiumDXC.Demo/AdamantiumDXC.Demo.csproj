@@ -22,7 +22,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\AdamantiumVulkan\AdamantiumVulkan.Common\AdamantiumVulkan.Common.csproj" />
-      <ProjectReference Include="..\..\AdamantiumVulkan\AdamantiumVulkan.Spirv\AdamantiumVulkan.Spirv.csproj" />
+      <ProjectReference Include="..\..\AdamantiumVulkan\AdamantiumVulkan.SPIRV\AdamantiumVulkan.SPIRV.csproj" />
       <ProjectReference Include="..\Adamantium.DXC\Adamantium.DXC.csproj" />
     </ItemGroup>
 

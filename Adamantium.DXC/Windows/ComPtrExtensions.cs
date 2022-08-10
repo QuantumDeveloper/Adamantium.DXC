@@ -80,11 +80,7 @@ internal static class ComPtrExtensions
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe ref readonly ComPtr<IUnknown> AsIUnknown<T>(this in ComPtr<T> ptr)
-#if NET6_0_OR_GREATER
-        where T : unmanaged, IUnknown.Interface
-#else
         where T : unmanaged
-#endif
     {
         return ref Unsafe.As<ComPtr<T>, ComPtr<IUnknown>>(ref Unsafe.AsRef(in ptr));
     }

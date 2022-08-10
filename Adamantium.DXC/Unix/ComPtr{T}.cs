@@ -101,7 +101,7 @@ namespace Adamantium.DXC.Unix;
             if (ptr_ != null)
             {
                 var @ref = ((IUnknown*)ptr_)->Release();
-                Debug.Assert((@ref != 0) || (ptr_ != other));
+                Debug.Assert((@ref != (UIntPtr)0) || (ptr_ != other));
             }
             ptr_ = other;
         }
