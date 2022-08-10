@@ -13,13 +13,13 @@ namespace Adamantium.DXC.Unix;
         where T : unmanaged
     {
         /// <summary>The raw pointer to a COM object, if existing.</summary>
-        private T* ptr_;
+        private T* _ptr;
 
         /// <summary>Creates a new <see cref="ComPtr{T}"/> instance from a raw pointer and increments the ref count.</summary>
         /// <param name="other">The raw pointer to wrap.</param>
         public ComPtr(T* other)
         {
-            ptr_ = other;
+            _ptr = other;
             InternalAddRef();
         }
 
@@ -27,7 +27,7 @@ namespace Adamantium.DXC.Unix;
         /// <param name="other">The other <see cref="ComPtr{T}"/> instance to copy.</param>
         public ComPtr(ComPtr<T> other)
         {
-            ptr_ = other.ptr_;
+            _ptr = other._ptr;
             InternalAddRef();
         }
 
@@ -51,7 +51,7 @@ namespace Adamantium.DXC.Unix;
         public readonly HRESULT As<U>(ComPtr<U>* p)
             where U : unmanaged
         {
-            return ((IUnknown*)ptr_)->QueryInterface(__uuidof<U>(), (void**)p->ReleaseAndGetAddressOf());
+            return ((IUnknown*)_ptr)->QueryInterface(__uuidof<U>(), (void**)p->ReleaseAndGetAddressOf());
         }
 
         /// <summary>Converts the current object reference to type <typeparamref name="U"/> and assigns that to a target <see cref="ComPtr{T}"/> value.</summary>
@@ -63,7 +63,7 @@ namespace Adamantium.DXC.Unix;
             where U : unmanaged
         {
             U* ptr;
-            HRESULT result = ((IUnknown*)ptr_)->QueryInterface(__uuidof<U>(), (void**)&ptr);
+            HRESULT result = ((IUnknown*)_ptr)->QueryInterface(__uuidof<U>(), (void**)&ptr);
 
             other.Attach(ptr);
             return result;
@@ -76,7 +76,7 @@ namespace Adamantium.DXC.Unix;
         /// <remarks>This method will automatically release the target COM object pointed to by <paramref name="other"/>, if any.</remarks>
         public readonly HRESULT AsIID(Guid* riid, ComPtr<IUnknown>* other)
         {
-            return ((IUnknown*)ptr_)->QueryInterface(riid, (void**)other->ReleaseAndGetAddressOf());
+            return ((IUnknown*)_ptr)->QueryInterface(riid, (void**)other->ReleaseAndGetAddressOf());
         }
 
         /// <summary>Converts the current object reference to a type indicated by the given IID and assigns that to a target <see cref="ComPtr{T}"/> value.</summary>
@@ -87,7 +87,7 @@ namespace Adamantium.DXC.Unix;
         public readonly HRESULT AsIID(Guid* riid, ref ComPtr<IUnknown> other)
         {
             IUnknown* ptr;
-            HRESULT result = ((IUnknown*)ptr_)->QueryInterface(riid, (void**)&ptr);
+            HRESULT result = ((IUnknown*)_ptr)->QueryInterface(riid, (void**)&ptr);
 
             other.Attach(ptr);
             return result;
@@ -98,12 +98,12 @@ namespace Adamantium.DXC.Unix;
         /// <remarks>This method will release the current raw pointer, if any, but it will not increment the references for <paramref name="other"/>.</remarks>
         public void Attach(T* other)
         {
-            if (ptr_ != null)
+            if (_ptr != null)
             {
-                var @ref = ((IUnknown*)ptr_)->Release();
-                Debug.Assert((@ref != 0) || (ptr_ != other));
+                var @ref = ((IUnknown*)_ptr)->Release();
+                Debug.Assert((@ref != 0) || (_ptr != other));
             }
-            ptr_ = other;
+            _ptr = other;
         }
 
         /// <summary>Returns the raw pointer wrapped by the current instance, and resets the current <see cref="ComPtr{T}"/> value.</summary>
@@ -111,8 +111,8 @@ namespace Adamantium.DXC.Unix;
         /// <remarks>This method will not change the reference count for the COM object in use.</remarks>
         public T* Detach()
         {
-            T* ptr = ptr_;
-            ptr_ = null;
+            T* ptr = _ptr;
+            _ptr = null;
             return ptr;
         }
 
@@ -122,7 +122,7 @@ namespace Adamantium.DXC.Unix;
         public readonly HRESULT CopyTo(T** ptr)
         {
             InternalAddRef();
-            *ptr = ptr_;
+            *ptr = _ptr;
             return HRESULT.OK;
         }
 
@@ -132,7 +132,7 @@ namespace Adamantium.DXC.Unix;
         public readonly HRESULT CopyTo(ComPtr<T>* p)
         {
             InternalAddRef();
-            *p->ReleaseAndGetAddressOf() = ptr_;
+            *p->ReleaseAndGetAddressOf() = _ptr;
             return HRESULT.OK;
         }
 
@@ -142,7 +142,7 @@ namespace Adamantium.DXC.Unix;
         public readonly HRESULT CopyTo(ref ComPtr<T> other)
         {
             InternalAddRef();
-            other.Attach(ptr_);
+            other.Attach(_ptr);
             return HRESULT.OK;
         }
 
@@ -152,7 +152,7 @@ namespace Adamantium.DXC.Unix;
         public readonly HRESULT CopyTo<U>(U** ptr)
             where U : unmanaged
         {
-            return ((IUnknown*)ptr_)->QueryInterface(__uuidof<U>(), (void**)ptr);
+            return ((IUnknown*)_ptr)->QueryInterface(__uuidof<U>(), (void**)ptr);
         }
 
         /// <summary>Converts the current COM object reference to a given interface type and assigns that to a target <see cref="ComPtr{T}"/>.</summary>
@@ -161,7 +161,7 @@ namespace Adamantium.DXC.Unix;
         public readonly HRESULT CopyTo<U>(ComPtr<U>* p)
             where U : unmanaged
         {
-            return ((IUnknown*)ptr_)->QueryInterface(__uuidof<U>(), (void**)p->ReleaseAndGetAddressOf());
+            return ((IUnknown*)_ptr)->QueryInterface(__uuidof<U>(), (void**)p->ReleaseAndGetAddressOf());
         }
 
         /// <summary>Converts the current COM object reference to a given interface type and assigns that to a target <see cref="ComPtr{T}"/>.</summary>
@@ -171,7 +171,7 @@ namespace Adamantium.DXC.Unix;
             where U : unmanaged
         {
             U* ptr;
-            HRESULT result = ((IUnknown*)ptr_)->QueryInterface(__uuidof<U>(), (void**)&ptr);
+            HRESULT result = ((IUnknown*)_ptr)->QueryInterface(__uuidof<U>(), (void**)&ptr);
 
             other.Attach(ptr);
             return result;
@@ -183,7 +183,7 @@ namespace Adamantium.DXC.Unix;
         /// <returns>The result of <see cref="IUnknown.QueryInterface"/> for the target IID.</returns>
         public readonly HRESULT CopyTo(Guid* riid, void** ptr)
         {
-            return ((IUnknown*)ptr_)->QueryInterface(riid, ptr);
+            return ((IUnknown*)_ptr)->QueryInterface(riid, ptr);
         }
 
         /// <summary>Converts the current object reference to a type indicated by the given IID and assigns that to a target <see cref="ComPtr{T}"/> value.</summary>
@@ -192,7 +192,7 @@ namespace Adamantium.DXC.Unix;
         /// <returns>The result of <see cref="IUnknown.QueryInterface"/> for the target IID.</returns>
         public readonly HRESULT CopyTo(Guid* riid, ComPtr<IUnknown>* p)
         {
-            return ((IUnknown*)ptr_)->QueryInterface(riid, (void**)p->ReleaseAndGetAddressOf());
+            return ((IUnknown*)_ptr)->QueryInterface(riid, (void**)p->ReleaseAndGetAddressOf());
         }
 
         /// <summary>Converts the current object reference to a type indicated by the given IID and assigns that to a target <see cref="ComPtr{T}"/> value.</summary>
@@ -202,7 +202,7 @@ namespace Adamantium.DXC.Unix;
         public readonly HRESULT CopyTo(Guid* riid, ref ComPtr<IUnknown> other)
         {
             IUnknown* ptr;
-            HRESULT result = ((IUnknown*)ptr_)->QueryInterface(riid, (void**)&ptr);
+            HRESULT result = ((IUnknown*)_ptr)->QueryInterface(riid, (void**)&ptr);
 
             other.Attach(ptr);
             return result;
@@ -212,10 +212,10 @@ namespace Adamantium.DXC.Unix;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
-            T* pointer = ptr_;
+            T* pointer = _ptr;
             if (pointer != null)
             {
-                ptr_ = null;
+                _ptr = null;
 
                 _ = ((IUnknown*)pointer)->Release();
             }
@@ -226,7 +226,7 @@ namespace Adamantium.DXC.Unix;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly T* Get()
         {
-            return ptr_;
+            return _ptr;
         }
 
         /// <summary>Gets the address of the current <see cref="ComPtr{T}"/> instance as a raw <typeparamref name="T"/> double pointer. This method is only valid when the current <see cref="ComPtr{T}"/> instance is on the stack or pinned.
@@ -244,7 +244,7 @@ namespace Adamantium.DXC.Unix;
         [EditorBrowsable(EditorBrowsableState.Never)]
         public readonly ref T* GetPinnableReference()
         {
-            fixed (T** ptr = &ptr_)
+            fixed (T** ptr = &_ptr)
             {
                 return ref *ptr;
             }
@@ -272,9 +272,9 @@ namespace Adamantium.DXC.Unix;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Swap(ComPtr<T>* r)
         {
-            T* tmp = ptr_;
-            ptr_ = r->ptr_;
-            r->ptr_ = tmp;
+            T* tmp = _ptr;
+            _ptr = r->_ptr;
+            r->_ptr = tmp;
         }
 
         /// <summary>Swaps the current COM object reference with that of a given <see cref="ComPtr{T}"/> instance.</summary>
@@ -282,15 +282,15 @@ namespace Adamantium.DXC.Unix;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Swap(ref ComPtr<T> other)
         {
-            T* tmp = ptr_;
-            ptr_ = other.ptr_;
-            other.ptr_ = tmp;
+            T* tmp = _ptr;
+            _ptr = other._ptr;
+            other._ptr = tmp;
         }
 
         // Increments the reference count for the current COM object, if any
         private readonly void InternalAddRef()
         {
-            T* temp = ptr_;
+            T* temp = _ptr;
 
             if (temp != null)
             {
@@ -302,11 +302,11 @@ namespace Adamantium.DXC.Unix;
         private uint InternalRelease()
         {
             uint @ref = 0;
-            T* temp = ptr_;
+            T* temp = _ptr;
 
             if (temp != null)
             {
-                ptr_ = null;
+                _ptr = null;
                 @ref = (uint)((IUnknown*)temp)->Release();
             }
 

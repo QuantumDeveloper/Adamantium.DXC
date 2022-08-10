@@ -15,20 +15,11 @@ internal static class ComPtrExtensions
     /// <returns>A <see cref="ComPtr{T}"/> instance of type <see cref="IUnknown"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe uint AddRef<T>(this ComPtr<T> ptr)
-#if NET6_0_OR_GREATER
-        where T : unmanaged, IUnknown.Interface
-#else
         where T : unmanaged
-#endif
     {
         if (ptr.Get() is not null)
         {
-#if NET6_0_OR_GREATER
-            return ptr.Get()->AddRef();
-#else
             return (uint)((IUnknown*)ptr.Get())->AddRef();
-#endif
-
         }
 
         return 0;
@@ -43,19 +34,11 @@ internal static class ComPtrExtensions
     /// <returns>A <see cref="ComPtr{T}"/> instance of type <see cref="IUnknown"/>.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe uint Release<T>(this ref ComPtr<T> ptr)
-#if NET6_0_OR_GREATER
-        where T : unmanaged, IUnknown.Interface
-#else
         where T : unmanaged
-#endif
     {
         if (ptr.Get() is not null)
         {
-#if NET6_0_OR_GREATER
-            uint count = ptr.Get()->Release();
-#else
             uint count = (uint)((IUnknown*)ptr.Get())->Release();
-#endif
 
             if (count == 0)
             {
@@ -80,11 +63,7 @@ internal static class ComPtrExtensions
     /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe ref readonly ComPtr<IUnknown> AsIUnknown<T>(this in ComPtr<T> ptr)
-#if NET6_0_OR_GREATER
-        where T : unmanaged, IUnknown.Interface
-#else
         where T : unmanaged
-#endif
     {
         return ref Unsafe.As<ComPtr<T>, ComPtr<IUnknown>>(ref Unsafe.AsRef(in ptr));
     }
@@ -98,11 +77,7 @@ internal static class ComPtrExtensions
     /// <remarks>This method is only valid when the current <see cref="ComPtr{T}"/> instance is on the stack or pinned.</remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe void** GetVoidAddressOf<T>(this in ComPtr<T> ptr)
-#if NET6_0_OR_GREATER
-        where T : unmanaged, IUnknown.Interface
-#else
         where T : unmanaged
-#endif
     {
         return (void**)Unsafe.AsPointer(ref Unsafe.AsRef(in ptr));
     }
@@ -115,11 +90,7 @@ internal static class ComPtrExtensions
     /// <returns>The moved <see cref="ComPtr{T}"/> instance.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static unsafe ComPtr<T> Move<T>(this in ComPtr<T> ptr)
-#if NET6_0_OR_GREATER
-        where T : unmanaged, IUnknown.Interface
-#else
         where T : unmanaged
-#endif
     {
         ComPtr<T> copy = default;
 
