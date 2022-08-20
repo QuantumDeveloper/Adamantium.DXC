@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -13,56 +12,30 @@ internal unsafe partial struct IDxcAssembler
 
     internal IUnknown Base;
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _QueryInterface(IDxcAssembler* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _AddRef(IDxcAssembler* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _Release(IDxcAssembler* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void _Dispose(IDxcAssembler* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _AssembleToContainer(IDxcAssembler* pThis, IDxcBlob* pShader, IDxcOperationResult** ppResult);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcAssembler* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcAssembler*, Guid*, void**, int>)(lpVtbl[0]))((IDxcAssembler*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr AddRef()
+    public nuint AddRef()
     {
-        fixed (IDxcAssembler* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcAssembler*, nuint>)(lpVtbl[1]))((IDxcAssembler*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr Release()
+    public nuint Release()
     {
-        fixed (IDxcAssembler* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcAssembler*, nuint>)(lpVtbl[2]))((IDxcAssembler*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -70,10 +43,7 @@ internal unsafe partial struct IDxcAssembler
     [VtblIndex(4)]
     public void Dispose()
     {
-        fixed (IDxcAssembler* pThis = &this)
-        {
-            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
-        }
+        ((delegate* unmanaged[Cdecl]<IDxcAssembler*, void>)(lpVtbl[4]))((IDxcAssembler*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcAssembler.xml' path='doc/member[@name="IDxcAssembler.AssembleToContainer"]/*' />
@@ -81,27 +51,24 @@ internal unsafe partial struct IDxcAssembler
     [VtblIndex(5)]
     public HRESULT AssembleToContainer(IDxcBlob* pShader, IDxcOperationResult** ppResult)
     {
-        fixed (IDxcAssembler* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AssembleToContainer>((IntPtr)(lpVtbl[5]))(pThis, pShader, ppResult);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcAssembler*, IDxcBlob*, IDxcOperationResult**, int>)(lpVtbl[5]))((IDxcAssembler*)Unsafe.AsPointer(ref this), pShader, ppResult);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Cdecl]<IDxcAssembler*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Cdecl]<IDxcAssembler*, nuint> AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr Release;
+        public delegate* unmanaged[Cdecl]<IDxcAssembler*, nuint> Release;
 
         [NativeTypeName("void () noexcept")]
-        public IntPtr Dispose;
+        public delegate* unmanaged[Cdecl]<IDxcAssembler*, void> Dispose;
 
         [NativeTypeName("HRESULT (IDxcBlob *, IDxcOperationResult **)")]
-        public IntPtr AssembleToContainer;
+        public delegate* unmanaged[Cdecl]<IDxcAssembler*, IDxcBlob*, IDxcOperationResult**, int> AssembleToContainer;
     }
 }

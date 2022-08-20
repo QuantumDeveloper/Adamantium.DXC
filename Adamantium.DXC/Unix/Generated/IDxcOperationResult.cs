@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -13,62 +12,30 @@ internal unsafe partial struct IDxcOperationResult
 
     internal IUnknown Base;
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _QueryInterface(IDxcOperationResult* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _AddRef(IDxcOperationResult* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _Release(IDxcOperationResult* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void _Dispose(IDxcOperationResult* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetStatus(IDxcOperationResult* pThis, HRESULT* pStatus);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetResult(IDxcOperationResult* pThis, IDxcBlob** ppResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetErrorBuffer(IDxcOperationResult* pThis, IDxcBlobEncoding** ppErrors);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOperationResult*, Guid*, void**, int>)(lpVtbl[0]))((IDxcOperationResult*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr AddRef()
+    public nuint AddRef()
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOperationResult*, nuint>)(lpVtbl[1]))((IDxcOperationResult*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr Release()
+    public nuint Release()
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOperationResult*, nuint>)(lpVtbl[2]))((IDxcOperationResult*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -76,10 +43,7 @@ internal unsafe partial struct IDxcOperationResult
     [VtblIndex(4)]
     public void Dispose()
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
-        }
+        ((delegate* unmanaged[Cdecl]<IDxcOperationResult*, void>)(lpVtbl[4]))((IDxcOperationResult*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcOperationResult.xml' path='doc/member[@name="IDxcOperationResult.GetStatus"]/*' />
@@ -87,10 +51,7 @@ internal unsafe partial struct IDxcOperationResult
     [VtblIndex(5)]
     public HRESULT GetStatus(HRESULT* pStatus)
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetStatus>((IntPtr)(lpVtbl[5]))(pThis, pStatus);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOperationResult*, HRESULT*, int>)(lpVtbl[5]))((IDxcOperationResult*)Unsafe.AsPointer(ref this), pStatus);
     }
 
     /// <include file='IDxcOperationResult.xml' path='doc/member[@name="IDxcOperationResult.GetResult"]/*' />
@@ -98,10 +59,7 @@ internal unsafe partial struct IDxcOperationResult
     [VtblIndex(6)]
     public HRESULT GetResult(IDxcBlob** ppResult)
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetResult>((IntPtr)(lpVtbl[6]))(pThis, ppResult);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOperationResult*, IDxcBlob**, int>)(lpVtbl[6]))((IDxcOperationResult*)Unsafe.AsPointer(ref this), ppResult);
     }
 
     /// <include file='IDxcOperationResult.xml' path='doc/member[@name="IDxcOperationResult.GetErrorBuffer"]/*' />
@@ -109,33 +67,30 @@ internal unsafe partial struct IDxcOperationResult
     [VtblIndex(7)]
     public HRESULT GetErrorBuffer(IDxcBlobEncoding** ppErrors)
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetErrorBuffer>((IntPtr)(lpVtbl[7]))(pThis, ppErrors);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOperationResult*, IDxcBlobEncoding**, int>)(lpVtbl[7]))((IDxcOperationResult*)Unsafe.AsPointer(ref this), ppErrors);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Cdecl]<IDxcOperationResult*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Cdecl]<IDxcOperationResult*, nuint> AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr Release;
+        public delegate* unmanaged[Cdecl]<IDxcOperationResult*, nuint> Release;
 
         [NativeTypeName("void () noexcept")]
-        public IntPtr Dispose;
+        public delegate* unmanaged[Cdecl]<IDxcOperationResult*, void> Dispose;
 
         [NativeTypeName("HRESULT (HRESULT *)")]
-        public IntPtr GetStatus;
+        public delegate* unmanaged[Cdecl]<IDxcOperationResult*, HRESULT*, int> GetStatus;
 
         [NativeTypeName("HRESULT (IDxcBlob **)")]
-        public IntPtr GetResult;
+        public delegate* unmanaged[Cdecl]<IDxcOperationResult*, IDxcBlob**, int> GetResult;
 
         [NativeTypeName("HRESULT (IDxcBlobEncoding **)")]
-        public IntPtr GetErrorBuffer;
+        public delegate* unmanaged[Cdecl]<IDxcOperationResult*, IDxcBlobEncoding**, int> GetErrorBuffer;
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -13,56 +12,30 @@ internal unsafe partial struct IDxcValidator
 
     internal IUnknown Base;
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _QueryInterface(IDxcValidator* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _AddRef(IDxcValidator* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _Release(IDxcValidator* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void _Dispose(IDxcValidator* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _Validate(IDxcValidator* pThis, IDxcBlob* pShader, [NativeTypeName("UINT32")] uint Flags, IDxcOperationResult** ppResult);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcValidator* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcValidator*, Guid*, void**, int>)(lpVtbl[0]))((IDxcValidator*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr AddRef()
+    public nuint AddRef()
     {
-        fixed (IDxcValidator* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcValidator*, nuint>)(lpVtbl[1]))((IDxcValidator*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr Release()
+    public nuint Release()
     {
-        fixed (IDxcValidator* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcValidator*, nuint>)(lpVtbl[2]))((IDxcValidator*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -70,10 +43,7 @@ internal unsafe partial struct IDxcValidator
     [VtblIndex(4)]
     public void Dispose()
     {
-        fixed (IDxcValidator* pThis = &this)
-        {
-            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
-        }
+        ((delegate* unmanaged[Cdecl]<IDxcValidator*, void>)(lpVtbl[4]))((IDxcValidator*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcValidator.xml' path='doc/member[@name="IDxcValidator.Validate"]/*' />
@@ -81,27 +51,24 @@ internal unsafe partial struct IDxcValidator
     [VtblIndex(5)]
     public HRESULT Validate(IDxcBlob* pShader, [NativeTypeName("UINT32")] uint Flags, IDxcOperationResult** ppResult)
     {
-        fixed (IDxcValidator* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Validate>((IntPtr)(lpVtbl[5]))(pThis, pShader, Flags, ppResult);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcValidator*, IDxcBlob*, uint, IDxcOperationResult**, int>)(lpVtbl[5]))((IDxcValidator*)Unsafe.AsPointer(ref this), pShader, Flags, ppResult);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Cdecl]<IDxcValidator*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Cdecl]<IDxcValidator*, nuint> AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr Release;
+        public delegate* unmanaged[Cdecl]<IDxcValidator*, nuint> Release;
 
         [NativeTypeName("void () noexcept")]
-        public IntPtr Dispose;
+        public delegate* unmanaged[Cdecl]<IDxcValidator*, void> Dispose;
 
         [NativeTypeName("HRESULT (IDxcBlob *, UINT32, IDxcOperationResult **)")]
-        public IntPtr Validate;
+        public delegate* unmanaged[Cdecl]<IDxcValidator*, IDxcBlob*, uint, IDxcOperationResult**, int> Validate;
     }
 }

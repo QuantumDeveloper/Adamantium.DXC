@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -13,61 +12,30 @@ internal unsafe partial struct IDxcBlob
 
     internal IUnknown Base;
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _QueryInterface(IDxcBlob* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _AddRef(IDxcBlob* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _Release(IDxcBlob* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void _Dispose(IDxcBlob* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("LPVOID")]
-    public delegate void* _GetBufferPointer(IDxcBlob* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("SIZE_T")]
-    public delegate nuint _GetBufferSize(IDxcBlob* pThis);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcBlob* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcBlob*, Guid*, void**, int>)(lpVtbl[0]))((IDxcBlob*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr AddRef()
+    public nuint AddRef()
     {
-        fixed (IDxcBlob* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcBlob*, nuint>)(lpVtbl[1]))((IDxcBlob*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr Release()
+    public nuint Release()
     {
-        fixed (IDxcBlob* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcBlob*, nuint>)(lpVtbl[2]))((IDxcBlob*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -75,10 +43,7 @@ internal unsafe partial struct IDxcBlob
     [VtblIndex(4)]
     public void Dispose()
     {
-        fixed (IDxcBlob* pThis = &this)
-        {
-            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
-        }
+        ((delegate* unmanaged[Cdecl]<IDxcBlob*, void>)(lpVtbl[4]))((IDxcBlob*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcBlob.xml' path='doc/member[@name="IDxcBlob.GetBufferPointer"]/*' />
@@ -87,10 +52,7 @@ internal unsafe partial struct IDxcBlob
     [return: NativeTypeName("LPVOID")]
     public void* GetBufferPointer()
     {
-        fixed (IDxcBlob* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetBufferPointer>((IntPtr)(lpVtbl[5]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcBlob*, void*>)(lpVtbl[5]))((IDxcBlob*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcBlob.xml' path='doc/member[@name="IDxcBlob.GetBufferSize"]/*' />
@@ -99,30 +61,27 @@ internal unsafe partial struct IDxcBlob
     [return: NativeTypeName("SIZE_T")]
     public nuint GetBufferSize()
     {
-        fixed (IDxcBlob* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetBufferSize>((IntPtr)(lpVtbl[6]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcBlob*, nuint>)(lpVtbl[6]))((IDxcBlob*)Unsafe.AsPointer(ref this));
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Cdecl]<IDxcBlob*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Cdecl]<IDxcBlob*, nuint> AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr Release;
+        public delegate* unmanaged[Cdecl]<IDxcBlob*, nuint> Release;
 
         [NativeTypeName("void () noexcept")]
-        public IntPtr Dispose;
+        public delegate* unmanaged[Cdecl]<IDxcBlob*, void> Dispose;
 
         [NativeTypeName("LPVOID ()")]
-        public IntPtr GetBufferPointer;
+        public delegate* unmanaged[Cdecl]<IDxcBlob*, void*> GetBufferPointer;
 
         [NativeTypeName("SIZE_T ()")]
-        public IntPtr GetBufferSize;
+        public delegate* unmanaged[Cdecl]<IDxcBlob*, nuint> GetBufferSize;
     }
 }

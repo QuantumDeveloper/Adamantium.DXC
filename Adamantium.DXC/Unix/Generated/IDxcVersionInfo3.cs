@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -13,56 +12,30 @@ internal unsafe partial struct IDxcVersionInfo3
 
     internal IUnknown Base;
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _QueryInterface(IDxcVersionInfo3* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _AddRef(IDxcVersionInfo3* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _Release(IDxcVersionInfo3* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void _Dispose(IDxcVersionInfo3* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetCustomVersionString(IDxcVersionInfo3* pThis, [NativeTypeName("char **")] sbyte** pVersionString);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcVersionInfo3* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, Guid*, void**, int>)(lpVtbl[0]))((IDxcVersionInfo3*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr AddRef()
+    public nuint AddRef()
     {
-        fixed (IDxcVersionInfo3* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, nuint>)(lpVtbl[1]))((IDxcVersionInfo3*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr Release()
+    public nuint Release()
     {
-        fixed (IDxcVersionInfo3* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, nuint>)(lpVtbl[2]))((IDxcVersionInfo3*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -70,10 +43,7 @@ internal unsafe partial struct IDxcVersionInfo3
     [VtblIndex(4)]
     public void Dispose()
     {
-        fixed (IDxcVersionInfo3* pThis = &this)
-        {
-            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
-        }
+        ((delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, void>)(lpVtbl[4]))((IDxcVersionInfo3*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcVersionInfo3.xml' path='doc/member[@name="IDxcVersionInfo3.GetCustomVersionString"]/*' />
@@ -81,27 +51,24 @@ internal unsafe partial struct IDxcVersionInfo3
     [VtblIndex(5)]
     public HRESULT GetCustomVersionString([NativeTypeName("char **")] sbyte** pVersionString)
     {
-        fixed (IDxcVersionInfo3* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetCustomVersionString>((IntPtr)(lpVtbl[5]))(pThis, pVersionString);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, sbyte**, int>)(lpVtbl[5]))((IDxcVersionInfo3*)Unsafe.AsPointer(ref this), pVersionString);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, nuint> AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr Release;
+        public delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, nuint> Release;
 
         [NativeTypeName("void () noexcept")]
-        public IntPtr Dispose;
+        public delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, void> Dispose;
 
         [NativeTypeName("HRESULT (char **)")]
-        public IntPtr GetCustomVersionString;
+        public delegate* unmanaged[Cdecl]<IDxcVersionInfo3*, sbyte**, int> GetCustomVersionString;
     }
 }

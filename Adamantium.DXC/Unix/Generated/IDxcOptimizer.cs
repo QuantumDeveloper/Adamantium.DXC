@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -13,62 +12,30 @@ internal unsafe partial struct IDxcOptimizer
 
     internal IUnknown Base;
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _QueryInterface(IDxcOptimizer* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _AddRef(IDxcOptimizer* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _Release(IDxcOptimizer* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void _Dispose(IDxcOptimizer* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetAvailablePassCount(IDxcOptimizer* pThis, [NativeTypeName("UINT32 *")] uint* pCount);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetAvailablePass(IDxcOptimizer* pThis, [NativeTypeName("UINT32")] uint index, IDxcOptimizerPass** ppResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _RunOptimizer(IDxcOptimizer* pThis, IDxcBlob* pBlob, [NativeTypeName("LPCWSTR *")] uint** ppOptions, [NativeTypeName("UINT32")] uint optionCount, IDxcBlob** pOutputModule, IDxcBlobEncoding** ppOutputText);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcOptimizer* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOptimizer*, Guid*, void**, int>)(lpVtbl[0]))((IDxcOptimizer*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr AddRef()
+    public nuint AddRef()
     {
-        fixed (IDxcOptimizer* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOptimizer*, nuint>)(lpVtbl[1]))((IDxcOptimizer*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr Release()
+    public nuint Release()
     {
-        fixed (IDxcOptimizer* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOptimizer*, nuint>)(lpVtbl[2]))((IDxcOptimizer*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -76,10 +43,7 @@ internal unsafe partial struct IDxcOptimizer
     [VtblIndex(4)]
     public void Dispose()
     {
-        fixed (IDxcOptimizer* pThis = &this)
-        {
-            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
-        }
+        ((delegate* unmanaged[Cdecl]<IDxcOptimizer*, void>)(lpVtbl[4]))((IDxcOptimizer*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcOptimizer.xml' path='doc/member[@name="IDxcOptimizer.GetAvailablePassCount"]/*' />
@@ -87,10 +51,7 @@ internal unsafe partial struct IDxcOptimizer
     [VtblIndex(5)]
     public HRESULT GetAvailablePassCount([NativeTypeName("UINT32 *")] uint* pCount)
     {
-        fixed (IDxcOptimizer* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetAvailablePassCount>((IntPtr)(lpVtbl[5]))(pThis, pCount);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOptimizer*, uint*, int>)(lpVtbl[5]))((IDxcOptimizer*)Unsafe.AsPointer(ref this), pCount);
     }
 
     /// <include file='IDxcOptimizer.xml' path='doc/member[@name="IDxcOptimizer.GetAvailablePass"]/*' />
@@ -98,10 +59,7 @@ internal unsafe partial struct IDxcOptimizer
     [VtblIndex(6)]
     public HRESULT GetAvailablePass([NativeTypeName("UINT32")] uint index, IDxcOptimizerPass** ppResult)
     {
-        fixed (IDxcOptimizer* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetAvailablePass>((IntPtr)(lpVtbl[6]))(pThis, index, ppResult);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOptimizer*, uint, IDxcOptimizerPass**, int>)(lpVtbl[6]))((IDxcOptimizer*)Unsafe.AsPointer(ref this), index, ppResult);
     }
 
     /// <include file='IDxcOptimizer.xml' path='doc/member[@name="IDxcOptimizer.RunOptimizer"]/*' />
@@ -109,33 +67,30 @@ internal unsafe partial struct IDxcOptimizer
     [VtblIndex(7)]
     public HRESULT RunOptimizer(IDxcBlob* pBlob, [NativeTypeName("LPCWSTR *")] uint** ppOptions, [NativeTypeName("UINT32")] uint optionCount, IDxcBlob** pOutputModule, IDxcBlobEncoding** ppOutputText)
     {
-        fixed (IDxcOptimizer* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_RunOptimizer>((IntPtr)(lpVtbl[7]))(pThis, pBlob, ppOptions, optionCount, pOutputModule, ppOutputText);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcOptimizer*, IDxcBlob*, uint**, uint, IDxcBlob**, IDxcBlobEncoding**, int>)(lpVtbl[7]))((IDxcOptimizer*)Unsafe.AsPointer(ref this), pBlob, ppOptions, optionCount, pOutputModule, ppOutputText);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Cdecl]<IDxcOptimizer*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Cdecl]<IDxcOptimizer*, nuint> AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr Release;
+        public delegate* unmanaged[Cdecl]<IDxcOptimizer*, nuint> Release;
 
         [NativeTypeName("void () noexcept")]
-        public IntPtr Dispose;
+        public delegate* unmanaged[Cdecl]<IDxcOptimizer*, void> Dispose;
 
         [NativeTypeName("HRESULT (UINT32 *)")]
-        public IntPtr GetAvailablePassCount;
+        public delegate* unmanaged[Cdecl]<IDxcOptimizer*, uint*, int> GetAvailablePassCount;
 
         [NativeTypeName("HRESULT (UINT32, IDxcOptimizerPass **)")]
-        public IntPtr GetAvailablePass;
+        public delegate* unmanaged[Cdecl]<IDxcOptimizer*, uint, IDxcOptimizerPass**, int> GetAvailablePass;
 
         [NativeTypeName("HRESULT (IDxcBlob *, LPCWSTR *, UINT32, IDxcBlob **, IDxcBlobEncoding **)")]
-        public IntPtr RunOptimizer;
+        public delegate* unmanaged[Cdecl]<IDxcOptimizer*, IDxcBlob*, uint**, uint, IDxcBlob**, IDxcBlobEncoding**, int> RunOptimizer;
     }
 }

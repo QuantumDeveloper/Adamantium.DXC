@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -13,60 +12,30 @@ internal unsafe partial struct IDxcExtraOutputs
 
     internal IUnknown Base;
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _QueryInterface(IDxcExtraOutputs* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _AddRef(IDxcExtraOutputs* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _Release(IDxcExtraOutputs* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void _Dispose(IDxcExtraOutputs* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("UINT32")]
-    public delegate uint _GetOutputCount(IDxcExtraOutputs* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetOutput(IDxcExtraOutputs* pThis, [NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("REFIID")] Guid* iid, void** ppvObject, [NativeTypeName("IDxcBlobWide **")] IDxcBlobUtf16** ppOutputType, [NativeTypeName("IDxcBlobWide **")] IDxcBlobUtf16** ppOutputName);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcExtraOutputs* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, Guid*, void**, int>)(lpVtbl[0]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr AddRef()
+    public nuint AddRef()
     {
-        fixed (IDxcExtraOutputs* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, nuint>)(lpVtbl[1]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr Release()
+    public nuint Release()
     {
-        fixed (IDxcExtraOutputs* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, nuint>)(lpVtbl[2]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -74,10 +43,7 @@ internal unsafe partial struct IDxcExtraOutputs
     [VtblIndex(4)]
     public void Dispose()
     {
-        fixed (IDxcExtraOutputs* pThis = &this)
-        {
-            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
-        }
+        ((delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, void>)(lpVtbl[4]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcExtraOutputs.xml' path='doc/member[@name="IDxcExtraOutputs.GetOutputCount"]/*' />
@@ -86,10 +52,7 @@ internal unsafe partial struct IDxcExtraOutputs
     [return: NativeTypeName("UINT32")]
     public uint GetOutputCount()
     {
-        fixed (IDxcExtraOutputs* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetOutputCount>((IntPtr)(lpVtbl[5]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, uint>)(lpVtbl[5]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcExtraOutputs.xml' path='doc/member[@name="IDxcExtraOutputs.GetOutput"]/*' />
@@ -97,30 +60,27 @@ internal unsafe partial struct IDxcExtraOutputs
     [VtblIndex(6)]
     public HRESULT GetOutput([NativeTypeName("UINT32")] uint uIndex, [NativeTypeName("REFIID")] Guid* iid, void** ppvObject, [NativeTypeName("IDxcBlobWide **")] IDxcBlobUtf16** ppOutputType, [NativeTypeName("IDxcBlobWide **")] IDxcBlobUtf16** ppOutputName)
     {
-        fixed (IDxcExtraOutputs* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetOutput>((IntPtr)(lpVtbl[6]))(pThis, uIndex, iid, ppvObject, ppOutputType, ppOutputName);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, uint, Guid*, void**, IDxcBlobUtf16**, IDxcBlobUtf16**, int>)(lpVtbl[6]))((IDxcExtraOutputs*)Unsafe.AsPointer(ref this), uIndex, iid, ppvObject, ppOutputType, ppOutputName);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, nuint> AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr Release;
+        public delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, nuint> Release;
 
         [NativeTypeName("void () noexcept")]
-        public IntPtr Dispose;
+        public delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, void> Dispose;
 
         [NativeTypeName("UINT32 ()")]
-        public IntPtr GetOutputCount;
+        public delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, uint> GetOutputCount;
 
         [NativeTypeName("HRESULT (UINT32, REFIID, void **, IDxcBlobWide **, IDxcBlobWide **)")]
-        public IntPtr GetOutput;
+        public delegate* unmanaged[Cdecl]<IDxcExtraOutputs*, uint, Guid*, void**, IDxcBlobUtf16**, IDxcBlobUtf16**, int> GetOutput;
     }
 }

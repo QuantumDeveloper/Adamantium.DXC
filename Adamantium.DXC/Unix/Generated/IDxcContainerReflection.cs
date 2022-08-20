@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Adamantium.DXC.Unix;
 
@@ -13,71 +12,30 @@ internal unsafe partial struct IDxcContainerReflection
 
     internal IUnknown Base;
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _QueryInterface(IDxcContainerReflection* pThis, [NativeTypeName("REFIID")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _AddRef(IDxcContainerReflection* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    [return: NativeTypeName("ULONG")]
-    public delegate UIntPtr _Release(IDxcContainerReflection* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void _Dispose(IDxcContainerReflection* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _Load(IDxcContainerReflection* pThis, IDxcBlob* pContainer);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetPartCount(IDxcContainerReflection* pThis, [NativeTypeName("UINT32 *")] uint* pResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetPartKind(IDxcContainerReflection* pThis, [NativeTypeName("UINT32")] uint idx, [NativeTypeName("UINT32 *")] uint* pResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetPartContent(IDxcContainerReflection* pThis, [NativeTypeName("UINT32")] uint idx, IDxcBlob** ppResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _FindFirstPartKind(IDxcContainerReflection* pThis, [NativeTypeName("UINT32")] uint kind, [NativeTypeName("UINT32 *")] uint* pResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate HRESULT _GetPartReflection(IDxcContainerReflection* pThis, [NativeTypeName("UINT32")] uint idx, [NativeTypeName("REFIID")] Guid* iid, void** ppvObject);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("REFIID")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, Guid*, void**, int>)(lpVtbl[0]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(1)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr AddRef()
+    public nuint AddRef()
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, nuint>)(lpVtbl[1]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(2)]
     [return: NativeTypeName("ULONG")]
-    public UIntPtr Release()
+    public nuint Release()
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, nuint>)(lpVtbl[2]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Dispose" />
@@ -85,10 +43,7 @@ internal unsafe partial struct IDxcContainerReflection
     [VtblIndex(4)]
     public void Dispose()
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            Marshal.GetDelegateForFunctionPointer<_Dispose>((IntPtr)(lpVtbl[4]))(pThis);
-        }
+        ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, void>)(lpVtbl[4]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcContainerReflection.xml' path='doc/member[@name="IDxcContainerReflection.Load"]/*' />
@@ -96,10 +51,7 @@ internal unsafe partial struct IDxcContainerReflection
     [VtblIndex(5)]
     public HRESULT Load(IDxcBlob* pContainer)
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Load>((IntPtr)(lpVtbl[5]))(pThis, pContainer);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, IDxcBlob*, int>)(lpVtbl[5]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this), pContainer);
     }
 
     /// <include file='IDxcContainerReflection.xml' path='doc/member[@name="IDxcContainerReflection.GetPartCount"]/*' />
@@ -107,10 +59,7 @@ internal unsafe partial struct IDxcContainerReflection
     [VtblIndex(6)]
     public HRESULT GetPartCount([NativeTypeName("UINT32 *")] uint* pResult)
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetPartCount>((IntPtr)(lpVtbl[6]))(pThis, pResult);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint*, int>)(lpVtbl[6]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this), pResult);
     }
 
     /// <include file='IDxcContainerReflection.xml' path='doc/member[@name="IDxcContainerReflection.GetPartKind"]/*' />
@@ -118,10 +67,7 @@ internal unsafe partial struct IDxcContainerReflection
     [VtblIndex(7)]
     public HRESULT GetPartKind([NativeTypeName("UINT32")] uint idx, [NativeTypeName("UINT32 *")] uint* pResult)
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetPartKind>((IntPtr)(lpVtbl[7]))(pThis, idx, pResult);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint, uint*, int>)(lpVtbl[7]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this), idx, pResult);
     }
 
     /// <include file='IDxcContainerReflection.xml' path='doc/member[@name="IDxcContainerReflection.GetPartContent"]/*' />
@@ -129,10 +75,7 @@ internal unsafe partial struct IDxcContainerReflection
     [VtblIndex(8)]
     public HRESULT GetPartContent([NativeTypeName("UINT32")] uint idx, IDxcBlob** ppResult)
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetPartContent>((IntPtr)(lpVtbl[8]))(pThis, idx, ppResult);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint, IDxcBlob**, int>)(lpVtbl[8]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this), idx, ppResult);
     }
 
     /// <include file='IDxcContainerReflection.xml' path='doc/member[@name="IDxcContainerReflection.FindFirstPartKind"]/*' />
@@ -140,10 +83,7 @@ internal unsafe partial struct IDxcContainerReflection
     [VtblIndex(9)]
     public HRESULT FindFirstPartKind([NativeTypeName("UINT32")] uint kind, [NativeTypeName("UINT32 *")] uint* pResult)
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_FindFirstPartKind>((IntPtr)(lpVtbl[9]))(pThis, kind, pResult);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint, uint*, int>)(lpVtbl[9]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this), kind, pResult);
     }
 
     /// <include file='IDxcContainerReflection.xml' path='doc/member[@name="IDxcContainerReflection.GetPartReflection"]/*' />
@@ -151,42 +91,39 @@ internal unsafe partial struct IDxcContainerReflection
     [VtblIndex(10)]
     public HRESULT GetPartReflection([NativeTypeName("UINT32")] uint idx, [NativeTypeName("REFIID")] Guid* iid, void** ppvObject)
     {
-        fixed (IDxcContainerReflection* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetPartReflection>((IntPtr)(lpVtbl[10]))(pThis, idx, iid, ppvObject);
-        }
+        return ((delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint, Guid*, void**, int>)(lpVtbl[10]))((IDxcContainerReflection*)Unsafe.AsPointer(ref this), idx, iid, ppvObject);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (REFIID, void **)")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, nuint> AddRef;
 
         [NativeTypeName("ULONG ()")]
-        public IntPtr Release;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, nuint> Release;
 
         [NativeTypeName("void () noexcept")]
-        public IntPtr Dispose;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, void> Dispose;
 
         [NativeTypeName("HRESULT (IDxcBlob *)")]
-        public IntPtr Load;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, IDxcBlob*, int> Load;
 
         [NativeTypeName("HRESULT (UINT32 *)")]
-        public IntPtr GetPartCount;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint*, int> GetPartCount;
 
         [NativeTypeName("HRESULT (UINT32, UINT32 *)")]
-        public IntPtr GetPartKind;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint, uint*, int> GetPartKind;
 
         [NativeTypeName("HRESULT (UINT32, IDxcBlob **)")]
-        public IntPtr GetPartContent;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint, IDxcBlob**, int> GetPartContent;
 
         [NativeTypeName("HRESULT (UINT32, UINT32 *)")]
-        public IntPtr FindFirstPartKind;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint, uint*, int> FindFirstPartKind;
 
         [NativeTypeName("HRESULT (UINT32, REFIID, void **)")]
-        public IntPtr GetPartReflection;
+        public delegate* unmanaged[Cdecl]<IDxcContainerReflection*, uint, Guid*, void**, int> GetPartReflection;
     }
 }

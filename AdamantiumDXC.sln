@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32728.150
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adamantium.DXC", "Adamantium.DXC\Adamantium.DXC.csproj", "{D1F8642A-C1D8-481D-A965-9051864AF5EB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adamantium.DXC.Generator", "Adamantium.DXC.Generator\Adamantium.DXC.Generator.csproj", "{2282B44A-08C9-44B3-A2AC-25AFC8659CCD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamantiumDXC.Demo", "AdamantiumDXC.Demo\AdamantiumDXC.Demo.csproj", "{A772244D-9AE5-4B58-9296-81CD26E25D06}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamantiumVulkan.Common", "..\AdamantiumVulkan\AdamantiumVulkan.Common\AdamantiumVulkan.Common.csproj", "{EEDD0454-2CF3-47E7-A94E-E8684B67DF35}"
@@ -23,10 +21,6 @@ Global
 		{D1F8642A-C1D8-481D-A965-9051864AF5EB}.Debug|Any CPU.Build.0 = Debug|x64
 		{D1F8642A-C1D8-481D-A965-9051864AF5EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1F8642A-C1D8-481D-A965-9051864AF5EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2282B44A-08C9-44B3-A2AC-25AFC8659CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2282B44A-08C9-44B3-A2AC-25AFC8659CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2282B44A-08C9-44B3-A2AC-25AFC8659CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2282B44A-08C9-44B3-A2AC-25AFC8659CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A772244D-9AE5-4B58-9296-81CD26E25D06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A772244D-9AE5-4B58-9296-81CD26E25D06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A772244D-9AE5-4B58-9296-81CD26E25D06}.Release|Any CPU.ActiveCfg = Release|Any CPU
