@@ -7,12 +7,39 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
     <ItemGroup>
+      <None Remove="structs.hlsl" />
+      <None Remove="UIEffect.fx" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\AdamantiumVulkan\AdamantiumVulkan.Common\AdamantiumVulkan.Common.csproj" />
+      <ProjectReference Include="..\..\AdamantiumVulkan\AdamantiumVulkan.SPIRV\AdamantiumVulkan.SPIRV.csproj" />
       <ProjectReference Include="..\Adamantium.DXC\Adamantium.DXC.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="simpleVertex.hlsl">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="BasicEffect.fx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="structs.hlsl">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="UIEffect.fx">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

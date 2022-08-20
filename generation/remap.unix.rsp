@@ -1,0 +1,9 @@
+@remap-classes.rsp
+@remap-guids.rsp
+@remap-handles.rsp
+@remap-members.rsp
+@remap-namespaces.unix.rsp
+@remap-nints.rsp
+@remap-structs.rsp
+@remap-transparent.rsp
+@remap-types.rsp

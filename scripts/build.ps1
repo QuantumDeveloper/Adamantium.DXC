@@ -2,4 +2,5 @@
 #Set-Location -Path $scriptpath
 
 cd ..\generation
-ClangSharpPInvokeGenerator "@generate.rsp"
+ClangSharpPInvokeGenerator "@generate.windows.rsp"
+ClangSharpPInvokeGenerator "@generate.unix.rsp"

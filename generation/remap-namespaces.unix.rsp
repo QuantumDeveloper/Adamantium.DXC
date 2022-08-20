@@ -1,0 +1,3 @@
+--with-namespace
+IUnknown=Adamantium.DXC.Unix
+
