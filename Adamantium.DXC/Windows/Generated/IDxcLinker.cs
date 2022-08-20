@@ -12,32 +12,12 @@ internal unsafe partial struct IDxcLinker
 {
     public void** lpVtbl;
 
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _QueryInterface(IDxcLinker* pThis, [NativeTypeName("const IID &")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _AddRef(IDxcLinker* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _Release(IDxcLinker* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _RegisterLibrary(IDxcLinker* pThis, [NativeTypeName("LPCWSTR")] ushort* pLibName, IDxcBlob* pLib);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _Link(IDxcLinker* pThis, [NativeTypeName("LPCWSTR")] ushort* pEntryName, [NativeTypeName("LPCWSTR")] ushort* pTargetProfile, [NativeTypeName("const LPCWSTR *")] ushort** pLibNames, [NativeTypeName("UINT32")] uint libCount, [NativeTypeName("const LPCWSTR *")] ushort** pArguments, [NativeTypeName("UINT32")] uint argCount, IDxcOperationResult** ppResult);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("const IID &")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcLinker* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcLinker*, Guid*, void**, int>)(lpVtbl[0]))((IDxcLinker*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
@@ -46,10 +26,7 @@ internal unsafe partial struct IDxcLinker
     [return: NativeTypeName("ULONG")]
     public uint AddRef()
     {
-        fixed (IDxcLinker* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcLinker*, uint>)(lpVtbl[1]))((IDxcLinker*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
@@ -58,10 +35,7 @@ internal unsafe partial struct IDxcLinker
     [return: NativeTypeName("ULONG")]
     public uint Release()
     {
-        fixed (IDxcLinker* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcLinker*, uint>)(lpVtbl[2]))((IDxcLinker*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcLinker.xml' path='doc/member[@name="IDxcLinker.RegisterLibrary"]/*' />
@@ -69,10 +43,7 @@ internal unsafe partial struct IDxcLinker
     [VtblIndex(3)]
     public HRESULT RegisterLibrary([NativeTypeName("LPCWSTR")] ushort* pLibName, IDxcBlob* pLib)
     {
-        fixed (IDxcLinker* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_RegisterLibrary>((IntPtr)(lpVtbl[3]))(pThis, pLibName, pLib);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcLinker*, ushort*, IDxcBlob*, int>)(lpVtbl[3]))((IDxcLinker*)Unsafe.AsPointer(ref this), pLibName, pLib);
     }
 
     /// <include file='IDxcLinker.xml' path='doc/member[@name="IDxcLinker.Link"]/*' />
@@ -80,27 +51,24 @@ internal unsafe partial struct IDxcLinker
     [VtblIndex(4)]
     public HRESULT Link([NativeTypeName("LPCWSTR")] ushort* pEntryName, [NativeTypeName("LPCWSTR")] ushort* pTargetProfile, [NativeTypeName("const LPCWSTR *")] ushort** pLibNames, [NativeTypeName("UINT32")] uint libCount, [NativeTypeName("const LPCWSTR *")] ushort** pArguments, [NativeTypeName("UINT32")] uint argCount, IDxcOperationResult** ppResult)
     {
-        fixed (IDxcLinker* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Link>((IntPtr)(lpVtbl[4]))(pThis, pEntryName, pTargetProfile, pLibNames, libCount, pArguments, argCount, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcLinker*, ushort*, ushort*, ushort**, uint, ushort**, uint, IDxcOperationResult**, int>)(lpVtbl[4]))((IDxcLinker*)Unsafe.AsPointer(ref this), pEntryName, pTargetProfile, pLibNames, libCount, pArguments, argCount, ppResult);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (const IID &, void **) __attribute__((stdcall))")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Stdcall]<IDxcLinker*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Stdcall]<IDxcLinker*, uint> AddRef;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr Release;
+        public delegate* unmanaged[Stdcall]<IDxcLinker*, uint> Release;
 
         [NativeTypeName("HRESULT (LPCWSTR, IDxcBlob *)")]
-        public IntPtr RegisterLibrary;
+        public delegate* unmanaged[Stdcall]<IDxcLinker*, ushort*, IDxcBlob*, int> RegisterLibrary;
 
         [NativeTypeName("HRESULT (LPCWSTR, LPCWSTR, const LPCWSTR *, UINT32, const LPCWSTR *, UINT32, IDxcOperationResult **) __attribute__((stdcall))")]
-        public IntPtr Link;
+        public delegate* unmanaged[Stdcall]<IDxcLinker*, ushort*, ushort*, ushort**, uint, ushort**, uint, IDxcOperationResult**, int> Link;
     }
 }

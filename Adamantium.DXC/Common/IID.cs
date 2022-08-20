@@ -30,16 +30,18 @@ internal static partial class IID
     public static readonly unsafe Guid* IDxcVersionInfo3;
     public static readonly unsafe Guid* IDxcPdbUtils;
 
+    public static readonly unsafe Guid* IUnknown;
+
     static IID()
     {
         unsafe
         {
-            IDxcCompiler3 =    (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
-            IDxcUtils =        (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
-            IDxcBlob =         (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcCompiler3 = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcUtils = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcBlob = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
             IDxcBlobEncoding = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
-            IDxcBlobWide =     (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
-            IDxcBlobUtf8 =       (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcBlobWide = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+            IDxcBlobUtf8 = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
             IDxcIncludeHandler = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
             IDxcCompilerArgs = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
             IDxcOperationResult = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
@@ -59,8 +61,10 @@ internal static partial class IID
             IDxcVersionInfo2 = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
             IDxcVersionInfo3 = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
             IDxcPdbUtils = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
-            
-            
+
+            IUnknown = (Guid*)RuntimeHelpers.AllocateTypeAssociatedMemory(sizeof(Guid));
+
+
             *IDxcCompiler3 = IDxcCompiler3Guid;
             *IDxcUtils = IDxcUtilsGuid;
             *IDxcBlob = IDxcBlobGuid;
@@ -86,11 +90,14 @@ internal static partial class IID
             *IDxcVersionInfo2 = IDxcVersionInfo2Guid;
             *IDxcVersionInfo3 = IDxcVersionInfo3Guid;
             *IDxcPdbUtils = IDxcPdbUtilsGuid;
+
+            *IUnknown = IUnknownGuid;
         }
     }
 
     private static readonly Guid IDxcBlobGuid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0x08, 0xFB, 0xA5, 0x8B,
             0x95, 0x51,
             0xE2, 0x40,
@@ -313,7 +320,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcValidatorGuid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0xD2, 0x2B, 0xE8, 0xA6,
             0xD7, 0x1F,
             0x26, 0x48,
@@ -328,7 +336,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcValidator2Guid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0xD1, 0x1F, 0x8E, 0x45,
             0xB2, 0xB1,
             0x50, 0x47,
@@ -343,7 +352,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcContainerBuilderGuid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0x50, 0x1F, 0x4B, 0x33,
             0x92, 0x22,
             0x35, 0x4B,
@@ -358,7 +368,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcAssemblerGuid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0x26, 0x7A, 0x1F, 0x09,
             0x1F, 0x1C,
             0x48, 0x49,
@@ -373,7 +384,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcContainerReflectionGuid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0x26, 0x1B, 0xC2, 0xD2,
             0x50, 0x83,
             0xDC, 0x4B,
@@ -388,7 +400,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcOptimizerPassGuid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0x9F, 0xD7, 0x2C, 0xAE,
             0x22, 0xCC,
             0x3F, 0x45,
@@ -403,7 +416,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcOptimizerGuid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0x2E, 0x0E, 0x74, 0x25,
             0xBA, 0x9C,
             0x1B, 0x40,
@@ -418,7 +432,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcVersionInfoGuid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0x50, 0x5B, 0x4F, 0xB0,
             0x59, 0x20,
             0x12, 0x4F,
@@ -433,7 +448,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcVersionInfo2Guid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0xC4, 0x04, 0x69, 0xFB,
             0xF0, 0x42,
             0x62, 0x4B,
@@ -448,7 +464,8 @@ internal static partial class IID
         });
 
     private static readonly Guid IDxcVersionInfo3Guid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0x43, 0xE8, 0x13, 0x5E,
             0x25, 0x9D,
             0x3C, 0x47,
@@ -463,7 +480,8 @@ internal static partial class IID
         });
 
     public static readonly Guid IDxcPdbUtilsGuid = new Guid(
-        new byte[] {
+        new byte[]
+        {
             0x7E, 0x64, 0xC9, 0xE6,
             0x6A, 0x9D,
             0x3B, 0x4C,
@@ -475,5 +493,21 @@ internal static partial class IID
             0x6C,
             0x34,
             0x3D
+        });
+
+    public static readonly Guid IUnknownGuid = new Guid(
+        new byte[]
+        {
+            0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00,
+            0x00, 0x00,
+            0xC0,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x46
         });
 }

@@ -12,32 +12,12 @@ internal unsafe partial struct IDxcCompiler3
 {
     public void** lpVtbl;
 
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _QueryInterface(IDxcCompiler3* pThis, [NativeTypeName("const IID &")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _AddRef(IDxcCompiler3* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _Release(IDxcCompiler3* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _Compile(IDxcCompiler3* pThis, [NativeTypeName("const DxcBuffer *")] DxcBuffer* pSource, [NativeTypeName("LPCWSTR *")] ushort** pArguments, [NativeTypeName("UINT32")] uint argCount, IDxcIncludeHandler* pIncludeHandler, [NativeTypeName("const IID &")] Guid* riid, [NativeTypeName("LPVOID *")] void** ppResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _Disassemble(IDxcCompiler3* pThis, [NativeTypeName("const DxcBuffer *")] DxcBuffer* pObject, [NativeTypeName("const IID &")] Guid* riid, [NativeTypeName("LPVOID *")] void** ppResult);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("const IID &")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcCompiler3* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcCompiler3*, Guid*, void**, int>)(lpVtbl[0]))((IDxcCompiler3*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
@@ -46,10 +26,7 @@ internal unsafe partial struct IDxcCompiler3
     [return: NativeTypeName("ULONG")]
     public uint AddRef()
     {
-        fixed (IDxcCompiler3* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcCompiler3*, uint>)(lpVtbl[1]))((IDxcCompiler3*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
@@ -58,10 +35,7 @@ internal unsafe partial struct IDxcCompiler3
     [return: NativeTypeName("ULONG")]
     public uint Release()
     {
-        fixed (IDxcCompiler3* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcCompiler3*, uint>)(lpVtbl[2]))((IDxcCompiler3*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcCompiler3.xml' path='doc/member[@name="IDxcCompiler3.Compile"]/*' />
@@ -69,38 +43,32 @@ internal unsafe partial struct IDxcCompiler3
     [VtblIndex(3)]
     public HRESULT Compile([NativeTypeName("const DxcBuffer *")] DxcBuffer* pSource, [NativeTypeName("LPCWSTR *")] ushort** pArguments, [NativeTypeName("UINT32")] uint argCount, IDxcIncludeHandler* pIncludeHandler, [NativeTypeName("const IID &")] Guid* riid, [NativeTypeName("LPVOID *")] void** ppResult)
     {
-        fixed (IDxcCompiler3* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Compile>((IntPtr)(lpVtbl[3]))(pThis, pSource, pArguments, argCount, pIncludeHandler, riid, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcCompiler3*, DxcBuffer*, ushort**, uint, IDxcIncludeHandler*, Guid*, void**, int>)(lpVtbl[3]))((IDxcCompiler3*)Unsafe.AsPointer(ref this), pSource, pArguments, argCount, pIncludeHandler, riid, ppResult);
     }
-
+    
     /// <include file='IDxcCompiler3.xml' path='doc/member[@name="IDxcCompiler3.Disassemble"]/*' />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(4)]
     public HRESULT Disassemble([NativeTypeName("const DxcBuffer *")] DxcBuffer* pObject, [NativeTypeName("const IID &")] Guid* riid, [NativeTypeName("LPVOID *")] void** ppResult)
     {
-        fixed (IDxcCompiler3* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Disassemble>((IntPtr)(lpVtbl[4]))(pThis, pObject, riid, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcCompiler3*, DxcBuffer*, Guid*, void**, int>)(lpVtbl[4]))((IDxcCompiler3*)Unsafe.AsPointer(ref this), pObject, riid, ppResult);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (const IID &, void **) __attribute__((stdcall))")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Stdcall]<IDxcCompiler3*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Stdcall]<IDxcCompiler3*, uint> AddRef;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr Release;
+        public delegate* unmanaged[Stdcall]<IDxcCompiler3*, uint> Release;
 
         [NativeTypeName("HRESULT (const DxcBuffer *, LPCWSTR *, UINT32, IDxcIncludeHandler *, const IID &, LPVOID *) __attribute__((stdcall))")]
-        public IntPtr Compile;
+        public delegate* unmanaged[Stdcall]<IDxcCompiler3*, DxcBuffer*, ushort**, uint, IDxcIncludeHandler*, Guid*, void**, int> Compile;
 
         [NativeTypeName("HRESULT (const DxcBuffer *, const IID &, LPVOID *) __attribute__((stdcall))")]
-        public IntPtr Disassemble;
+        public delegate* unmanaged[Stdcall]<IDxcCompiler3*, DxcBuffer*, Guid*, void**, int> Disassemble;
     }
 }

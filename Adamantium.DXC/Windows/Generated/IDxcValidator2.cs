@@ -12,32 +12,12 @@ internal unsafe partial struct IDxcValidator2
 {
     public void** lpVtbl;
 
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _QueryInterface(IDxcValidator2* pThis, [NativeTypeName("const IID &")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _AddRef(IDxcValidator2* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _Release(IDxcValidator2* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _Validate(IDxcValidator2* pThis, IDxcBlob* pShader, [NativeTypeName("UINT32")] uint Flags, IDxcOperationResult** ppResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _ValidateWithDebug(IDxcValidator2* pThis, IDxcBlob* pShader, [NativeTypeName("UINT32")] uint Flags, DxcBuffer* pOptDebugBitcode, IDxcOperationResult** ppResult);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("const IID &")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcValidator2* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcValidator2*, Guid*, void**, int>)(lpVtbl[0]))((IDxcValidator2*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
@@ -46,10 +26,7 @@ internal unsafe partial struct IDxcValidator2
     [return: NativeTypeName("ULONG")]
     public uint AddRef()
     {
-        fixed (IDxcValidator2* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcValidator2*, uint>)(lpVtbl[1]))((IDxcValidator2*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
@@ -58,10 +35,7 @@ internal unsafe partial struct IDxcValidator2
     [return: NativeTypeName("ULONG")]
     public uint Release()
     {
-        fixed (IDxcValidator2* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcValidator2*, uint>)(lpVtbl[2]))((IDxcValidator2*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IDxcValidator.Validate" />
@@ -69,10 +43,7 @@ internal unsafe partial struct IDxcValidator2
     [VtblIndex(3)]
     public HRESULT Validate(IDxcBlob* pShader, [NativeTypeName("UINT32")] uint Flags, IDxcOperationResult** ppResult)
     {
-        fixed (IDxcValidator2* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Validate>((IntPtr)(lpVtbl[3]))(pThis, pShader, Flags, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcValidator2*, IDxcBlob*, uint, IDxcOperationResult**, int>)(lpVtbl[3]))((IDxcValidator2*)Unsafe.AsPointer(ref this), pShader, Flags, ppResult);
     }
 
     /// <include file='IDxcValidator2.xml' path='doc/member[@name="IDxcValidator2.ValidateWithDebug"]/*' />
@@ -80,27 +51,24 @@ internal unsafe partial struct IDxcValidator2
     [VtblIndex(4)]
     public HRESULT ValidateWithDebug(IDxcBlob* pShader, [NativeTypeName("UINT32")] uint Flags, DxcBuffer* pOptDebugBitcode, IDxcOperationResult** ppResult)
     {
-        fixed (IDxcValidator2* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_ValidateWithDebug>((IntPtr)(lpVtbl[4]))(pThis, pShader, Flags, pOptDebugBitcode, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcValidator2*, IDxcBlob*, uint, DxcBuffer*, IDxcOperationResult**, int>)(lpVtbl[4]))((IDxcValidator2*)Unsafe.AsPointer(ref this), pShader, Flags, pOptDebugBitcode, ppResult);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (const IID &, void **) __attribute__((stdcall))")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Stdcall]<IDxcValidator2*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Stdcall]<IDxcValidator2*, uint> AddRef;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr Release;
+        public delegate* unmanaged[Stdcall]<IDxcValidator2*, uint> Release;
 
         [NativeTypeName("HRESULT (IDxcBlob *, UINT32, IDxcOperationResult **) __attribute__((stdcall))")]
-        public IntPtr Validate;
+        public delegate* unmanaged[Stdcall]<IDxcValidator2*, IDxcBlob*, uint, IDxcOperationResult**, int> Validate;
 
         [NativeTypeName("HRESULT (IDxcBlob *, UINT32, DxcBuffer *, IDxcOperationResult **) __attribute__((stdcall))")]
-        public IntPtr ValidateWithDebug;
+        public delegate* unmanaged[Stdcall]<IDxcValidator2*, IDxcBlob*, uint, DxcBuffer*, IDxcOperationResult**, int> ValidateWithDebug;
     }
 }

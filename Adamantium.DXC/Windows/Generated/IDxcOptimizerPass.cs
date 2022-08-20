@@ -12,41 +12,12 @@ internal unsafe partial struct IDxcOptimizerPass
 {
     public void** lpVtbl;
 
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _QueryInterface(IDxcOptimizerPass* pThis, [NativeTypeName("const IID &")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _AddRef(IDxcOptimizerPass* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _Release(IDxcOptimizerPass* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _GetOptionName(IDxcOptimizerPass* pThis, [NativeTypeName("LPWSTR *")] ushort** ppResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _GetDescription(IDxcOptimizerPass* pThis, [NativeTypeName("LPWSTR *")] ushort** ppResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _GetOptionArgCount(IDxcOptimizerPass* pThis, [NativeTypeName("UINT32 *")] uint* pCount);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _GetOptionArgName(IDxcOptimizerPass* pThis, [NativeTypeName("UINT32")] uint argIndex, [NativeTypeName("LPWSTR *")] ushort** ppResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _GetOptionArgDescription(IDxcOptimizerPass* pThis, [NativeTypeName("UINT32")] uint argIndex, [NativeTypeName("LPWSTR *")] ushort** ppResult);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("const IID &")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcOptimizerPass* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, Guid*, void**, int>)(lpVtbl[0]))((IDxcOptimizerPass*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
@@ -55,10 +26,7 @@ internal unsafe partial struct IDxcOptimizerPass
     [return: NativeTypeName("ULONG")]
     public uint AddRef()
     {
-        fixed (IDxcOptimizerPass* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint>)(lpVtbl[1]))((IDxcOptimizerPass*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
@@ -67,10 +35,7 @@ internal unsafe partial struct IDxcOptimizerPass
     [return: NativeTypeName("ULONG")]
     public uint Release()
     {
-        fixed (IDxcOptimizerPass* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint>)(lpVtbl[2]))((IDxcOptimizerPass*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcOptimizerPass.xml' path='doc/member[@name="IDxcOptimizerPass.GetOptionName"]/*' />
@@ -78,10 +43,7 @@ internal unsafe partial struct IDxcOptimizerPass
     [VtblIndex(3)]
     public HRESULT GetOptionName([NativeTypeName("LPWSTR *")] ushort** ppResult)
     {
-        fixed (IDxcOptimizerPass* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetOptionName>((IntPtr)(lpVtbl[3]))(pThis, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, ushort**, int>)(lpVtbl[3]))((IDxcOptimizerPass*)Unsafe.AsPointer(ref this), ppResult);
     }
 
     /// <include file='IDxcOptimizerPass.xml' path='doc/member[@name="IDxcOptimizerPass.GetDescription"]/*' />
@@ -89,10 +51,7 @@ internal unsafe partial struct IDxcOptimizerPass
     [VtblIndex(4)]
     public HRESULT GetDescription([NativeTypeName("LPWSTR *")] ushort** ppResult)
     {
-        fixed (IDxcOptimizerPass* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetDescription>((IntPtr)(lpVtbl[4]))(pThis, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, ushort**, int>)(lpVtbl[4]))((IDxcOptimizerPass*)Unsafe.AsPointer(ref this), ppResult);
     }
 
     /// <include file='IDxcOptimizerPass.xml' path='doc/member[@name="IDxcOptimizerPass.GetOptionArgCount"]/*' />
@@ -100,10 +59,7 @@ internal unsafe partial struct IDxcOptimizerPass
     [VtblIndex(5)]
     public HRESULT GetOptionArgCount([NativeTypeName("UINT32 *")] uint* pCount)
     {
-        fixed (IDxcOptimizerPass* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetOptionArgCount>((IntPtr)(lpVtbl[5]))(pThis, pCount);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint*, int>)(lpVtbl[5]))((IDxcOptimizerPass*)Unsafe.AsPointer(ref this), pCount);
     }
 
     /// <include file='IDxcOptimizerPass.xml' path='doc/member[@name="IDxcOptimizerPass.GetOptionArgName"]/*' />
@@ -111,10 +67,7 @@ internal unsafe partial struct IDxcOptimizerPass
     [VtblIndex(6)]
     public HRESULT GetOptionArgName([NativeTypeName("UINT32")] uint argIndex, [NativeTypeName("LPWSTR *")] ushort** ppResult)
     {
-        fixed (IDxcOptimizerPass* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetOptionArgName>((IntPtr)(lpVtbl[6]))(pThis, argIndex, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint, ushort**, int>)(lpVtbl[6]))((IDxcOptimizerPass*)Unsafe.AsPointer(ref this), argIndex, ppResult);
     }
 
     /// <include file='IDxcOptimizerPass.xml' path='doc/member[@name="IDxcOptimizerPass.GetOptionArgDescription"]/*' />
@@ -122,36 +75,33 @@ internal unsafe partial struct IDxcOptimizerPass
     [VtblIndex(7)]
     public HRESULT GetOptionArgDescription([NativeTypeName("UINT32")] uint argIndex, [NativeTypeName("LPWSTR *")] ushort** ppResult)
     {
-        fixed (IDxcOptimizerPass* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetOptionArgDescription>((IntPtr)(lpVtbl[7]))(pThis, argIndex, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint, ushort**, int>)(lpVtbl[7]))((IDxcOptimizerPass*)Unsafe.AsPointer(ref this), argIndex, ppResult);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (const IID &, void **) __attribute__((stdcall))")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint> AddRef;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr Release;
+        public delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint> Release;
 
         [NativeTypeName("HRESULT (LPWSTR *) __attribute__((stdcall))")]
-        public IntPtr GetOptionName;
+        public delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, ushort**, int> GetOptionName;
 
         [NativeTypeName("HRESULT (LPWSTR *) __attribute__((stdcall))")]
-        public IntPtr GetDescription;
+        public delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, ushort**, int> GetDescription;
 
         [NativeTypeName("HRESULT (UINT32 *) __attribute__((stdcall))")]
-        public IntPtr GetOptionArgCount;
+        public delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint*, int> GetOptionArgCount;
 
         [NativeTypeName("HRESULT (UINT32, LPWSTR *) __attribute__((stdcall))")]
-        public IntPtr GetOptionArgName;
+        public delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint, ushort**, int> GetOptionArgName;
 
         [NativeTypeName("HRESULT (UINT32, LPWSTR *) __attribute__((stdcall))")]
-        public IntPtr GetOptionArgDescription;
+        public delegate* unmanaged[Stdcall]<IDxcOptimizerPass*, uint, ushort**, int> GetOptionArgDescription;
     }
 }

@@ -212,16 +212,18 @@ internal unsafe class WindowsDxcCompiler : IDxcCompilerPlatform
         
         var allocated = GCHandle.Alloc(intPtrArray.ToArray(), GCHandleType.Pinned);
         var arrayPtr = (ushort**)allocated.AddrOfPinnedObject();
-
+        
         ComPtr<IDxcResult> dxcResult = default;
-        var result =  DxcCompiler3.Get()->Compile(
+        HRESULT result = default;
+
+        result = DxcCompiler3.Get()->Compile(
             &buffer,
             arrayPtr,
             (uint)dxcArgs.Count,
             DxcIncludeHandler.Get(),
             IID.IDxcResult,
             dxcResult.GetVoidAddressOf());
-        
+
         allocated.Free();
 
         DxcCompiler.CheckResult(result, fileName);

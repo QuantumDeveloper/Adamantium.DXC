@@ -12,38 +12,12 @@ internal unsafe partial struct IDxcContainerBuilder
 {
     public void** lpVtbl;
 
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _QueryInterface(IDxcContainerBuilder* pThis, [NativeTypeName("const IID &")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _AddRef(IDxcContainerBuilder* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _Release(IDxcContainerBuilder* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _Load(IDxcContainerBuilder* pThis, IDxcBlob* pDxilContainerHeader);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _AddPart(IDxcContainerBuilder* pThis, [NativeTypeName("UINT32")] uint fourCC, IDxcBlob* pSource);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _RemovePart(IDxcContainerBuilder* pThis, [NativeTypeName("UINT32")] uint fourCC);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _SerializeContainer(IDxcContainerBuilder* pThis, IDxcOperationResult** ppResult);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("const IID &")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcContainerBuilder* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, Guid*, void**, int>)(lpVtbl[0]))((IDxcContainerBuilder*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
@@ -52,10 +26,7 @@ internal unsafe partial struct IDxcContainerBuilder
     [return: NativeTypeName("ULONG")]
     public uint AddRef()
     {
-        fixed (IDxcContainerBuilder* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, uint>)(lpVtbl[1]))((IDxcContainerBuilder*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
@@ -64,10 +35,7 @@ internal unsafe partial struct IDxcContainerBuilder
     [return: NativeTypeName("ULONG")]
     public uint Release()
     {
-        fixed (IDxcContainerBuilder* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, uint>)(lpVtbl[2]))((IDxcContainerBuilder*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcContainerBuilder.xml' path='doc/member[@name="IDxcContainerBuilder.Load"]/*' />
@@ -75,10 +43,7 @@ internal unsafe partial struct IDxcContainerBuilder
     [VtblIndex(3)]
     public HRESULT Load(IDxcBlob* pDxilContainerHeader)
     {
-        fixed (IDxcContainerBuilder* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Load>((IntPtr)(lpVtbl[3]))(pThis, pDxilContainerHeader);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, IDxcBlob*, int>)(lpVtbl[3]))((IDxcContainerBuilder*)Unsafe.AsPointer(ref this), pDxilContainerHeader);
     }
 
     /// <include file='IDxcContainerBuilder.xml' path='doc/member[@name="IDxcContainerBuilder.AddPart"]/*' />
@@ -86,10 +51,7 @@ internal unsafe partial struct IDxcContainerBuilder
     [VtblIndex(4)]
     public HRESULT AddPart([NativeTypeName("UINT32")] uint fourCC, IDxcBlob* pSource)
     {
-        fixed (IDxcContainerBuilder* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddPart>((IntPtr)(lpVtbl[4]))(pThis, fourCC, pSource);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, uint, IDxcBlob*, int>)(lpVtbl[4]))((IDxcContainerBuilder*)Unsafe.AsPointer(ref this), fourCC, pSource);
     }
 
     /// <include file='IDxcContainerBuilder.xml' path='doc/member[@name="IDxcContainerBuilder.RemovePart"]/*' />
@@ -97,10 +59,7 @@ internal unsafe partial struct IDxcContainerBuilder
     [VtblIndex(5)]
     public HRESULT RemovePart([NativeTypeName("UINT32")] uint fourCC)
     {
-        fixed (IDxcContainerBuilder* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_RemovePart>((IntPtr)(lpVtbl[5]))(pThis, fourCC);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, uint, int>)(lpVtbl[5]))((IDxcContainerBuilder*)Unsafe.AsPointer(ref this), fourCC);
     }
 
     /// <include file='IDxcContainerBuilder.xml' path='doc/member[@name="IDxcContainerBuilder.SerializeContainer"]/*' />
@@ -108,33 +67,30 @@ internal unsafe partial struct IDxcContainerBuilder
     [VtblIndex(6)]
     public HRESULT SerializeContainer(IDxcOperationResult** ppResult)
     {
-        fixed (IDxcContainerBuilder* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_SerializeContainer>((IntPtr)(lpVtbl[6]))(pThis, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, IDxcOperationResult**, int>)(lpVtbl[6]))((IDxcContainerBuilder*)Unsafe.AsPointer(ref this), ppResult);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (const IID &, void **) __attribute__((stdcall))")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, uint> AddRef;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr Release;
+        public delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, uint> Release;
 
         [NativeTypeName("HRESULT (IDxcBlob *) __attribute__((stdcall))")]
-        public IntPtr Load;
+        public delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, IDxcBlob*, int> Load;
 
         [NativeTypeName("HRESULT (UINT32, IDxcBlob *) __attribute__((stdcall))")]
-        public IntPtr AddPart;
+        public delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, uint, IDxcBlob*, int> AddPart;
 
         [NativeTypeName("HRESULT (UINT32) __attribute__((stdcall))")]
-        public IntPtr RemovePart;
+        public delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, uint, int> RemovePart;
 
         [NativeTypeName("HRESULT (IDxcOperationResult **) __attribute__((stdcall))")]
-        public IntPtr SerializeContainer;
+        public delegate* unmanaged[Stdcall]<IDxcContainerBuilder*, IDxcOperationResult**, int> SerializeContainer;
     }
 }

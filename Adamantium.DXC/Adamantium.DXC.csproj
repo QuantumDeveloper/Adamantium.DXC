@@ -9,8 +9,8 @@
 
     <PropertyGroup>
         <PackageId>Adamantium.DXC</PackageId>
-        <Version>1.0.2</Version>
-        <Authors>Den</Authors>
+        <Version>1.0.4</Version>
+        <Authors>Adamantium studio</Authors>
         <Company>Adamantium studio</Company>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>

@@ -12,35 +12,12 @@ internal unsafe partial struct IDxcOperationResult
 {
     public void** lpVtbl;
 
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _QueryInterface(IDxcOperationResult* pThis, [NativeTypeName("const IID &")] Guid* riid, void** ppvObject);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _AddRef(IDxcOperationResult* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    [return: NativeTypeName("ULONG")]
-    public delegate uint _Release(IDxcOperationResult* pThis);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _GetStatus(IDxcOperationResult* pThis, HRESULT* pStatus);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _GetResult(IDxcOperationResult* pThis, IDxcBlob** ppResult);
-
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate HRESULT _GetErrorBuffer(IDxcOperationResult* pThis, IDxcBlobEncoding** ppErrors);
-
     /// <inheritdoc cref="IUnknown.QueryInterface" />
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [VtblIndex(0)]
     public HRESULT QueryInterface([NativeTypeName("const IID &")] Guid* riid, void** ppvObject)
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_QueryInterface>((IntPtr)(lpVtbl[0]))(pThis, riid, ppvObject);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOperationResult*, Guid*, void**, int>)(lpVtbl[0]))((IDxcOperationResult*)Unsafe.AsPointer(ref this), riid, ppvObject);
     }
 
     /// <inheritdoc cref="IUnknown.AddRef" />
@@ -49,10 +26,7 @@ internal unsafe partial struct IDxcOperationResult
     [return: NativeTypeName("ULONG")]
     public uint AddRef()
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_AddRef>((IntPtr)(lpVtbl[1]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOperationResult*, uint>)(lpVtbl[1]))((IDxcOperationResult*)Unsafe.AsPointer(ref this));
     }
 
     /// <inheritdoc cref="IUnknown.Release" />
@@ -61,10 +35,7 @@ internal unsafe partial struct IDxcOperationResult
     [return: NativeTypeName("ULONG")]
     public uint Release()
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_Release>((IntPtr)(lpVtbl[2]))(pThis);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOperationResult*, uint>)(lpVtbl[2]))((IDxcOperationResult*)Unsafe.AsPointer(ref this));
     }
 
     /// <include file='IDxcOperationResult.xml' path='doc/member[@name="IDxcOperationResult.GetStatus"]/*' />
@@ -72,10 +43,7 @@ internal unsafe partial struct IDxcOperationResult
     [VtblIndex(3)]
     public HRESULT GetStatus(HRESULT* pStatus)
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetStatus>((IntPtr)(lpVtbl[3]))(pThis, pStatus);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOperationResult*, HRESULT*, int>)(lpVtbl[3]))((IDxcOperationResult*)Unsafe.AsPointer(ref this), pStatus);
     }
 
     /// <include file='IDxcOperationResult.xml' path='doc/member[@name="IDxcOperationResult.GetResult"]/*' />
@@ -83,10 +51,7 @@ internal unsafe partial struct IDxcOperationResult
     [VtblIndex(4)]
     public HRESULT GetResult(IDxcBlob** ppResult)
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetResult>((IntPtr)(lpVtbl[4]))(pThis, ppResult);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOperationResult*, IDxcBlob**, int>)(lpVtbl[4]))((IDxcOperationResult*)Unsafe.AsPointer(ref this), ppResult);
     }
 
     /// <include file='IDxcOperationResult.xml' path='doc/member[@name="IDxcOperationResult.GetErrorBuffer"]/*' />
@@ -94,30 +59,27 @@ internal unsafe partial struct IDxcOperationResult
     [VtblIndex(5)]
     public HRESULT GetErrorBuffer(IDxcBlobEncoding** ppErrors)
     {
-        fixed (IDxcOperationResult* pThis = &this)
-        {
-            return Marshal.GetDelegateForFunctionPointer<_GetErrorBuffer>((IntPtr)(lpVtbl[5]))(pThis, ppErrors);
-        }
+        return ((delegate* unmanaged[Stdcall]<IDxcOperationResult*, IDxcBlobEncoding**, int>)(lpVtbl[5]))((IDxcOperationResult*)Unsafe.AsPointer(ref this), ppErrors);
     }
 
     public partial struct Vtbl
     {
         [NativeTypeName("HRESULT (const IID &, void **) __attribute__((stdcall))")]
-        public IntPtr QueryInterface;
+        public delegate* unmanaged[Stdcall]<IDxcOperationResult*, Guid*, void**, int> QueryInterface;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr AddRef;
+        public delegate* unmanaged[Stdcall]<IDxcOperationResult*, uint> AddRef;
 
         [NativeTypeName("ULONG () __attribute__((stdcall))")]
-        public IntPtr Release;
+        public delegate* unmanaged[Stdcall]<IDxcOperationResult*, uint> Release;
 
         [NativeTypeName("HRESULT (HRESULT *) __attribute__((stdcall))")]
-        public IntPtr GetStatus;
+        public delegate* unmanaged[Stdcall]<IDxcOperationResult*, HRESULT*, int> GetStatus;
 
         [NativeTypeName("HRESULT (IDxcBlob **) __attribute__((stdcall))")]
-        public IntPtr GetResult;
+        public delegate* unmanaged[Stdcall]<IDxcOperationResult*, IDxcBlob**, int> GetResult;
 
         [NativeTypeName("HRESULT (IDxcBlobEncoding **) __attribute__((stdcall))")]
-        public IntPtr GetErrorBuffer;
+        public delegate* unmanaged[Stdcall]<IDxcOperationResult*, IDxcBlobEncoding**, int> GetErrorBuffer;
     }
 }

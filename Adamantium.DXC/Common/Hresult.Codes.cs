@@ -37,6 +37,8 @@ internal partial struct HRESULT
 
     [NativeTypeName("#define E_UNEXPECTED (HRESULT)0x8000FFFF")]
     public const int UNEXPECTED = unchecked((int)(0x8000FFFF));
+
+    public const int FILENOTFOUND = unchecked((int)(0x80070002));
     
     public static bool SUCCEEDED(HRESULT hr)
     {
